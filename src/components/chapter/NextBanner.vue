@@ -1,5 +1,5 @@
 <template lang="pug">
-section.next-banner
+article.next-banner
   slot
 </template>
 

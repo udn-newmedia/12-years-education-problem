@@ -11,6 +11,7 @@ html, body {
 }
 
 h1, h2, h3, h4, p {
+  margin: 0;
   &.white {
     color: #f6f6f6;
   }
@@ -73,7 +74,6 @@ a, button {
   width: 100%;
   margin: auto;
   padding: 24px 16px 24px 16px;
-  background-color: #fff;
   @include pad {
     padding: 72px 0 72px 0;
     max-width: 576px;

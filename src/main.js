@@ -3,6 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import { rwdMethods } from '@/mixins/masterBuilder.js';
+import { addBorder, removeBorder } from '@/utils/debugger.js';
+import '~/style/main.scss';
 
 Vue.config.productionTip = false
 
@@ -13,7 +15,11 @@ new Vue({
   mixins: [rwdMethods]
 }).$mount('#app')
 
-// rec.udn.com追蹤碼
+/* 解決 rec.udn.com追蹤碼 佔位問題 */
 window.onload = () => {
   document.getElementsByTagName('iframe')[0].style.top = 0;
 };
+
+/* debugger */
+window.addBorder = addBorder;
+window.removeBorder = removeBorder;

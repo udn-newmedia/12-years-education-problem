@@ -1,5 +1,5 @@
 <template lang="pug">
-section.chapter-banner
+article.chapter-banner
   slot
 </template>
 

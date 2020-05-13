@@ -52,12 +52,11 @@ export default {
         }
       }
     }
-
-    br {
-      @include pc {
-        display: none;
-      }
-    }
+    // br {
+    //   @include pc {
+    //     display: none;
+    //   }
+    // }
   }
 }
 </style>

@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import NmdButton from '@/components/pinhead/NmdButton.vue';
+import NmdButton from '@/components/_common/pinhead/NmdButton.vue';
 import { sendGaMethods } from "@/mixins/masterBuilder.js";
 
 export default {
@@ -60,7 +60,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/style/_mixins.scss';
 .footer-questionnaire {
   position: relative;
   display: block;

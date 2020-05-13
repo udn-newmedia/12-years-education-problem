@@ -97,7 +97,7 @@
 
 <script>
 import { sendGaMethods } from "@/mixins/masterBuilder.js";
-import FooterQuestionnaire from '@/components/footer/FooterQuestionnaire.vue';
+import FooterQuestionnaire from '@/components/_common/footer/FooterQuestionnaire.vue';
 
 export default {
   name: 'FooterRelateArticle',
@@ -188,7 +188,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/style/_mixins.scss';
 .footer-relate-article {
   position: relative;
   display: block;

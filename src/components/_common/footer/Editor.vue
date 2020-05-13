@@ -11,13 +11,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/style/_mixins.scss';
 .footer-editor {
   width: 325px;
   @include smob {
     width: 300px;
   }
-  // @include pad {}
   @include pc {
     width: 720px;
     padding: 72px 0 16px 0;

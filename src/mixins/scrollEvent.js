@@ -1,3 +1,7 @@
+/**
+ * Common scroll event methods.
+ */
+
 const typePixel = 'p';
 const typeWindowHeight = 'w';
 
@@ -17,19 +21,23 @@ const scrollEvent = {
       }
       this.ticking = true;
     },
+    
+    /**
+     * 
+     * The scroll event to handle that triggering if the target element is obseravle.
+     * 
+     * @param {target} String - the id of target element
+     * 
+     * @param {option} Object - option
+     * @property {type} string: default: w (p / w)
+     * @property {top} number: default: 0
+     * @property {bottom} number: default: 0
+     * @property {enterEvent} method: default: null
+     * @property {leaveEvent} method: default: null
+     * @property {aboveEvent} method: default: null
+     * @property {underEvent} method: default: null
+     */
     observableEvent(target, option) {
-      /*
-        option: {
-          type: default: w (p / w),
-          top: default: 0,
-          bottom: default: 0,
-          enterEvent: default: null,
-          leaveEvent: default: null,
-          aboveEvent: default: null,
-          underEvent: default: null
-        }
-      */
-
       const slide = document.querySelector(target);
       if (!slide) return;
 
@@ -47,13 +55,13 @@ const scrollEvent = {
         console.error('OberservableEvent: lack of type parameter!');
       }
 
-      /*
-        | above / leave position
-        |———————————————————————
-        | enter position
-        |———————————————————————
-        | under / leave position
-      */
+      /**
+       * | above / leave position
+       * |——————————————————————— 
+       * | enter position 
+       * |———————————————————————
+       * | under / leave position
+       */
       // enter
       if (pos.top < finalTop && pos.bottom > finalBottom) {
         if (option.enterEvent) option.enterEvent();

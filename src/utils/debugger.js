@@ -1,3 +1,12 @@
+/**
+ * Support debugger methods to browser
+ * .
+ * @property {_target} target element
+ * @property {_el} child element
+ * @property {_width} width
+ * @return {function}
+ */
+
 function addBorder(_target = document, _el = '*', _width = 1) {
   const target = _target || document;  
   const el = _el || '*';

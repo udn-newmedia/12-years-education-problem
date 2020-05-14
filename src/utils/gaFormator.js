@@ -1,3 +1,7 @@
+/**
+ * GA format for static UI element.
+ */
+
 const gaTable = {
   HeaderShareOpen: {
     category: 'share',

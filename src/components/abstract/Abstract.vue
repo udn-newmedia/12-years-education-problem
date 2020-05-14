@@ -1,6 +1,6 @@
 <template lang="pug">
 section.abstract
-  h1 Abstract
+  slot
 </template>
 
 <script>

@@ -6,6 +6,20 @@ article.next-banner
 <script>
 export default {
   name: 'NextBanner',
+  props: {
+    cost: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    next: {
+      type: String,
+      default: null
+    }
+  }
 }
 </script>
 

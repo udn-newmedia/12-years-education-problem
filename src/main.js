@@ -3,7 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import { rwdMethods } from '@/mixins/masterBuilder.js';
-import { addBorder, removeBorder } from '@/utils/debugger.js';
+import myDebugger from '@/utils/debugger.js';
+
 import '~/style/main.scss';
 
 Vue.config.productionTip = false
@@ -21,5 +22,5 @@ window.onload = () => {
 };
 
 /* debugger */
-window.addBorder = addBorder;
-window.removeBorder = removeBorder;
+window.addBorder = myDebugger.addBorder;
+window.removeBorder = myDebugger.removeBorder;

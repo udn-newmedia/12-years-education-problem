@@ -13,7 +13,9 @@ export default {
 .chapter {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  border: solid 1px red;
+  h3 {
+    font-family: source-han-seri-tc;
+    font-weight: bold;
+  }
 }
 </style>

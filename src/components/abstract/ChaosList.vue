@@ -11,6 +11,12 @@ export default {
 
 <style lang="scss" scoped>
 .chaos-list {
-
+  p {
+    margin: 0;
+  }
+  .td--red {
+    padding-right: 0.5rem;
+    color: #e25151;
+  }
 }
 </style>

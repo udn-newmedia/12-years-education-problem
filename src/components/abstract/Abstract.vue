@@ -14,6 +14,12 @@ export default {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  border: solid 1px red;
+  padding-bottom: 32vh;
+  color: #f2e6e6;
+  background-color: #080808;
+
+  @include pc {
+    padding-bottom: 16vh;
+  }
 }
 </style>

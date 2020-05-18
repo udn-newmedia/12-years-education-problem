@@ -1,5 +1,5 @@
 <template lang="pug">
-section.card-collector
+section.card-collector( :class="{ 'card-collector--disabled': $store.state.isEnterMainContent }")
   h1 Card Collector
 </template>
 
@@ -89,9 +89,17 @@ export default {
 
 <style lang="scss" scoped>
 .card-collector {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
-  border: solid 1px red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+  &.card-collector--disabled {
+    opacity: 0;
+  }
 }
 </style>

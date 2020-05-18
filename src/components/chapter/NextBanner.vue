@@ -11,12 +11,18 @@ article.article(:class="{ 'clean-padding': next === null }")
     div.next-banner__next(v-if="next !== null")
       p 往下看
       p {{next}}
-
+      div.next-banner__arrow
+        NmdArrow(iconColor="#a72626")
 </template>
 
 <script>
+import NmdArrow from '@/components/_common/pinhead/NmdArrow.vue';
+
 export default {
   name: 'NextBanner',
+  components: {
+    NmdArrow,
+  },
   props: {
     cost: {
       type: String,
@@ -72,6 +78,11 @@ $red: #a72626;
     margin-bottom: 0;
     text-align: center;
     font-weight: bold;
+  }
+  .next-banner__arrow {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
   }
 }
 

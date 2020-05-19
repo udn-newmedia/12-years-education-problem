@@ -1,11 +1,10 @@
 <template lang="pug">
-div#app
+div#app(:class="{'app-in-cover': $store.state.isEnterCollector}")
+  Cover
+    h2(slot="prembleTitle") 新課綱上路一年<br>理想與現實的差距<br>有多大？
+    p(slot="prembleText") 一張張美好明亮的圖卡，<br>是台灣教育對孩子的期待，<br>點按圖卡看現況與理想之間，<br>還有多大的差距。
+    h1(slot="gate") 無效預算？<br>揭露108課綱<br>五大亂象
   main
-    CardCollector
-    Cover
-      h2(slot="prembleTitle") 新課綱上路一年<br>理想與現實的差距<br>有多大？
-      p(slot="prembleText") 一張張美好明亮的圖卡，<br>是台灣教育對孩子的期待，<br>點按圖卡看現況與理想之間，<br>還有多大的差距。
-      h1(slot="gate") 無效預算？<br>揭露108課綱<br>五大亂象
     Abstract
       article.article
         p 影響全台240萬學生的108課綱（十二年國教課程綱要）2019年正式實施，是台灣近20年最大一波教育改革，政府砸入大筆經費推動—教育預算年年增，是僅次社會保險、國防的第三大支出；2020年12年國教「專屬」預算高達341億，超越外交部、文化部等部會整年度預算。
@@ -159,6 +158,7 @@ div#app
 
 <script>
 import { sendGaMethods } from '@/mixins/masterBuilder.js';
+import ErikoScroller from '@/utils/scrollEvent.js';
 
 /* Header */
 /* Header */
@@ -173,7 +173,6 @@ import PageBackTop from '@/components/_common/layout/PageBackTop.vue';
 /* Footer */
 
 import Abstract from '@/components/abstract/Abstract.vue';
-import CardCollector from '@/components/card_collector/CardCollector.vue';
 import ChaosList from '@/components/abstract/ChaosList.vue';
 import Chapter from '@/components/chapter/Chapter.vue';
 import ChapterBanner from '@/components/chapter/ChapterBanner.vue';
@@ -187,7 +186,6 @@ export default {
   mixins: [sendGaMethods],
   components: {
     Abstract,
-    CardCollector,
     Chapter,
     ChaosList,
     ChapterBanner,
@@ -202,11 +200,33 @@ export default {
     PageFooter,
     PageBackTop,
   },
+  data() {
+    return {
+      es: new ErikoScroller()
+    }
+  },
+  computed: {
+    observableScrollEventOption() {
+      return {
+        type: 'w',
+        top: 0,
+        bottom: 0,
+        enterEvent: this.handleEnterEvent,
+        leaveEvent: this.handleLeaveEvent,
+      }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-  main {
-    background-color: #f2f2f2;
+#app {
+  &.app-in-cover {
+    overflow: hidden;
+    height: 200vh;
   }
+}
+main {
+  background-color: #f2f2f2;
+}
 </style>

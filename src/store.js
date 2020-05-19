@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isEnterCollector: false,
+    isEnterCollector: true,
     isEnterMainContent: false,
   },
   mutations: {

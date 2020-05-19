@@ -1,26 +1,30 @@
 <template lang="pug">
-section.cover
-  article.cover__block.cover__preamble
+section.cover#cover
+  article.cover__block.cover__preamble(v-show="!$store.state.isEnterMainContent")
     slot(name="prembleTitle")
     slot(name="prembleText")
     footer.cover__preamble__arrow-container
       NmdArrow(iconColor="#cecece")
-  div.cover__block.cover__collector-space#collector-space
   article.cover__block.cover__gate#gate
+    div.cover-collector-container(:class="{'cover-collector-container--fixed': !$store.state.isEnterMainContent}")
+      CardCollector
     div.cover__gate__bg(:class="{ 'cover__gate__bg--enlarge': !$store.state.isEnterMainContent }")
-    header.cover__gate__title
-      slot(name="gate")
-    NmdArrow(iconColor="#cecece")
+      header.cover__gate__title
+        slot(name="gate")
+        div.cover__gate__title__arrow-container
+          NmdArrow(iconColor="#cecece")
 </template>
 
 <script>
 import ErikoScroller from '@/utils/scrollEvent.js';
 
+import CardCollector from '@/components/card_collector/CardCollector.vue';
 import NmdArrow from '@/components/_common/pinhead/NmdArrow.vue';
 
 export default {
   name: 'Cover',
   components: {
+    CardCollector,
     NmdArrow,
   },
   data() {
@@ -29,41 +33,29 @@ export default {
     }
   },
   computed: {
-    observableScrollEventOption() {
+    gateEventOption() {
       return {
         type: 'w',
-        top: 0,
-        bottom: 0,
-        enterEvent: this.handleEnterEvent,
-        leaveEvent: this.handleLeaveEvent,
-        aboveEvent: this.handleAboveEvent,
-        underEvent: this.handleUnderEvent,
+        top: 1,
+        bottom: 1,
+        enterEvent: this.handleGateEnterEvent,
+        aboveEvent: this.handleGateAboveEvent,
       }
     },
   },
-  watch: {
-    
-  },
   methods: {
-    handleEnterEvent() {
-      this.$store.dispatch('updatedIsEnterCollector', true);
-      this.$store.dispatch('updatedIsEnterMainContent', false);
+    handleGateEnterEvent() {
+      if(!this.$store.state.isEnterCollector) this.$store.dispatch('updatedIsEnterCollector', true);
     },
-    handleLeaveEvent() {
-      this.$store.dispatch('updatedIsEnterCollector', false);
+    handleGateAboveEvent() {
+      if(!this.$store.state.isEnterCollector) this.$store.dispatch('updatedIsEnterCollector', true);
     },
-    handleAboveEvent() {
-      this.$store.dispatch('updatedIsEnterMainContent', false);
-    },
-    handleUnderEvent() {
-      this.$store.dispatch('updatedIsEnterMainContent', true);
-    }
   },
   mounted() {
-    this.es.addObservableScrollEvent('#collector-space', this.observableScrollEventOption, true);
+    this.es.addObservableScrollEvent('#cover', this.gateEventOption);
   },
   destroyed() {
-    this.es.removeObservableScrollEvent('#collector-space', this.observableScrollEventOption, true);
+    this.es.removeObservableScrollEvent('#cover', this.gateEventOption);
   },
 }
 </script>
@@ -72,20 +64,33 @@ export default {
 .cover {
   position: relative;
   width: 100%;
-  height: 300vh;
   .cover__block {
     width: 100%;
     height: 100vh;
   }
   .cover__preamble {
     position: relative;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: #ffffff;
     padding-bottom: 10vh;
-    background-color: #000000dd;
+    background-color: #00000000;
+    opacity: 0;
+    animation: fade-in .1s .2s forwards;
+    @keyframes fade-in {
+      from {
+        background-color: #00000000;
+        opacity: 0;
+      }
+      to {
+        background-color: #00000088;
+        opacity: 1;
+      }
+    }
+
     h2 {
       font-family: source-han-seri-tc;
       font-weight: bold;
@@ -107,27 +112,28 @@ export default {
       transform: translateX(-50%);
     }
   }
-  .collector-space {}
   .cover__gate {
     position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
     width: 100%;
-    padding-bottom: 5vh;
     color: #f2e6e6;
     .cover__gate__bg {
       position: absolute;
+      z-index: 8;
+      pointer-events: none;
       left: 0;
       bottom: 0;
       width: 100%;
       height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 5vh;
       background-image: url('../assets/img/gate/cover_door_mob.png');
       background-size: cover;
       background-position: center top;
-      transition: .666s ease;
+      transition: 2s ease;
       @include pc {
         background-position: center;
         background-image: url('../assets/img/gate/cover_door_pc.png');
@@ -144,6 +150,13 @@ export default {
     }
     .cover__gate__title {
       position: relative;
+      .cover__gate__title__arrow-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
     h1 {
       font-family: source-han-seri-tc;
@@ -155,6 +168,18 @@ export default {
         }
       }
     }
+  }
+}
+
+.cover-collector-container {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  &.cover-collector-container--fixed {
+    position: fixed;
   }
 }
 </style>

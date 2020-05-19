@@ -1,14 +1,31 @@
 <template lang="pug">
-section.card-collector( :class="{ 'card-collector--disabled': $store.state.isEnterMainContent }")
-  h1 Card Collector
+section.card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide }")
+  div#bg-stars
+  div#bg-stars-2
+  div#bg-stars-3
+  Exit
+  div.card-collector__entrance-container(:class="{ 'card-collector-container--active': $store.state.isEnterMainContent }")
+    Entrance
 </template>
 
 <script>
+import ErikoScroller from '@/utils/scrollEvent.js';
+import _debounce from 'lodash.debounce';
+
+import Entrance from '@/components/card_collector/Entrance.vue';
+import Exit from '@/components/card_collector/Exit.vue';
+
 export default {
   name: 'CardCollector',
+  components: {
+    Entrance,
+    Exit
+  },
   data() {
     return {
-     CARDS_INFO_TABLE: {
+      es: new ErikoScroller(),
+      shouldCollectorHide: false,
+      CARDS_INFO_TABLE: {
        1: 1,
        2: 2,
        3: 3,
@@ -81,25 +98,52 @@ export default {
          expection: '學生常保好奇心，把世界當成遊樂場',
          truth: '填鴨式的教學，抹煞學生的好奇心'
        },
-     }
+      }
     }
+  },
+  methods: {
+    handleScrollEvent: _debounce(function() {
+      if (window.pageYOffset > window.innerHeight * 2) {
+        if (!this.shouldCollectorHide) this.shouldCollectorHide = true;
+      } else {
+        if(this.shouldCollectorHide) this.shouldCollectorHide = false;
+      }
+    }, 30),
+  },
+  mounted() {
+    this.es.addScrollEvent(this.handleScrollEvent);
   },
 }
 </script>
 
 <style lang="scss" scoped>
+@import '~/style/stars.sass';
+
 .card-collector {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   transition: 1s;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
   &.card-collector--disabled {
-    opacity: 0;
+    visibility: hidden;
+  }
+  .card-collector__entrance-container {
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    top: 15%;
+    transform: translateX(-50%);
+    &.card-collector-container--active {
+      opacity: 1;
+    }
+    @include pad {
+      top: 16%;
+    }
+    @include pc {
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 }
 </style>

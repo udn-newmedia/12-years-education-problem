@@ -1,8 +1,13 @@
 <template lang="pug">
 section.card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide }")
-  div#bg-stars
-  div#bg-stars-2
-  div#bg-stars-3
+  div.card-collector__bg
+    div#bg-stars
+    div#bg-stars-2
+    div#bg-stars-3
+
+  article.cards#cards
+    Card(v-for="item in Object.keys(CARDS_INFO_TABLE)" :key="item" :index="+item" :expection="CARDS_INFO[CARDS_INFO_TABLE[item]].expection" :truth="CARDS_INFO[CARDS_INFO_TABLE[item]].truth")
+
   Exit
   div.card-collector__entrance-container(:class="{ 'card-collector-container--active': $store.state.isEnterMainContent }")
     Entrance
@@ -10,20 +15,24 @@ section.card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide
 
 <script>
 import ErikoScroller from '@/utils/scrollEvent.js';
+import { Draggable } from '@shopify/draggable';
 import _debounce from 'lodash.debounce';
 
+import Card from '@/components/card_collector/Card.vue';
 import Entrance from '@/components/card_collector/Entrance.vue';
 import Exit from '@/components/card_collector/Exit.vue';
 
 export default {
   name: 'CardCollector',
   components: {
+    Card,
     Entrance,
     Exit
   },
   data() {
     return {
       es: new ErikoScroller(),
+      dr: null,
       shouldCollectorHide: false,
       CARDS_INFO_TABLE: {
        1: 1,
@@ -109,9 +118,23 @@ export default {
         if(this.shouldCollectorHide) this.shouldCollectorHide = false;
       }
     }, 30),
+    initialDraggable() {
+      const container = document.querySelector('#cards');
+      this.dr = new Draggable(container, {
+        draggable: '.PillSwitchControl',
+        delay: 0,
+      });
+
+
+      // TODO: draggable initial
+    }
   },
   mounted() {
     this.es.addScrollEvent(this.handleScrollEvent);
+    this.initialDraggable();
+  },
+  destroyed() {
+    this.es.removeScrollEvent(this.handleScrollEvent);
   },
 }
 </script>
@@ -127,6 +150,9 @@ export default {
   background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
   &.card-collector--disabled {
     visibility: hidden;
+  }
+  .card-collector__bg {
+    position: relative;
   }
   .card-collector__entrance-container {
     position: absolute;
@@ -145,5 +171,11 @@ export default {
       transform: translate(-50%, -50%);
     }
   }
+}
+
+.cards {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -134,13 +134,15 @@ export default {
       background-size: cover;
       background-position: center top;
       transition: 2s ease;
+      transform-origin: center 20%;
       @include pc {
         background-position: center;
         background-image: url('../assets/img/gate/cover_door_pc.png');
+        transform-origin: center;
       }
 
       &.cover__gate__bg--enlarge {
-        transform: scale(5);
+        transform: scale(7.5);
         transform-origin: center 25%;
         @include pc {
           transform: scale(10);

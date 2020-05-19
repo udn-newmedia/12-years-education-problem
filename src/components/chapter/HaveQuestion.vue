@@ -29,7 +29,7 @@ export default {
 .have-question {
   min-height: 80vh;
   @include pc {
-    min-height: 40vh;
+    min-height: 55vh;
   }
   h2 {
     writing-mode: vertical-lr;

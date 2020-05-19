@@ -32,5 +32,6 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: #031128;
+  opacity: 0.9;
 }
 </style>

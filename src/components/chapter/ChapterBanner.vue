@@ -86,7 +86,7 @@ $red: #ba4141;
 .chapter-banner-container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,6 +124,7 @@ $red: #ba4141;
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    padding: 15vh 0;
     @include pad {
       padding: 0 5%;
     }

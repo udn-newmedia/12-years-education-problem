@@ -100,7 +100,6 @@ export default {
   width: 18vh;
   height: 24vh;
   margin: 0;
-  transition: .333s ease-in-out;
   cursor: pointer;
 
   @include pc {

@@ -1,5 +1,5 @@
 <template lang="pug">
-section.card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide }")
+section.card-collector#card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide }")
   div.card-collector__bg
     div#bg-stars
     div#bg-stars-2
@@ -18,7 +18,6 @@ section.card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide
 
 <script>
 import ErikoScroller from '@/utils/scrollEvent.js';
-import { Draggable } from '@shopify/draggable';
 import _debounce from 'lodash.debounce';
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
 
@@ -37,13 +36,8 @@ export default {
   data() {
     return {
       es: new ErikoScroller(),
-      dr: null,
       shouldCollectorHide: false,
       CARD_AMOUNT: { need: 36, own: 18 },
-      CARDS_CONFIG: {
-        row: 0,
-        col: 0,
-      },
       CARDS_INFO_TABLE: {
        1: 1,
        2: 2,
@@ -134,29 +128,9 @@ export default {
         if(this.shouldCollectorHide) this.shouldCollectorHide = false;
       }
     }, 30),
-    initialDraggable() {
-      const container = document.querySelector('#cards');
-      this.dr = new Draggable(container, {
-        draggable: '.PillSwitchControl',
-        delay: 0,
-      });
-
-
-      // TODO: draggable initial
-    },
   },
   mounted() {
-    setInterval(() => {
-      const loopR = this.$store.state.cardCollector.loopRow + 1;
-      this.$store.dispatch('updatedLoopRow', loopR);
-    }, 500);
-    setInterval(() => {
-      const loopC = this.$store.state.cardCollector.loopCol + 1;
-      this.$store.dispatch('updatedLoopCol', loopC);
-    }, 600);
-
     this.es.addScrollEvent(this.handleScrollEvent);
-    this.initialDraggable();
   },
   destroyed() {
     this.es.removeScrollEvent(this.handleScrollEvent);
@@ -164,7 +138,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~/style/stars.sass';
 
 .card-collector {
@@ -179,6 +153,7 @@ export default {
   }
   .card-collector__bg {
     position: relative;
+    pointer-events: none;
     height: 0;
   }
   .card-collector__entrance-container {
@@ -205,6 +180,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
+  cursor: pointer;
   .cards-bg {
     position: relative;
     width: 100%;

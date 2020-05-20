@@ -6,7 +6,10 @@ section.card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide
     div#bg-stars-3
 
   article.cards#cards
-    Card(v-for="item in Object.keys(CARDS_INFO_TABLE)" :key="item" :index="+item" :expection="CARDS_INFO[CARDS_INFO_TABLE[item]].expection" :truth="CARDS_INFO[CARDS_INFO_TABLE[item]].truth")
+    .cards-bg(:class="{ 'cards-bg--active': $store.state.cardCollector.enterMode }" :style="{ backgroundImage: cardsBg}")
+    Card(
+      v-for="i in CARD_AMOUNT.need" :key="i" :pos="i" :index="(i - 1)%CARD_AMOUNT.own+1" :expection="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_AMOUNT.own+1]].expection" :truth="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_AMOUNT.own+1]].truth"
+    )
 
   Exit
   div.card-collector__entrance-container(:class="{ 'card-collector-container--active': $store.state.isEnterMainContent }")
@@ -17,6 +20,7 @@ section.card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide
 import ErikoScroller from '@/utils/scrollEvent.js';
 import { Draggable } from '@shopify/draggable';
 import _debounce from 'lodash.debounce';
+import { autoResize_2 } from '@/mixins/masterBuilder.js';
 
 import Card from '@/components/card_collector/Card.vue';
 import Entrance from '@/components/card_collector/Entrance.vue';
@@ -24,6 +28,7 @@ import Exit from '@/components/card_collector/Exit.vue';
 
 export default {
   name: 'CardCollector',
+  mixins: [autoResize_2],
   components: {
     Card,
     Entrance,
@@ -34,6 +39,11 @@ export default {
       es: new ErikoScroller(),
       dr: null,
       shouldCollectorHide: false,
+      CARD_AMOUNT: { need: 36, own: 18 },
+      CARDS_CONFIG: {
+        row: 0,
+        col: 0,
+      },
       CARDS_INFO_TABLE: {
        1: 1,
        2: 2,
@@ -110,6 +120,12 @@ export default {
       }
     }
   },
+  computed: {
+    cardsBg() {
+      const url = require(`~/img/illus/bg/${this.$store.state.cardCollector.currentIndex}/${this.isMob ? 'mob' : 'pc'}.jpg`);
+      return `url(${url})`;
+    }
+  },
   methods: {
     handleScrollEvent: _debounce(function() {
       if (window.pageYOffset > window.innerHeight * 2) {
@@ -127,9 +143,18 @@ export default {
 
 
       // TODO: draggable initial
-    }
+    },
   },
   mounted() {
+    setInterval(() => {
+      const loopR = this.$store.state.cardCollector.loopRow + 1;
+      this.$store.dispatch('updatedLoopRow', loopR);
+    }, 500);
+    setInterval(() => {
+      const loopC = this.$store.state.cardCollector.loopCol + 1;
+      this.$store.dispatch('updatedLoopCol', loopC);
+    }, 600);
+
     this.es.addScrollEvent(this.handleScrollEvent);
     this.initialDraggable();
   },
@@ -148,20 +173,23 @@ export default {
   height: 100vh;
   transition: 1s;
   background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+
   &.card-collector--disabled {
     visibility: hidden;
   }
   .card-collector__bg {
     position: relative;
+    height: 0;
   }
   .card-collector__entrance-container {
     position: absolute;
+    pointer-events: none;
     z-index: 10;
     left: 50%;
     top: 15%;
     transform: translateX(-50%);
     &.card-collector-container--active {
-      opacity: 1;
+      pointer-events: auto;
     }
     @include pad {
       top: 16%;
@@ -177,5 +205,17 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
+  .cards-bg {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: .666s ease-in-out;
+    &.cards-bg--active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 </style>

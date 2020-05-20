@@ -129,7 +129,7 @@ $red: #ba4141;
       padding: 0 5%;
     }
     @include pc {
-      padding: 0 100px;
+      padding: 150px 100px;
     }
   }
   .chapter-banner__left {

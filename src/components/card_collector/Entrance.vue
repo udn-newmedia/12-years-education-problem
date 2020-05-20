@@ -40,7 +40,6 @@ export default {
 
   &.entrance--disabled {
     pointer-events: none;
-    border: solid 1px red;
   }
 }
 </style>

@@ -10,10 +10,6 @@ export default new Vuex.Store({
     cardCollector: {
       currentIndex: 1,
       enterMode: false,
-      loopRow: 0,
-      loopCol: 0,
-      dragX: 0,
-      dragY: 0,
     },
   },
   mutations: {
@@ -29,18 +25,6 @@ export default new Vuex.Store({
     updatedCardEnterMode(state, payload) {
       state.cardCollector.enterMode = payload;
     },
-    updatedLoopRow(state, payload) {
-      state.cardCollector.loopRow = payload;
-    },
-    updatedLoopCol(state, payload) {
-      state.cardCollector.loopCol = payload;
-    },
-    updatedDragX(state, payload) {
-      state.cardCollector.dragX = payload;
-    },
-    updatedDragY(state, payload) {
-      state.cardCollector.dragY = payload;
-    }
   },
   actions: {
     updatedIsEnterCollector(context, payload) {
@@ -55,11 +39,5 @@ export default new Vuex.Store({
     updatedCardEnterMode(context, payload) {
       context.commit('updatedCardEnterMode', payload);
     },
-    updatedDragX(context, payload) {
-      context.commit('updatedLoopRow', payload);
-    },
-    updatedDragY(context, payload) {
-      context.commit('updatedLoopCol', payload);
-    }
   },
 });

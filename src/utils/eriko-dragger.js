@@ -1,18 +1,8 @@
+import { addStartListener, addMoveListener, addEndListener } from './utils/listener.js';
+
 function setEvent(ed, inputEvent, type) {
   if (typeof inputEvent !== 'function') console.error('inputEvent must be a funciton.');
   else ed[type] = inputEvent;
-
-  console.log(type);
-}
-
-function listenerRegister(ed, evtReg, evtType) {
-  if (!ed[evtType]) console.error(`${evtType} event cannot be empty.`);
-  if (!ed.container) console.error('container cannot be empty.');
-  if (!ed.target) console.error('target cannot be empty.');
-  if (!ed.execute || !ed[evtType]) return;
-
-  const edInfo = '123';
-  ed.container.addEventListener(evtReg, ed[evtType].bind(event, edInfo), true);
 }
 
 class ErikoDragger {
@@ -22,9 +12,20 @@ class ErikoDragger {
     this.startEvent = option ? option.startEvent : null;
     this.moveEvent = option ? option.moveEvent : null;
     this.endEvent = option ? option.endEvent : null;
+    this.edInfo = {
+      dragStartCoord: null,
+      dragMovingCoord: null,
+      dragEndCoord: null,
+      dragPreviousCoord: null,
+      dragDirection: null,
+      dragDistance: 0,
+      dragStartTimestamp: null,
+      dragDuration: 0,
+      dragTranslate: null,
+    }
   }
 
-  get execute() {
+  get readyStatus() {
     return this.container && this.target;
   }
 
@@ -46,17 +47,10 @@ class ErikoDragger {
     setEvent(this, inputEvent, 'endEvent');
   }
 
-  addStartListener() {
-    listenerRegister(this, 'touchstart', 'startEvent');
-    listenerRegister(this, 'dragstart', 'startEvent');
-  }
-  addMoveListener() {
-    listenerRegister(this, 'touchmove', 'moveEvent');
-    listenerRegister(this, 'drag', 'moveEvent');
-  }
-  addEndListener() {
-    listenerRegister(this, 'touchend', 'endEvent');
-    listenerRegister(this, 'dragover', 'endEvent');
+  launch() {
+    addStartListener(this);
+    addMoveListener(this);
+    addEndListener(this);
   }
 }
 

@@ -8,7 +8,6 @@ section.card-collector#card-collector(v-if="isDataReady" :class="{ 'card-collect
   Exit
   div.card-collector__entrance-container(:class="{ 'card-collector-container--active': $store.state.isEnterMainContent }")
     Entrance
-  //- div#dragger.dragger(:class="{ 'dragger--disabled': false }")
 </template>
 
 <script>
@@ -60,13 +59,9 @@ export default {
       }
     }, 30),
     handleDragStartEvent(edInfo) {
-      const evt = event;
       console.log(edInfo);
-      console.log('start:' + evt);
     },
     handleDragMovingEvent() {
-      const evt = event;
-      evt.preventDefault();
       if (!this.ticking) {
         window.requestAnimationFrame(() => {
           // console.log('moving' + evt);
@@ -76,8 +71,7 @@ export default {
       this.ticking = true;
     },
     handleDragEndEvent() {
-      // const evt = event;
-      // console.log('end' + evt);
+
     },
     initialData() {
       axios.get('./data/collector_config.json')
@@ -96,15 +90,13 @@ export default {
           this.initialDragger();
         })
     },
-    initialDragger() {
-      this.ed.setContainer('#card-collector');
-      this.ed.setTarget('#cards');
-      this.ed.setStartEvent(this.handleDragStartEvent);
-      this.ed.setMoveEvent(this.handleDragMovingEvent);
-      this.ed.setEndEvent(this.handleDragEndEvent);
-      this.ed.addStartListener();
-      this.ed.addMoveListener();
-      this.ed.addEndListener();
+    async initialDragger() {
+      await this.ed.setContainer('#card-collector');
+      await this.ed.setTarget('#cards');
+      await this.ed.setStartEvent(this.handleDragStartEvent);
+      await this.ed.setMoveEvent(this.handleDragMovingEvent);
+      await this.ed.setEndEvent(this.handleDragEndEvent);
+      await this.ed.launch();
     }
   },
   mounted() {
@@ -118,7 +110,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .card-collector {
   position: relative;
   width: 100%;

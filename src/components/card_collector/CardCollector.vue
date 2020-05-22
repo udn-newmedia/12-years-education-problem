@@ -59,24 +59,25 @@ export default {
         if(this.shouldCollectorHide) this.shouldCollectorHide = false;
       }
     }, 30),
-    handleDragStartEvent() {
+    handleDragStartEvent(edInfo) {
       const evt = event;
-      console.log('start' + evt);
+      console.log(edInfo);
+      console.log('start:' + evt);
     },
     handleDragMovingEvent() {
       const evt = event;
       evt.preventDefault();
       if (!this.ticking) {
         window.requestAnimationFrame(() => {
-          console.log('moving' + evt);
+          // console.log('moving' + evt);
           this.ticking = false;
         });
       }
       this.ticking = true;
     },
     handleDragEndEvent() {
-      const evt = event;
-      console.log('end' + evt);
+      // const evt = event;
+      // console.log('end' + evt);
     },
     initialData() {
       axios.get('./data/collector_config.json')

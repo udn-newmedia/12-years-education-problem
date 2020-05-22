@@ -11,7 +11,8 @@ function listenerRegister(ed, evtReg, evtType) {
   if (!ed.target) console.error('target cannot be empty.');
   if (!ed.execute || !ed[evtType]) return;
 
-  ed.container.addEventListener(evtReg, ed[evtType], true);
+  const edInfo = '123';
+  ed.container.addEventListener(evtReg, ed[evtType].bind(event, edInfo), true);
 }
 
 class ErikoDragger {

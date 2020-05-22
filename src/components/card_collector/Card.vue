@@ -9,7 +9,6 @@
 <script>
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
 import _debounce from 'lodash.debounce';
-import { Draggable } from '@shopify/draggable';
 
 const CARDS_ROW = {
   mob: 5,
@@ -44,7 +43,6 @@ export default {
   },
   data() {
     return {
-      dr: new Draggable(),
       dragTranslate: null,
       dataAccumulatedDragTranslate: {
         x: 0,
@@ -124,33 +122,13 @@ export default {
       const t = parseTranslate(mirroTranslate);
       this.dragTranslate = t;
     }, 100),
-    initialDraggable() {
-      const container = document.querySelector(`#card-${this.pos}`);
-      const draggable = new Draggable(container, {
-        draggable: '.card-cover',
-        placedTimeout: 800,
-      });
-
-      function preventDefaultTouchmove() {
-        event.preventDefault();
-      }
-      draggable.on('mirror:created', () => {
-        container.addEventListener('touchmove', preventDefaultTouchmove)
-      });
-      draggable.on('mirror:move', this.handleDraggableMove);
-      draggable.on('drag:over', () => {
-        container.removeEventListener('touchmove', preventDefaultTouchmove)
-      });
-    },
   },
   mounted() {
-    this.initialDraggable();
-
-    if (+this.pos === 1) {
-      const MAX_ROW = CARDS_ROW[this.DEVICE];
-      this.loop.row += MAX_ROW;
-      this.loop.col += Math.ceil(this.$parent.CARD_AMOUNT.need[this.DEVICE] / MAX_ROW);
-    }
+    // if (+this.pos === 1) {
+    //   const MAX_ROW = CARDS_ROW[this.DEVICE];
+    //   this.loop.row += MAX_ROW;
+    //   this.loop.col += Math.ceil(this.$parent.CARD_AMOUNT.need[this.DEVICE] / MAX_ROW);
+    // }
   },
 }
 </script>

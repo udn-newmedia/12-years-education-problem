@@ -1,10 +1,6 @@
 <template lang="pug">
-section.card-collector#card-collector(:class="{ 'card-collector--disabled': shouldCollectorHide }")
-  div.card-collector__bg
-    div#bg-stars
-    div#bg-stars-2
-    div#bg-stars-3
-  article.cards#cards(v-if="isDataReady")
+section.card-collector#card-collector(v-if="isDataReady" :class="{ 'card-collector--disabled': shouldCollectorHide }")
+  article.cards#cards
     .cards-bg(:class="{ 'cards-bg--active': $store.state.cardCollector.enterMode }" :style="{ backgroundImage: cardsBg}")
     Card(
       v-for="i in CARD_AMOUNT.need[DEVICE]" :key="i" :pos="i" :index="(i - 1)%CARD_AMOUNT.own+1" :expection="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_AMOUNT.own+1]].expection" :truth="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_AMOUNT.own+1]].truth"
@@ -16,9 +12,10 @@ section.card-collector#card-collector(:class="{ 'card-collector--disabled': shou
 </template>
 
 <script>
-import ErikoScroller from '@/utils/scrollEvent.js';
-import _debounce from 'lodash.debounce';
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
+import { ErikoScroller } from 'eriko-scroller.js';
+import { ErikoDragger } from '@/utils/eriko-dragger.js';
+import _debounce from 'lodash.debounce';
 import axios from 'axios';
 
 import Card from '@/components/card_collector/Card.vue';
@@ -35,7 +32,9 @@ export default {
   },
   data() {
     return {
+      ticking: false,
       es: new ErikoScroller(),
+      ed: new ErikoDragger(),
       shouldCollectorHide: false,
       isDataReady: false,
       CARD_AMOUNT: null,
@@ -60,6 +59,25 @@ export default {
         if(this.shouldCollectorHide) this.shouldCollectorHide = false;
       }
     }, 30),
+    handleDragStartEvent() {
+      const evt = event;
+      console.log('start' + evt);
+    },
+    handleDragMovingEvent() {
+      const evt = event;
+      evt.preventDefault();
+      if (!this.ticking) {
+        window.requestAnimationFrame(() => {
+          console.log('moving' + evt);
+          this.ticking = false;
+        });
+      }
+      this.ticking = true;
+    },
+    handleDragEndEvent() {
+      const evt = event;
+      console.log('end' + evt);
+    },
     initialData() {
       axios.get('./data/collector_config.json')
         .then(res => {
@@ -73,7 +91,20 @@ export default {
         .then(() => {
           this.isDataReady = true;
         }) 
+        .then(() => {
+          this.initialDragger();
+        })
     },
+    initialDragger() {
+      this.ed.setContainer('#card-collector');
+      this.ed.setTarget('#cards');
+      this.ed.setStartEvent(this.handleDragStartEvent);
+      this.ed.setMoveEvent(this.handleDragMovingEvent);
+      this.ed.setEndEvent(this.handleDragEndEvent);
+      this.ed.addStartListener();
+      this.ed.addMoveListener();
+      this.ed.addEndListener();
+    }
   },
   mounted() {
     this.initialData();
@@ -86,23 +117,17 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~/style/stars.sass';
 
 .card-collector {
   position: relative;
   width: 100%;
   height: 100vh;
   transition: 1s;
-  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
 
   &.card-collector--disabled {
     visibility: hidden;
   }
-  .card-collector__bg {
-    position: relative;
-    pointer-events: none;
-    height: 0;
-  }
+
   .card-collector__entrance-container {
     position: absolute;
     pointer-events: none;
@@ -142,24 +167,4 @@ export default {
     }
   }
 }
-
-// #dragger.dragger {
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-//   width: 100%;
-//   height: 100%;
-//   @include clean-tap;
-//   &.dragger--disabled {
-//     pointer-events: none;
-//   }
-// }
-
-// .draggable-source--is-dragging {
-//   display: none;
-// }
-
-// .draggable-mirror {
-//   transition: 0.5s;
-// }
 </style>

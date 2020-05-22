@@ -6,7 +6,8 @@ section.cover#cover
     footer.cover__preamble__arrow-container
       NmdArrow(iconColor="#cecece")
   article.cover__block.cover__gate#gate
-    div.cover-collector-container(:class="{'cover-collector-container--fixed': !$store.state.isEnterMainContent}")
+    div.cover__collector-container(:class="{'cover__collector-container--fixed': !$store.state.isEnterMainContent}")
+      Background
       CardCollector
     div.cover__gate__bg(:class="{ 'cover__gate__bg--enlarge': !$store.state.isEnterMainContent }")
       header.cover__gate__title
@@ -16,14 +17,16 @@ section.cover#cover
 </template>
 
 <script>
-import ErikoScroller from '@/utils/scrollEvent.js';
+import { ErikoScroller } from 'eriko-scroller.js';
 
+import Background from '@/components/card_collector/Background.vue';
 import CardCollector from '@/components/card_collector/CardCollector.vue';
 import NmdArrow from '@/components/_common/pinhead/NmdArrow.vue';
 
 export default {
   name: 'Cover',
   components: {
+    Background,
     CardCollector,
     NmdArrow,
   },
@@ -173,14 +176,15 @@ export default {
   }
 }
 
-.cover-collector-container {
+.cover__collector-container {
   position: absolute;
   z-index: 5;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  &.cover-collector-container--fixed {
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  &.cover__collector-container--fixed {
     position: fixed;
   }
 }

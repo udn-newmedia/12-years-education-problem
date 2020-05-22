@@ -158,7 +158,7 @@ div#app(:class="{'app-in-cover': $store.state.isEnterCollector}")
 
 <script>
 import { sendGaMethods } from '@/mixins/masterBuilder.js';
-import ErikoScroller from '@/utils/scrollEvent.js';
+import { ErikoScroller } from 'eriko-scroller.js';
 
 /* Header */
 /* Header */

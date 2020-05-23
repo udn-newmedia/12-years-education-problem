@@ -12,14 +12,14 @@ class ErikoDragger {
     this.startEvent = option ? option.startEvent : null;
     this.moveEvent = option ? option.moveEvent : null;
     this.endEvent = option ? option.endEvent : null;
+    this.debounce = option ? option.debouce : 300;
     this.edInfo = {
       dragStartCoord: null,
       dragMovingCoord: null,
-      dragEndCoord: null,
-      dragPreviousCoord: null,
       dragDirection: null,
+      dragDirectionFromPrev: null,
       dragDistance: 0,
-      dragStartTimestamp: null,
+      dragDistanceFromPrev: 0,
       dragDuration: 0,
       dragTranslate: null,
     }

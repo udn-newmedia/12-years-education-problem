@@ -1,5 +1,11 @@
 import { defaultStartEvent, defaultMovingEvent, defaultEndEvent } from './defaultEvent.js';
 
+let ticking_s = false;
+let ticking_m = false;
+let ticking_e = false;
+let debounceStart = 0;
+let debounceCurrent = 0;
+
 function registerListener(ed, evtType, evtPhase) {
   if (!ed.container) console.error('container cannot be empty.');
   if (!ed.target) console.error('target cannot be empty.');
@@ -9,30 +15,58 @@ function registerListener(ed, evtType, evtPhase) {
   switch (evtPhase) {
     case 'startEvent':
       eventBundle = () => {
+        debounceStart = new Date().getTime();
+        if (ed[evtPhase]) {
+          if (!ticking_s) {
+            window.requestAnimationFrame(() => {
+              ed[evtPhase].bind(event, ed.edInfo)();
+              ticking_s = false;
+            });
+          }
+          ticking_s = true;
+        }
         defaultStartEvent(ed, evtType);
-        if (ed[evtPhase]) ed[evtPhase].bind(event, ed.edInfo)();        
       }
       break;  
 
     case 'moveEvent':
       eventBundle = () => {
-        if (ed[evtPhase]) ed[evtPhase].bind(event, ed.edInfo)();        
-        defaultMovingEvent(ed, evtType);
+        debounceCurrent = new Date().getTime();
+        if (debounceCurrent - debounceStart > ed.debounce) {
+          if (ed[evtPhase]) {
+            if (!ticking_m) {
+              window.requestAnimationFrame(() => {
+                ed[evtPhase].bind(event, ed.edInfo)();
+                ticking_m = false;
+              });
+            }
+            ticking_m = true;
+          }
+          defaultMovingEvent(ed, evtType);
+          debounceStart = debounceCurrent;
+        }
       }
       break;
 
     case 'endEvent':
       eventBundle = () => {
-        if (ed[evtPhase]) ed[evtPhase].bind(event, ed.edInfo)();        
+        if (ed[evtPhase]) {
+          if (!ticking_e) {
+            window.requestAnimationFrame(() => {
+              ed[evtPhase].bind(event, ed.edInfo)();
+              ticking_e = false;
+            });
+          }
+          ticking_e = true;
+        }
         defaultEndEvent(ed, evtType);
       }
       break;
   
-    default:
-      break;
+    default: break;
   }
 
-  ed.container.addEventListener(evtType, eventBundle, true);
+  ed.container.addEventListener(evtType, eventBundle, { passive: true });
 }
 
 function addStartListener(dr) {

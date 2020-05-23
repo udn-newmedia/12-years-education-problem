@@ -31,7 +31,6 @@ export default {
   },
   data() {
     return {
-      ticking: false,
       es: new ErikoScroller(),
       ed: new ErikoDragger(),
       shouldCollectorHide: false,
@@ -59,19 +58,13 @@ export default {
       }
     }, 30),
     handleDragStartEvent(edInfo) {
-      console.log(edInfo);
+      console.log('start:', edInfo);
     },
-    handleDragMovingEvent() {
-      if (!this.ticking) {
-        window.requestAnimationFrame(() => {
-          // console.log('moving' + evt);
-          this.ticking = false;
-        });
-      }
-      this.ticking = true;
+    handleDragMovingEvent(edInfo) {
+      console.log('move:', edInfo, edInfo.dragDirection);
     },
-    handleDragEndEvent() {
-
+    handleDragEndEvent(edInfo) {
+      console.log('end:', edInfo);
     },
     initialData() {
       axios.get('./data/collector_config.json')
@@ -111,11 +104,12 @@ export default {
 
 <style lang="scss">
 .card-collector {
+  touch-action: none;
   position: relative;
   width: 100%;
   height: 100vh;
   transition: 1s;
-
+  @include clean-tap;
   &.card-collector--disabled {
     visibility: hidden;
   }

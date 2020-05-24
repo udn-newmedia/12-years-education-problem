@@ -13,7 +13,7 @@ section.card-collector#card-collector(v-if="isDataReady" :class="{ 'card-collect
 <script>
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
 import { ErikoScroller } from 'eriko-scroller.js';
-import { ErikoDragger } from '@/utils/eriko-dragger.js';
+import { ErikoDragger } from 'eriko-dragger.js';
 import _debounce from 'lodash.debounce';
 import axios from 'axios';
 
@@ -61,7 +61,7 @@ export default {
       console.log('start:', edInfo);
     },
     handleDragMovingEvent(edInfo) {
-      console.log('move:', edInfo, edInfo.dragDirection);
+      console.log('move:', edInfo, edInfo.dragTranslate);
     },
     handleDragEndEvent(edInfo) {
       console.log('end:', edInfo);
@@ -97,6 +97,7 @@ export default {
     this.es.addScrollEvent(this.handleScrollEvent);
   },
   destroyed() {
+    this.ed.removeDragger();
     this.es.removeScrollEvent(this.handleScrollEvent);
   },
 }

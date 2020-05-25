@@ -1,12 +1,31 @@
 <template lang="pug">
-section.card-collector#card-collector(v-if="isDataReady" :class="{ 'card-collector--disabled': shouldCollectorHide }")
-  article.cards#cards
-    .cards-bg(:class="{ 'cards-bg--active': $store.state.cardCollector.enterMode }" :style="{ backgroundImage: cardsBg}")
+section.card-collector#card-collector(
+  v-if="isDataReady"
+  :class="{ 'card-collector--disabled': shouldCollectorHide }"
+)
+  article.cards#cards(
+    :class="{'cards--on-dragging': isOnDragging}"
+  )
+    .cards-bg(
+      :class="{'cards-bg--active': $store.state.cardCollector.enterMode}"
+      :style="{backgroundImage: cardsBg}"
+    )
     Card(
-      v-for="i in CARD_AMOUNT.need[DEVICE]" :key="i" :pos="i" :index="(i - 1)%CARD_AMOUNT.own+1" :expection="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_AMOUNT.own+1]].expection" :truth="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_AMOUNT.own+1]].truth"
+      v-for="i in CARD_NEED"
+      :key="i"
+      :pos="i"
+      :index="(i - 1)%CARD_OWN+1"
+      :expection="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_OWN+1]].expection"
+      :truth="CARDS_INFO[CARDS_INFO_TABLE[(i - 1)%CARD_OWN+1]].truth"
+      :translate="cardsTranslate"
+      :cardsRow="CARDS_ROW"
+      :cardSize="CARD_SIZE"
+      :cardNeed="CARD_NEED"
     )
   Exit
-  div.card-collector__entrance-container(:class="{ 'card-collector-container--active': $store.state.isEnterMainContent }")
+  div.card-collector__entrance-container(
+    :class="{'card-collector-container--active': $store.state.isEnterMainContent }"
+  )
     Entrance
 </template>
 
@@ -20,6 +39,11 @@ import axios from 'axios';
 import Card from '@/components/card_collector/Card.vue';
 import Entrance from '@/components/card_collector/Entrance.vue';
 import Exit from '@/components/card_collector/Exit.vue';
+
+const CARD_SIZE = {
+  mob: 0.28,
+  pc: 0.32,
+}
 
 export default {
   name: 'CardCollector',
@@ -35,19 +59,36 @@ export default {
       ed: new ErikoDragger(),
       shouldCollectorHide: false,
       isDataReady: false,
-      CARD_AMOUNT: null,
+      CARD_OWN: null,
       CARDS_INFO_TABLE: null,
-      CARDS_INFO: null
+      CARDS_INFO: null,
+      CARDS_ROW: 5,
+      cardsTranslate: {x: 0, y: 0},
+      isOnDragging: false,
     }
   },
   computed: {
     DEVICE() {
       return this.isMob ? 'mob' : 'pc';
     },
+    CARD_NEED() {
+      const col = Math.ceil(window.innerWidth / (window.innerHeight * (this.CARD_SIZE * 0.75) + 0.03));
+
+      return (
+        (col % 2 === 0 ? col + 2 : col + 1)
+
+        *
+
+        (this.CARDS_ROW) 
+      );
+    },
+    CARD_SIZE() {
+      return CARD_SIZE[this.DEVICE];
+    },
     cardsBg() {
       const url = require(`~/img/illus/bg/${this.$store.state.cardCollector.currentIndex}/${this.isMob ? 'mob' : 'pc'}.jpg`);
       return `url(${url})`;
-    }
+    },
   },
   methods: {
     handleScrollEvent: _debounce(function() {
@@ -58,20 +99,31 @@ export default {
       }
     }, 30),
     handleDragStartEvent(edInfo) {
-      console.log('start:', edInfo);
+      this.isOnDragging = true;
+      edInfo
     },
     handleDragMovingEvent(edInfo) {
-      console.log('move:', edInfo, edInfo.dragTranslate);
+      if (!edInfo.dragTranslate) return;
+      if (
+        edInfo.dragTranslate.x === this.cardsTranslate.x &&
+        edInfo.dragTranslate.y === this.cardsTranslate.y
+      ) return;
+
+      this.cardsTranslate = {
+        x: edInfo.dragTranslate.x || this.cardsTranslate.x,
+        y: edInfo.dragTranslate.y || this.cardsTranslate.y
+      };
     },
     handleDragEndEvent(edInfo) {
-      console.log('end:', edInfo);
+      this.isOnDragging = false;
+      edInfo
     },
     initialData() {
       axios.get('./data/collector_config.json')
         .then(res => {
           if (res.request.readyState && res.status === 200) {
             const json = JSON.parse(JSON.stringify(res.data));
-            this.CARD_AMOUNT = json.CARD_AMOUNT;
+            this.CARD_OWN = json.CARD_OWN;
             this.CARDS_INFO_TABLE = json.CARDS_INFO_TABLE;
             this.CARDS_INFO = json.CARDS_INFO;
           }
@@ -89,6 +141,7 @@ export default {
       await this.ed.setStartEvent(this.handleDragStartEvent);
       await this.ed.setMoveEvent(this.handleDragMovingEvent);
       await this.ed.setEndEvent(this.handleDragEndEvent);
+      await this.ed.setDebounce(100);
       await this.ed.launch();
     }
   },
@@ -140,6 +193,13 @@ export default {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  ::selection {
+    background: transparent;
+    cursor: pointer;
+  }
+  .cards--on-dragging {
+    cursor: pointer;
+  }
   @include clean-tap;
   .cards-bg {
     position: relative;

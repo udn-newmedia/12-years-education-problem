@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      es: new ErikoScroller()
+      es: new ErikoScroller(),
     }
   },
   computed: {
@@ -41,24 +41,24 @@ export default {
         type: 'w',
         top: 1,
         bottom: 1,
-        enterEvent: this.handleGateEnterEvent,
-        aboveEvent: this.handleGateAboveEvent,
+        enterEvent: this.nothing,
+        leaveEvent: this.handleGateLeaveEvent,
       }
     },
   },
   methods: {
-    handleGateEnterEvent() {
-      if(!this.$store.state.isEnterCollector) this.$store.dispatch('updatedIsEnterCollector', true);
+    handleGateLeaveEvent() {
+      // this.$store.dispatch('updatedIsEnterCollector', true)
     },
-    handleGateAboveEvent() {
-      if(!this.$store.state.isEnterCollector) this.$store.dispatch('updatedIsEnterCollector', true);
+    nothing() {
+
     },
   },
   mounted() {
-    this.es.addObservableScrollEvent('#cover', this.gateEventOption);
+    this.es.addObservableScrollEvent('#cover', this.gateEventOption, true);
   },
   destroyed() {
-    this.es.removeObservableScrollEvent('#cover', this.gateEventOption);
+    this.es.removeObservableScrollEvent('#cover', this.gateEventOption, true);
   },
 }
 </script>

@@ -1,24 +1,22 @@
 <template lang="pug">
-  figure.card(:id="'card-' + pos" :class="{'card--active': false}" :style="{transform, top: `${position.top}px`, left: `${position.left}px`}" @click="handleCardClick()")
+  figure.card(
+    :id="'card-' + pos"
+    :class="{'card--active': false, 'card--show': shouldCardShow}"
+    :style="{transform, top: `${position.top}px`, left: `${position.left}px`}"
+    @click="handleCardClick()"
+  )
     div.card-cover
-      img(:src="imgSrc")
+      img(
+        :id="'card-cover-' + pos"
+        :src="imgSrc"
+      )
       //- p {{expection}}
       //- p {{truth}}
 </template>
 
 <script>
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
-import _debounce from 'lodash.debounce';
-
-const CARDS_ROW = {
-  mob: 5,
-  pc: 4
-};
-const CARD_SIZE = {
-  mob: 0.28,
-  pc: 0.32,
-  // pc: 0.25
-}
+// import _debounce from 'lodash.debounce';
 
 export default {
   name: 'Card',
@@ -39,10 +37,26 @@ export default {
     truth: {
       type: String,
       required: true
-    }
+    },
+    translate: {
+      type: Object,
+    },
+    cardNeed: {
+      type: Number,
+      default: 0
+    },
+    cardSize: {
+      type: Number,
+      default: 0
+    },
+    cardsRow: {
+      type: Number,
+      default: 0
+    },
   },
   data() {
     return {
+      shouldCardShow: true,
       dragTranslate: null,
       dataAccumulatedDragTranslate: {
         x: 0,
@@ -55,25 +69,15 @@ export default {
     }
   },
   computed: {
-    DEVICE() {
-      return this.isMob ? 'mob' : 'pc';
-    },
     imgSrc() {
       return require(`~/img/illus/card/${this.index}.jpg`);
     },
     transform() {
-      const translate = `translate(${this.translate.x}px,${this.translate.y}px)`
-      return translate;
-    },
-    translate() {
-      return {
-        x: this.dataAccumulatedDragTranslate.x,
-        y: this.dataAccumulatedDragTranslate.y
-      };
+      return `translate(${this.dataAccumulatedDragTranslate.x}px,${this.dataAccumulatedDragTranslate.y}px)`;
     },
     position() {
-      const MAX_ROW = CARDS_ROW[this.DEVICE] || 6;
-      const MAX_COL = Math.ceil(this.$parent.CARD_AMOUNT.need[this.DEVICE] / MAX_ROW) || 3;
+      const MAX_ROW = this.cardsRow;
+      const MAX_COL = Math.ceil(this.cardNeed / MAX_ROW);
       const row = (this.pos - 1) % MAX_ROW;
       const col = (Math.floor((this.pos - 1) / MAX_ROW)) % MAX_COL;
 
@@ -82,8 +86,8 @@ export default {
         else return 0;
       }
       const translateXOffset = 0.3;
-      const CARD_WIDTH = window.innerHeight * CARD_SIZE[this.DEVICE] * 0.75;
-      const CARD_HEIGHT = window.innerHeight * CARD_SIZE[this.DEVICE];
+      const CARD_WIDTH = window.innerHeight * this.cardSize * 0.75;
+      const CARD_HEIGHT = window.innerHeight * this.cardSize;
 
       const initialTop = (row - translateYOffset(col) + this.loop.row) * CARD_HEIGHT;
       const initialLeft = (col - translateXOffset + this.loop.col) * CARD_WIDTH;
@@ -95,13 +99,16 @@ export default {
     },
   },
   watch: {
-    dragTranslate: {
+    translate: {
       handler(value) {
         const dragTranslateX = value ? value.x : 0;
         const dragTranslateY = value ? value.y : 0;
-        this.dataAccumulatedDragTranslate.x += dragTranslateX * 1;
-        this.dataAccumulatedDragTranslate.y += dragTranslateY * 1;
+        this.dataAccumulatedDragTranslate.x += dragTranslateX * 1.25;
+        this.dataAccumulatedDragTranslate.y += dragTranslateY * 1.25;
+
+        this.handleSpecCardLoop();
       },
+      deep: true
     }
   },
   methods: {
@@ -109,26 +116,33 @@ export default {
       this.$store.dispatch('updatedCardCurrendIndex', this.index);
       this.$store.dispatch('updatedCardEnterMode', true);
     },
-    handleDraggableMove: _debounce(function(evt) {
-      const vm = this;
-      const mirroTranslate = evt.data.mirror.style.transform;
-      function parseTranslate(t) {
-        const temp = t.split(',');
-        const tempX = temp[0].split('(')[1].split('px')[0];
-        const tempY = temp[1].split('px')[0];
+    handleSpecCardLoop() {
+      setTimeout(() => {
+        const bounds = this.$el.getBoundingClientRect();
+        const padding = window.innerHeight * 0.025;
+        const extension = 1.5;
+        const ch = (window.innerHeight * this.cardSize - padding) * extension;
+        const cw = (window.innerHeight * this.cardSize * 0.75 - padding) * extension;
+        const MAX_ROW = this.cardsRow;
 
-        return { x: +tempX - vm.position.left, y: +tempY - vm.position.top }
-      }
-      const t = parseTranslate(mirroTranslate);
-      this.dragTranslate = t;
-    }, 100),
-  },
-  mounted() {
-    // if (+this.pos === 1) {
-    //   const MAX_ROW = CARDS_ROW[this.DEVICE];
-    //   this.loop.row += MAX_ROW;
-    //   this.loop.col += Math.ceil(this.$parent.CARD_AMOUNT.need[this.DEVICE] / MAX_ROW);
-    // }
+        const topCondition = bounds.top < -ch;
+        const bottomCondition = bounds.bottom > window.innerHeight + ch;
+        const leftCondition = bounds.left < -cw;
+        const rightCondition = bounds.right > window.innerWidth + cw;
+
+        if (topCondition) this.loop.row += MAX_ROW;
+        if (bottomCondition) this.loop.row -= MAX_ROW;
+        if (leftCondition) this.loop.col += Math.ceil(this.cardNeed / MAX_ROW);
+        if (rightCondition) this.loop.col -= Math.ceil(this.cardNeed / MAX_ROW);
+
+        if (topCondition || bottomCondition || leftCondition || rightCondition) {
+          this.shouldCardShow = false;
+          setTimeout(() => {
+            this.shouldCardShow = true;
+          }, 5);
+        }
+      }, 700);
+    },
   },
 }
 </script>
@@ -142,25 +156,40 @@ export default {
   width: 21vh;
   height: 28vh;
   margin: 0;
-  padding: 3vh;
+  padding: 2.5vh;
+  opacity: 0;
+  transition: transform .750s;
   cursor: pointer;
   @include clean-tap;
-
-  transition: transform .666s;
-
   @include pc {
     width: 24vh;
     height: 32vh;
   }
 
-  &.card--active {}
+  &.card--show {
+    animation: fade-in .333s ease-in-out forwards;
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
+  &.card--active {
+
+  }
   .card-cover {
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     img {
       height: 100%;
+      width: 100%;
       object-fit: cover;
+      object-position: center;
     }
   }
 }

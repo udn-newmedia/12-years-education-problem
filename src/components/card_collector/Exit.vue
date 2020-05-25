@@ -22,7 +22,7 @@ export default {
 
 <style lang="scss" scoped>
 .exit-container {
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;

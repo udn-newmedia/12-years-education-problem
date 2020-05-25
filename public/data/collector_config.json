@@ -1,11 +1,5 @@
 {
-  "CARD_AMOUNT": {
-    "need": {
-      "pc": 32,
-      "mob": 25
-    },
-    "own": 18
-  },
+  "CARD_OWN": 18,
   "CARDS_INFO_TABLE": {
     "1": 1,
     "2": 2,

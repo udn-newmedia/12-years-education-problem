@@ -29,6 +29,15 @@
   @include clean-tap;
 }
 
+@mixin clean-drag {
+  user-select: none;
+  user-drag: none; 
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 @mixin layout-margin {
   margin: 24px 0;
   @media screen and (min-width: 1025px) {

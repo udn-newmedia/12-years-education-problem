@@ -14,6 +14,7 @@ export default {
     handleExit() {
       if(!this.$store.state.isEnterMainContent) this.$store.dispatch('updatedIsEnterMainContent', true);
       if(this.$store.state.isEnterCollector) this.$store.dispatch('updatedIsEnterCollector', false);
+      if(this.$store.state.isFocusOneCard) this.$store.dispatch('updatedIsFocusOneCard', false);
       window.scroll(0, 0);
     },
   },

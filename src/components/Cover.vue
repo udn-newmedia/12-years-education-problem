@@ -10,7 +10,8 @@ section.cover#cover
       NmdArrow(iconColor="#cecece")
   article.cover__block.cover__gate#gate
     div.cover__collector-container(:class="{'cover__collector-container--fixed': !$store.state.isEnterMainContent}")
-      Background
+      StarBackground
+      WhiteBackground
       CardCollector
     div.cover__gate__bg(:class="{ 'cover__gate__bg--enlarge': !$store.state.isEnterMainContent }")
       header.cover__gate__title
@@ -22,16 +23,18 @@ section.cover#cover
 <script>
 import { ErikoScroller } from 'eriko-scroller.js';
 
-import Background from '@/components/card_collector/Background.vue';
 import CardCollector from '@/components/card_collector/CardCollector.vue';
 import NmdArrow from '@/components/_common/pinhead/NmdArrow.vue';
+import StarBackground from '@/components/StarBackground.vue';
+import WhiteBackground from '@/components/WhiteBackground.vue';
 
 export default {
   name: 'Cover',
   components: {
-    Background,
     CardCollector,
     NmdArrow,
+    StarBackground,
+    WhiteBackground,
   },
   data() {
     return {
@@ -44,7 +47,7 @@ export default {
       return {
         type: 'w',
         top: 1,
-        bottom: 1,
+        bottom: 1.2,
         enterEvent: this.handleGateEnterEvent,
         leaveEvent: this.handleGateLeaveEvent,
       }
@@ -131,7 +134,7 @@ export default {
       background-image: url('../assets/img/gate/cover_door_mob.png');
       background-size: cover;
       background-position: center top;
-      transition: 2s ease;
+      transition: 2s .5s ease;
       transform-origin: center 20%;
       @include pc {
         background-position: center;
@@ -144,7 +147,7 @@ export default {
         transform-origin: center 25%;
         @include pc {
           transform: scale(10);
-          transform-origin: center center;
+          transform-origin: center;
         }
       }
     }

@@ -68,7 +68,7 @@ export default {
   width: 100%;
   height: 100%;
   cursor: pointer;
-  transform: translateY(-100%);
+  transform: translateY(-101%);
   transition: .333s ease-in-out;
   @include clean-btn;
   &.page-back-top__btn--active {

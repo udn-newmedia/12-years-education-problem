@@ -6,7 +6,7 @@
   )
     div.card__cover(v-show="!isCardActive" @click="handleCardClick()")
       img(
-        :id="'card__cover-' + pos"
+        :id="`card__cover-${pos}`"
         :src="imgSrc"
         draggable=false
       )
@@ -14,6 +14,8 @@
 
 <script>
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
+
+const dragShiftRatio = 1.25;
 
 export default {
   name: 'Card',
@@ -66,9 +68,13 @@ export default {
     cardClassAttr() {
       return {
         'card--active': this.isCardActive,
-        'card--show': this.shouldCardShow,
+        'card--show': this.shouldCardShow && !this.$store.state.isFocusOneCard,
+        'card--hide': this.isCardActive && this.$store.state.isFocusOneCard,
         'card--ondragging': this.isOnDragging,
-        'card--no-transition': !this.isCardActive && this.$store.state.isFocusOneCard
+        'card--no-transition': !this.isCardActive && this.$store.state.isFocusOneCard,
+        'card--rotate-animation-1': this.$store.state.isEnterMainContent && this.index % 3 === 0,
+        'card--rotate-animation-2': this.$store.state.isEnterMainContent && this.index % 3 === 1,
+        'card--rotate-animation-3': this.$store.state.isEnterMainContent && this.index % 3 === 2,
       };
     },
     isFocusOneCard() {
@@ -81,12 +87,23 @@ export default {
       return require(`~/img/illus/card/${this.index}.jpg`);
     },
     transform() {
-      if (this.isCardActive) {
-        // TODO: 移動到中間
-        return 'translate(-50%,-50%)';
-      } else {
-        return `translate(${this.dataAccumulatedDragTranslate.x}px,${this.dataAccumulatedDragTranslate.y}px)`;
+      if (this.isCardActive && !this.$store.state.isEnterMainContent) {
+        const x = this.dataAccumulatedDragTranslate.x + (window.innerWidth * 0.5 - (this.$el.getBoundingClientRect().left + window.innerHeight * this.cardSize * 0.75 * 0.5));
+        const y = this.dataAccumulatedDragTranslate.y + (window.innerHeight * 0.5 - (this.$el.getBoundingClientRect().top + 120));
+        return `translate(${x}px,${y}px) scale(0) rotateY(-180deg)`;
       }
+      else if(this.$store.state.isEnterMainContent) {
+        // TODO: ramdon offset
+        const OffsetDistance = this.isMob ? 80 : 120;
+        const ramdonOffsetX = (Math.random() * 2 - 1) * OffsetDistance - (this.isMob ? 20 : 40);
+        const ramdonOffsetY = (Math.random() * 2 - 1) * OffsetDistance - (this.isMob ? 150 : 60);
+        const ramdonScale = Math.random() * 0.6;
+
+        const x = this.dataAccumulatedDragTranslate.x + window.innerWidth * 0.5 - this.$el.getBoundingClientRect().left + ramdonOffsetX;
+        const y = this.dataAccumulatedDragTranslate.y + (window.innerHeight * 0.5 - this.$el.getBoundingClientRect().top) + ramdonOffsetY;
+        return `translate(${x}px,${y}px) scale(${ramdonScale})`;
+      }
+      else return `translate(${this.dataAccumulatedDragTranslate.x}px,${this.dataAccumulatedDragTranslate.y}px)`;
     },
     position() {
       function translateYOffset(col) {
@@ -98,7 +115,6 @@ export default {
       const MAX_COL = Math.ceil(this.cardNeed / MAX_ROW);
       const row = (this.pos - 1) % MAX_ROW;
       const col = (Math.floor((this.pos - 1) / MAX_ROW)) % MAX_COL;
-
 
       const translateXOffset = 0.3;
       const CARD_WIDTH = window.innerHeight * this.cardSize * 0.75;
@@ -118,8 +134,8 @@ export default {
       handler(value) {
         const dragTranslateX = value ? value.x : 0;
         const dragTranslateY = value ? value.y : 0;
-        this.dataAccumulatedDragTranslate.x += dragTranslateX * 0.5;
-        this.dataAccumulatedDragTranslate.y += dragTranslateY * 0.5;
+        this.dataAccumulatedDragTranslate.x += dragTranslateX * dragShiftRatio;
+        this.dataAccumulatedDragTranslate.y += dragTranslateY * dragShiftRatio;
 
         // Observable
         this.handleSpecCardLoop();
@@ -185,35 +201,104 @@ export default {
   margin: 0;
   padding: 2.5vh;
   opacity: 0;
-  transition: transform .750s;
+  transition: transform .666s;
   cursor: pointer;
   @include clean-tap;
   @include pc {
     width: 24vh;
     height: 32vh;
   }
-
   &.card--show {
     animation: fade-in .333s ease-in-out forwards;
+  }
+  &.card--active {
+    opacity: 1;
+    transition: .333s;
+    background-color: #ffffff;
+  }
+  &.card--hide {
+    animation: fade-out .333s ease-in-out forwards;
+  }
+  &.card--no-transition {
+    pointer-events: none;
+    transition: 0 !important;
+    animation: fade-out .333s ease-in-out forwards;
   }
   &.card--ondragging {
     pointer-events: none;
   }
-  &.card--active {
-    opacity: 1 !important;
-    width: 90vw;
-    height: 320px;
-    transition: .750s;
-    @include pc {
-      width: 640px;
-      height: 320px;
+  &.card--rotate-animation-1 {
+    opacity: 1;
+    animation: rotate-animation-1 linear 10s infinite;
+  }
+  &.card--rotate-animation-2 {
+    opacity: 1;
+    animation: rotate-animation-2 15s infinite;
+  }
+  &.card--rotate-animation-3 {
+    opacity: 1;
+    animation: rotate-animation-3 20s infinite;
+  }
+  @keyframes rotate-animation-1 {
+    0% {
+      transform-origin: 0 0;
+    }
+    25% {
+      transform-origin: 5% 3%;
+    }
+    50% {
+      transform-origin: 6% 5%;
+
+    }
+    75% {
+      transform-origin: 3% 3%;
+
+    }
+    100% {
+      transform-origin: 0 0;
     }
   }
-  &.card--no-transition {
-    pointer-events: none;
-    transition: 0s !important;
-    animation: fade-out .333s ease-in-out forwards;
+  @keyframes rotate-animation-2 {
+    0% {
+      transform-origin: 0 0;
+    }
+    25% {
+      transform-origin: -5% -3%;
+    }
+    50% {
+      transform-origin: -6% -5%;
+
+    }
+    75% {
+      transform-origin: -3% -3%;
+
+    }
+    100% {
+      transform-origin: 0 0;
+    }
   }
+  @keyframes rotate-animation-3 {
+    0% {
+      transform-origin: 0 0;
+    }
+    25% {
+      transform-origin: -7% -0%;
+    }
+    50% {
+      transform-origin: -6% -7%;
+
+    }
+    75% {
+      transform-origin: -2% -6%;
+
+    }
+    100% {
+      transform-origin: 0 0;
+    }
+  }
+
+
+
   .card__cover {
     position: relative;
     width: 100%;
@@ -224,15 +309,13 @@ export default {
       width: 100%;
       object-fit: cover;
       object-position: center;
-      user-select: none;
-      user-drag: none; 
-      -moz-user-select: none;
-      -webkit-user-drag: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
+      @include clean-drag;
     }
   }
 }
+
+
+
 @keyframes fade-in {
   from {
     opacity: 0;

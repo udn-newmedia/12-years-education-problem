@@ -5,39 +5,44 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isEnterCollector: true,
+    isInFirstView: true,
+    isEnterCollector: false,
     isEnterMainContent: false,
-    cardCollector: {
-      currentIndex: 1,
-      enterMode: false,
-    },
+    isFocusOneCard: false,
+    cardActiveIndex: -1,
   },
   mutations: {
+    updatedIsInFirstView(state, payload) {
+      state.isInFirstView = payload;
+    },
     updatedIsEnterCollector(state, payload) {
       state.isEnterCollector = payload;
     },
     updatedIsEnterMainContent(state, payload) {
       state.isEnterMainContent = payload;
     },
-    updatedCardCurrendIndex(state, payload) {
-      state.cardCollector.currentIndex = payload;
+    updatedIsFocusOneCard(state, payload) {
+      state.isFocusOneCard = payload;
     },
-    updatedCardEnterMode(state, payload) {
-      state.cardCollector.enterMode = payload;
+    updatedCardActiveIndex(state, payload) {
+      state.cardActiveIndex = payload;
     },
   },
   actions: {
+    updatedIsInFirstView(context, payload) {
+      context.commit('updatedIsInFirstView', payload);
+    },
     updatedIsEnterCollector(context, payload) {
       context.commit('updatedIsEnterCollector', payload);
     },
     updatedIsEnterMainContent(context, payload) {
       context.commit('updatedIsEnterMainContent', payload);
     },
-    updatedCardCurrendIndex(context, payload) {
-      context.commit('updatedCardCurrendIndex', payload);
+    updatedIsFocusOneCard(context, payload) {
+      context.commit('updatedIsFocusOneCard', payload);
     },
-    updatedCardEnterMode(context, payload) {
-      context.commit('updatedCardEnterMode', payload);
+    updatedCardActiveIndex(context, payload) {
+      context.commit('updatedCardActiveIndex', payload);
     },
   },
 });

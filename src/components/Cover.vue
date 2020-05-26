@@ -1,6 +1,9 @@
 <template lang="pug">
 section.cover#cover
-  article.cover__block.cover__preamble(v-show="!$store.state.isEnterMainContent")
+  article.cover__block.cover__preamble(
+    v-if="$store.state.isInFirstView"
+    :style="{opacity: preambleOpacity}"
+  )
     slot(name="prembleTitle")
     slot(name="prembleText")
     footer.cover__preamble__arrow-container
@@ -33,6 +36,7 @@ export default {
   data() {
     return {
       es: new ErikoScroller(),
+      preambleOpacity: 1,
     }
   },
   computed: {
@@ -41,24 +45,27 @@ export default {
         type: 'w',
         top: 1,
         bottom: 1,
-        enterEvent: this.nothing,
+        enterEvent: this.handleGateEnterEvent,
         leaveEvent: this.handleGateLeaveEvent,
       }
     },
   },
   methods: {
-    handleGateLeaveEvent() {
-      // this.$store.dispatch('updatedIsEnterCollector', true)
+    handleGateEnterEvent() {
+      const totalHeight = document.body.scrollHeight - window.innerHeight;
+      this.preambleOpacity = (totalHeight - window.pageYOffset) / totalHeight;
     },
-    nothing() {
-
+    handleGateLeaveEvent() {
+      this.$store.dispatch('updatedIsInFirstView', false)
+      this.$store.dispatch('updatedIsEnterCollector', true)
+      this.es.removeObservableScrollEvent('#cover', this.gateEventOption);
     },
   },
   mounted() {
-    this.es.addObservableScrollEvent('#cover', this.gateEventOption, true);
+    this.es.addObservableScrollEvent('#cover', this.gateEventOption);
   },
   destroyed() {
-    this.es.removeObservableScrollEvent('#cover', this.gateEventOption, true);
+    this.es.removeObservableScrollEvent('#cover', this.gateEventOption);
   },
 }
 </script>
@@ -80,19 +87,7 @@ export default {
     align-items: center;
     color: #ffffff;
     padding-bottom: 10vh;
-    background-color: #00000000;
-    opacity: 0;
-    animation: fade-in .1s .2s forwards;
-    @keyframes fade-in {
-      from {
-        background-color: #00000000;
-        opacity: 0;
-      }
-      to {
-        background-color: #00000088;
-        opacity: 1;
-      }
-    }
+    background-color: #000000aa;
 
     h2 {
       font-family: source-han-seri-tc;

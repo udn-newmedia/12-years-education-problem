@@ -1,5 +1,7 @@
 <template lang="pug">
-div#app(:class="{'app-in-cover': $store.state.isEnterCollector}")
+div#app(
+  :class="{'app-in-first-view': $store.state.isInFirstView, 'app-in-collector': $store.state.isEnterCollector}"
+)
   Cover
     h2(slot="prembleTitle") 新課綱上路一年<br>理想與現實的差距<br>有多大？
     p(slot="prembleText") 一張張美好明亮的圖卡，<br>是台灣教育對孩子的期待，<br>點按圖卡看現況與理想之間，<br>還有多大的差距。
@@ -158,7 +160,6 @@ div#app(:class="{'app-in-cover': $store.state.isEnterCollector}")
 
 <script>
 import { sendGaMethods } from '@/mixins/masterBuilder.js';
-import { ErikoScroller } from 'eriko-scroller.js';
 
 /* Header */
 /* Header */
@@ -200,30 +201,18 @@ export default {
     PageFooter,
     PageBackTop,
   },
-  data() {
-    return {
-      es: new ErikoScroller()
-    }
-  },
-  computed: {
-    observableScrollEventOption() {
-      return {
-        type: 'w',
-        top: 0,
-        bottom: 0,
-        enterEvent: this.handleEnterEvent,
-        leaveEvent: this.handleLeaveEvent,
-      }
-    },
-  },
 }
 </script>
 
 <style lang="scss">
 #app {
-  &.app-in-cover {
+  &.app-in-first-view {
     overflow: hidden;
-    height: 200vh;
+    max-height: 200vh;
+  }
+  &.app-in-collector {
+    overflow: hidden;
+    max-height: 100vh;
   }
 }
 main {

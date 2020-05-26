@@ -28,7 +28,7 @@ export default {
   padding-bottom: 160%;
   color: #93acff;
   text-align: center;
-  background-color: #031128;
+  background-color: transparent;
   cursor: pointer;
   @include clean-btn;
   @include pad {

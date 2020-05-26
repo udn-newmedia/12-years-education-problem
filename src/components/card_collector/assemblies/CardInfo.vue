@@ -139,5 +139,6 @@ export default {
 
 .--show-opacity {
   opacity: 1 !important;
+  transition: .333s .666s;
 }
 </style>

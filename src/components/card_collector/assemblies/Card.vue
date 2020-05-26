@@ -209,20 +209,20 @@ export default {
     height: 32vh;
   }
   &.card--show {
-    animation: fade-in .333s ease-in-out forwards;
+    animation: fade-in .666s ease-in-out forwards;
   }
   &.card--active {
     opacity: 1;
-    transition: .333s;
+    transition: .5s;
     background-color: #ffffff;
   }
   &.card--hide {
-    animation: fade-out .333s ease-in-out forwards;
+    animation: fade-out .666s ease-in-out forwards;
   }
   &.card--no-transition {
     pointer-events: none;
     transition: 0 !important;
-    animation: fade-out .333s ease-in-out forwards;
+    animation: fade-out .666  s ease-in-out forwards;
   }
   &.card--ondragging {
     pointer-events: none;

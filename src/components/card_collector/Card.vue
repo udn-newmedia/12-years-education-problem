@@ -1,22 +1,19 @@
 <template lang="pug">
   figure.card(
     :id="'card-' + pos"
-    :class="{'card--active': false, 'card--show': shouldCardShow}"
-    :style="{transform, top: `${position.top}px`, left: `${position.left}px`}"
-    @click="handleCardClick()"
+    :class="cardClassAttr"
+    :style="{transform, left: `${position.left}px`, top: `${position.top}px`}"
   )
-    div.card-cover
+    div.card__cover(v-show="!isCardActive" @click="handleCardClick()")
       img(
-        :id="'card-cover-' + pos"
+        :id="'card__cover-' + pos"
         :src="imgSrc"
+        draggable=false
       )
-      //- p {{expection}}
-      //- p {{truth}}
 </template>
 
 <script>
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
-// import _debounce from 'lodash.debounce';
 
 export default {
   name: 'Card',
@@ -28,14 +25,6 @@ export default {
     },
     pos: {
       type: Number,
-      required: true
-    },
-    expection: {
-      type: String,
-      required: true
-    },
-    truth: {
-      type: String,
       required: true
     },
     translate: {
@@ -53,10 +42,15 @@ export default {
       type: Number,
       default: 0
     },
+    isOnDragging: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
       shouldCardShow: true,
+      isCardActive: false,
       dragTranslate: null,
       dataAccumulatedDragTranslate: {
         x: 0,
@@ -69,22 +63,43 @@ export default {
     }
   },
   computed: {
+    cardClassAttr() {
+      return {
+        'card--active': this.isCardActive,
+        'card--show': this.shouldCardShow,
+        'card--ondragging': this.isOnDragging,
+        'card--no-transition': !this.isCardActive && this.$store.state.isFocusOneCard
+      };
+    },
+    isFocusOneCard() {
+      return this.$store.state.isFocusOneCard;
+    },
+    isEnterMainContent() {
+      return this.$store.state.isEnterMainContent;
+    },
     imgSrc() {
       return require(`~/img/illus/card/${this.index}.jpg`);
     },
     transform() {
-      return `translate(${this.dataAccumulatedDragTranslate.x}px,${this.dataAccumulatedDragTranslate.y}px)`;
+      if (this.isCardActive) {
+        // TODO: 移動到中間
+        return 'translate(-50%,-50%)';
+      } else {
+        return `translate(${this.dataAccumulatedDragTranslate.x}px,${this.dataAccumulatedDragTranslate.y}px)`;
+      }
     },
     position() {
+      function translateYOffset(col) {
+        if (col % 2 === 1) return 0.5;
+        else return 0;
+      }
+
       const MAX_ROW = this.cardsRow;
       const MAX_COL = Math.ceil(this.cardNeed / MAX_ROW);
       const row = (this.pos - 1) % MAX_ROW;
       const col = (Math.floor((this.pos - 1) / MAX_ROW)) % MAX_COL;
 
-      function translateYOffset(col) {
-        if (col % 2 === 1) return 0.5;
-        else return 0;
-      }
+
       const translateXOffset = 0.3;
       const CARD_WIDTH = window.innerHeight * this.cardSize * 0.75;
       const CARD_HEIGHT = window.innerHeight * this.cardSize;
@@ -103,18 +118,31 @@ export default {
       handler(value) {
         const dragTranslateX = value ? value.x : 0;
         const dragTranslateY = value ? value.y : 0;
-        this.dataAccumulatedDragTranslate.x += dragTranslateX * 1.25;
-        this.dataAccumulatedDragTranslate.y += dragTranslateY * 1.25;
+        this.dataAccumulatedDragTranslate.x += dragTranslateX * 0.5;
+        this.dataAccumulatedDragTranslate.y += dragTranslateY * 0.5;
 
+        // Observable
         this.handleSpecCardLoop();
       },
       deep: true
+    },
+    isFocusOneCard: {
+      handler(value) {
+        if (!value) this.isCardActive = false;
+      }
+    },
+    isEnterMainContent: {
+      handler() {
+        // if (value)
+        // TODO: 卡片集中到中間
+      }
     }
   },
   methods: {
     handleCardClick() {
-      this.$store.dispatch('updatedCardCurrendIndex', this.index);
-      this.$store.dispatch('updatedCardEnterMode', true);
+      this.isCardActive = !this.isCardActive;
+      this.$store.dispatch('updatedIsFocusOneCard', true);
+      this.$store.dispatch('updatedCardActiveIndex', this.index);
     },
     handleSpecCardLoop() {
       setTimeout(() => {
@@ -147,12 +175,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .card {
   position: absolute;
   left: 0;
   top: 0;
-  // overflow: hidden;
   width: 21vh;
   height: 28vh;
   margin: 0;
@@ -168,19 +195,26 @@ export default {
 
   &.card--show {
     animation: fade-in .333s ease-in-out forwards;
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
+  }
+  &.card--ondragging {
+    pointer-events: none;
   }
   &.card--active {
-
+    opacity: 1 !important;
+    width: 90vw;
+    height: 320px;
+    transition: .750s;
+    @include pc {
+      width: 640px;
+      height: 320px;
+    }
   }
-  .card-cover {
+  &.card--no-transition {
+    pointer-events: none;
+    transition: 0s !important;
+    animation: fade-out .333s ease-in-out forwards;
+  }
+  .card__cover {
     position: relative;
     width: 100%;
     height: 100%;
@@ -190,7 +224,29 @@ export default {
       width: 100%;
       object-fit: cover;
       object-position: center;
+      user-select: none;
+      user-drag: none; 
+      -moz-user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
     }
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 </style>

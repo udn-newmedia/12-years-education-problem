@@ -1,5 +1,5 @@
 <template lang="pug">
-  footer.exit-container
+  footer.exit-container(:class="{'exit-container--active': $store.state.isEnterCollector}")
     p.small 無效預算？揭露108課綱五大亂象
     button(@click="handleExit") Exit
 </template>
@@ -26,12 +26,17 @@ export default {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 72px;
   color: #93acff;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #031128;
   opacity: 0.9;
+  transform: translateY(100%);
+  transition: .750s;
+}
+.exit-container--active {
+  transform: translateY(0);
 }
 </style>

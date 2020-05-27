@@ -1,5 +1,9 @@
 <template lang="pug">
-  button.entrance(:class="{'entrance--disabled': !$store.state.isEnterMainContent}" @click="handleEntrance")
+  button.entrance(
+    :class="{'entrance--disabled': !$store.state.isEnterMainContent}" @click="handleEntrance"
+    aria-label="return project"
+    name="return project"
+  )
 </template>
 
 <script>

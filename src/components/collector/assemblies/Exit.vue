@@ -1,15 +1,32 @@
 <template lang="pug">
-  footer.exit-container(:class="{'exit-container--active': $store.state.isEnterCollector}")
+  footer.exit-container(
+    :class="{'exit-container--active': $store.state.isEnterCollector || $store.state.isFocusOneCard}"
+  )
     p.small 無效預算？揭露108課綱五大亂象
-    button(@click="handleExit") Exit
+    button.exit-button(
+      @click="handleExit"
+      aria-label="enter project"
+      name="enter project"
+    )
+      NmdButton(
+        textColor="#93acff"
+        bgColor="#93acff"
+        theme="outlined"
+        border="m"
+        size="s"
+      ) 進專題
 </template>
 
 <script>
 import { sendGaMethods } from '@/mixins/masterBuilder.js';
+import NmdButton from '@/components/_common/pinhead/NmdButton.vue';
 
 export default {
   name: 'Exit',
   mixins: [sendGaMethods],
+  components: {
+    NmdButton
+  },
   methods: {
     handleExit() {
       if(!this.$store.state.isEnterMainContent) this.$store.dispatch('updatedIsEnterMainContent', true);
@@ -39,5 +56,10 @@ export default {
 }
 .exit-container--active {
   transform: translateY(0);
+}
+.exit-button {
+  width: 100px;
+  margin-left: 8px;
+  @include clean-btn;
 }
 </style>

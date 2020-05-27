@@ -2,20 +2,36 @@
 article.card.cards-info(
     :class="{'cards-info--active': $store.state.isFocusOneCard}"
   )
-    button.card__back-interface__close-bottom(@click="handleCardCloseClick()") close
-    button.card__back-interface__next-bottom(@click="handleCardNextClick()") next
-    button.card__back-interface__prev-bottom(@click="handleCardPrevClick()") prev
+    
+    button.card__back-interface__close-bottom(@click="handleCardCloseClick()")
+      Cross
+    button.card__back-interface__next-bottom(@click="handleCardNextClick()")
+      Arrow(v-if="deviceType === 'pc'" dir="right")
+      Arrow(v-else dir="up")
+    button.card__back-interface__prev-bottom(@click="handleCardPrevClick()")
+      Arrow(v-if="deviceType === 'pc'" dir="left")
+      Arrow(v-else dir="down")
     p.card__back-interface__expection(
       :class="{'--show-opacity': $store.state.isFocusOneCard}"
-    ) 新課綱希望...<br>{{cardInfo.expection}}
+    ) 台灣教育期待：...<br>{{cardInfo.expection}}
     p.card__back-interface__truth(
       :class="{'--show-opacity': $store.state.isFocusOneCard}"
     ) 現實是：{{cardInfo.truth}}
 </template>
 
 <script>
+import { autoResize_3 } from '@/mixins/masterBuilder.js';
+
+import Arrow from './Arrow.vue';
+import Cross from './Cross.vue';
+
 export default {
   name: 'CardInfo',
+  mixins: [autoResize_3],
+  components: {
+    Arrow,
+    Cross,
+  },
   props: {
     CARDS_INFO: {
       type: Object,
@@ -64,7 +80,7 @@ export default {
   pointer-events: none;
   z-index: 5000;
   left: 50%;
-  top: 50%;
+  top: 45%;
   width: 90vw;
   height: 320px;
   padding: 40px;
@@ -76,7 +92,12 @@ export default {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0);
   transition: .333s;
+  @include pad {
+    width: 80vw;
+    padding: 40px 80px;
+  }
   @include pc {
+    top: 50%;
     width: 640px;
     height: 320px;
     padding: 80px;
@@ -107,16 +128,23 @@ export default {
   }
   .card__back-interface__close-bottom {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    padding: 8px;
+    @include clean-btn;
   }
   .card__back-interface__next-bottom {
     position: absolute;
     left: 50%;
-    top: 0;
+    top: -16px;
+    width: 24px;
+    height: 24px;
     transform: translate(-50%, -100%);
+    @include clean-btn;
     @include pc {
-      right: 0;
+      right: -16px;
       top: 50%;
       left: auto;
       transform: translate(100%, -50%);
@@ -125,10 +153,13 @@ export default {
   .card__back-interface__prev-bottom {
     position: absolute;
     left: 50%;
-    bottom: 0;
+    bottom: -16px;
+    width: 24px;
+    height: 24px;
     transform: translate(-50%, 100%);
+    @include clean-btn;
     @include pc {
-      left: 0;
+      left: -16px;
       top: 50%;
       bottom: auto;
       transform: translate(-100%, -50%);

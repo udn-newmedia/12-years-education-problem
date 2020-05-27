@@ -15,8 +15,6 @@
 <script>
 import { autoResize_2 } from '@/mixins/masterBuilder.js';
 
-const dragShiftRatio = 1.25;
-
 export default {
   name: 'Card',
   mixins: [autoResize_2],
@@ -86,6 +84,9 @@ export default {
     imgSrc() {
       return require(`~/img/illus/card/${this.index}.jpg`);
     },
+    dragShiftRatio() {
+      return this.isMob ? 1.25 : 0.75;
+    },
     transform() {
       if (this.isCardActive && !this.$store.state.isEnterMainContent) {
         const x = this.dataAccumulatedDragTranslate.x + (window.innerWidth * 0.5 - (this.$el.getBoundingClientRect().left + window.innerHeight * this.cardSize * 0.75 * 0.5));
@@ -93,7 +94,6 @@ export default {
         return `translate(${x}px,${y}px) scale(0) rotateY(-180deg)`;
       }
       else if(this.$store.state.isEnterMainContent) {
-        // TODO: ramdon offset
         const OffsetDistance = this.isMob ? 80 : 120;
         const ramdonOffsetX = (Math.random() * 2 - 1) * OffsetDistance - (this.isMob ? 20 : 40);
         const ramdonOffsetY = (Math.random() * 2 - 1) * OffsetDistance - (this.isMob ? 150 : 60);
@@ -134,8 +134,8 @@ export default {
       handler(value) {
         const dragTranslateX = value ? value.x : 0;
         const dragTranslateY = value ? value.y : 0;
-        this.dataAccumulatedDragTranslate.x += dragTranslateX * dragShiftRatio;
-        this.dataAccumulatedDragTranslate.y += dragTranslateY * dragShiftRatio;
+        this.dataAccumulatedDragTranslate.x += dragTranslateX * this.dragShiftRatio;
+        this.dataAccumulatedDragTranslate.y += dragTranslateY * this.dragShiftRatio;
 
         // Observable
         this.handleSpecCardLoop();
@@ -147,12 +147,6 @@ export default {
         if (!value) this.isCardActive = false;
       }
     },
-    isEnterMainContent: {
-      handler() {
-        // if (value)
-        // TODO: 卡片集中到中間
-      }
-    }
   },
   methods: {
     handleCardClick() {
@@ -193,6 +187,7 @@ export default {
 
 <style lang="scss">
 .card {
+  will-change: transform;
   position: absolute;
   left: 0;
   top: 0;

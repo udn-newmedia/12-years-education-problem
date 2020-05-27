@@ -14,16 +14,16 @@ section.cover#cover
       WhiteBackground
       CardCollector
     div.cover__gate__bg(:class="{ 'cover__gate__bg--enlarge': !$store.state.isEnterMainContent }")
-      header.cover__gate__title
-        slot(name="gate")
-        div.cover__gate__title__arrow-container
-          NmdArrow(iconColor="#cecece")
+    header.cover__gate__title(v-if="$store.state.isEnterMainContent")
+      slot(name="gate")
+      div.cover__gate__title__arrow-container
+        NmdArrow(iconColor="#cecece")
 </template>
 
 <script>
 import { ErikoScroller } from 'eriko-scroller.js';
 
-import CardCollector from '@/components/card_collector/CardCollector.vue';
+import CardCollector from '@/components/collector/CardCollector.vue';
 import NmdArrow from '@/components/_common/pinhead/NmdArrow.vue';
 import StarBackground from '@/components/StarBackground.vue';
 import WhiteBackground from '@/components/WhiteBackground.vue';
@@ -133,11 +133,13 @@ export default {
       padding-bottom: 5vh;
       background-image: url('../assets/img/gate/cover_door_mob.png');
       background-size: cover;
-      background-position: center top;
+      background-position: center;
       transition: 2s .5s ease;
-      transform-origin: center 20%;
+      transform-origin: center 25%;
+      @include pad {
+        background-image: url('../assets/img/gate/cover_door_pad.png');
+      }
       @include pc {
-        background-position: center;
         background-image: url('../assets/img/gate/cover_door_pc.png');
         transform-origin: center;
       }
@@ -151,24 +153,38 @@ export default {
         }
       }
     }
-    .cover__gate__title {
-      position: relative;
-      .cover__gate__title__arrow-container {
-        position: relative;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+  }
+  .cover__gate__title {
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    bottom: 90px;
+    width: 100%;
+    text-align: center;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fade-in .5s 2s forwards;
+    @include pad {
+      bottom: 150px;
     }
-    h1 {
-      font-family: source-han-seri-tc;
-      font-weight: bold;
-      margin-bottom: 32px;
-      br:nth-child(2) {
-        @include pc {
-          display: none;
-        }
+    @include pc {
+      bottom: 80px;
+    }
+    .cover__gate__title__arrow-container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  h1 {
+    font-family: source-han-seri-tc;
+    font-weight: bold;
+    margin-bottom: 32px;
+    br:nth-child(2) {
+      @include pc {
+        display: none;
       }
     }
   }

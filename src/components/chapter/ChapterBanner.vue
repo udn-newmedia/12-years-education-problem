@@ -1,5 +1,5 @@
 <template lang="pug">
-article.chapter-banner-container
+article.chapter-banner-container(:data-cb-index="index")
   div.chapter-banner
     div.chapter-banner__left
       h3 {{problem}}
@@ -41,6 +41,10 @@ export default {
   name: 'ChapterBanner',
   mixins: [autoResize_3, selectSrcMethod_3],
   props: {
+    index: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -76,7 +80,10 @@ export default {
       }
 
       return null;
-    }
+    },
+    fadeInFlag() {
+      return this.$store.state.chapterBannerActiveList[this.index];
+    },
   }
 }
 </script>

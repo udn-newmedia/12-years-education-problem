@@ -43,11 +43,11 @@ import { ErikoDragger } from 'eriko-dragger.js';
 import _debounce from 'lodash.debounce';
 import axios from 'axios';
 
-import Card from '@/components/card_collector/assemblies/Card.vue';
-import CardBg from '@/components/card_collector/assemblies/CardBg.vue';
-import CardInfo from '@/components/card_collector/assemblies/CardInfo.vue';
-import Entrance from '@/components/card_collector/assemblies/Entrance.vue';
-import Exit from '@/components/card_collector/assemblies/Exit.vue';
+import Card from '@/components/collector/assemblies/Card.vue';
+import CardBg from '@/components/collector/assemblies/CardBg.vue';
+import CardInfo from '@/components/collector/assemblies/CardInfo.vue';
+import Entrance from '@/components/collector/assemblies/Entrance.vue';
+import Exit from '@/components/collector/assemblies/Exit.vue';
 
 const CARD_SIZE = {
   mob: 0.28,

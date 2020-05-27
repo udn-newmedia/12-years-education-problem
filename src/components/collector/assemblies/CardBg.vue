@@ -35,6 +35,7 @@ export default {
 
 <style lang="scss" scoped>
 .card-bg {
+  will-change: transform;
   position: absolute;
   left: 0;
   top: 0;

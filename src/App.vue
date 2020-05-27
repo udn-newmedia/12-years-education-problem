@@ -10,7 +10,11 @@ div#app(
     Abstract
       article.article
         p 影響全台240萬學生的108課綱（十二年國教課程綱要）2019年正式實施，是台灣近20年最大一波教育改革，政府砸入大筆經費推動—教育預算年年增，是僅次社會保險、國防的第三大支出；2020年12年國教「專屬」預算高達341億，超越外交部、文化部等部會整年度預算。
-        ColumnOne(:srcMob="require('~/img/chart/data_m.svg')" :srcPad="require('~/img/chart/data_m.svg')" :srcPc="require('~/img/chart/data.svg')")
+        ColumnOne(
+          :srcMob="require('~/img/chart/data_m.svg')"
+          :srcPad="require('~/img/chart/data_m.svg')"
+          :srcPc="require('~/img/chart/data.svg')"
+        )
         p 但新課綱的推動，並沒有因為高額預算就一帆風順。被教育界喻為20年大躍進的這場新教改，《聯合報》追蹤調查，教學現場出現五大亂象，讓課綱精神變了調：
         ChaosList
           table
@@ -41,7 +45,15 @@ div#app(
                 td
                   p 偏鄉小校開課難
     Chapter(:id="1")
-      ChapterBanner(title="掛羊頭賣狗肉^_^明星高中帶頭亂" question="彈性課程、多元選修" ideal="國、高中開設多元課程，讓學生探索興趣" truth="學校掛羊頭賣狗肉，課程變學科加課，喪失多元精神" problem="亂象一" cover="cover1.jpg")
+      ChapterBanner(
+        index="1"
+        title="掛羊頭賣狗肉^_^明星高中帶頭亂"
+        question="彈性課程、多元選修"
+        ideal="國、高中開設多元課程，讓學生探索興趣"
+        truth="學校掛羊頭賣狗肉，課程變學科加課，喪失多元精神"
+        problem="亂象一"
+        cover="cover1.jpg"
+      )
       article.article
         p 教育部統計，<strong>大學休退學人數每年超過9萬人，許多人的理由都是「志趣不合」</strong>，對自己辛苦考上的大學科系毫無興趣。為解決學生的「無動力」，新課綱重大變革之一，是在高中增加多元選修，讓學生享用「課程自助餐」。但上路不到一年，就傳出許多學校「掛羊頭賣狗肉」，<strong>以選修之名行補課、加課之實</strong>，抹殺制度美意。
         h2 計畫亂寫被退 課程換湯不換藥
@@ -53,9 +65,22 @@ div#app(
         p 新竹高中校長李明昭表示，其實很多學校都面臨類似狀況，因為108學年教育部並未要求學校在多元課程上需開設一定的課數，隔年卻忽然要求，因此學校緊急邀集老師設計出多元選修課程，並補回教育部獲通過。
         p 台南一中校長廖財固則說，108年各高中在普通班的課程計畫幾乎都被退，只有4所學校通過；主要是剛實施，學校想法和委員所期待的有落差，因此才會有這麼多學校被退。
         p 國教署副署長戴淑芬表示，課程計畫雖是「備查」，但新課綱上路，教育部和審查委員期待各校能以現有師資來落實課綱精神，才會加上建議，請學校重新審視，希望透過不斷對話，來引導學校更加理解新課綱。
-      NextBanner(cost="11~15億" description="教育部107年到109年每年平均花11億到15億，辦理高中職優質化輔助方案、多元選修、彈性學習之高中特色課程及高職務實致用特色課程" next="亂象二 |  補教搶賺焦慮財")
+      NextBanner(
+        index="1"
+        cost="11~15億"
+        description="教育部107年到109年每年平均花11億到15億，辦理高中職優質化輔助方案、多元選修、彈性學習之高中特色課程及高職務實致用特色課程"
+        next="亂象二 |  補教搶賺焦慮財"
+      )
     Chapter(:id="2")
-      ChapterBanner(title="新名詞讓家長慌^_^補教趁勢賺課綱財" question="核心素養、高中學習歷程檔案" ideal="不要「標準化」的工廠學生" truth="補教換新名詞開班，用「公式」幫孩子鋪路"  problem="亂象二" cover="cover2.jpg")
+      ChapterBanner(
+        index="2"
+        title="新名詞讓家長慌^_^補教趁勢賺課綱財"
+        question="核心素養、高中學習歷程檔案"
+        ideal="不要「標準化」的工廠學生"
+        truth="補教換新名詞開班，用「公式」幫孩子鋪路"
+        problem="亂象二"
+        cover="cover2.jpg"
+      )
       article.article
         p 創下超高收視率的韓劇《SKY castle 天空之城》中，高社經地位的父母為了孩子升學，找來專職「學習顧問」，不僅量身規劃課程，還貼心安排學生參加各種志工活動、社團、競賽，打造完美成績與豐富的申請資料。類似的場景，也正在台灣上演。
         h2 財源1：<br>學習歷程輔導班 天空之城台灣版？
@@ -63,7 +88,11 @@ div#app(
         p 教育部、大學招生委員會聯合會雖曾多次舉辦說明會，但面對未知卻影響重大的學習歷程，家長和學生仍舊相當憂慮。教育部高中優質化計畫曾對高中生做調查，「學習歷程檔案」是令學生最煩惱的一個項目。
         p 黃姓家長孩子今年高一，是第一屆新課綱學生，他常督促孩子準備學習檔案，又是蒐集資料、又是拍照存證，做很多但充滿無奈：「到底有沒有效？沒有人知道，只能悶著頭做」。
         p 有補教業者看準家長焦慮、學生迷惘，開出學習歷程輔導班，<strong>主打一對一輔導、量身規畫課外競賽與活動，還建置300個職人老師的資料庫</strong>，要幫學生打造出最適合目標科系的學習歷程檔案。課程採「包套制」，報名時間不限，但補習班保證安排學生完成3項多元表現成果，一套價位雖高達4萬，仍吸引學生蜂擁而至，有學生國三一畢業就來報名，許多來自明星私校。
-        ColumnOne(:srcMob="require('~/img/pic/mob/pic2.jpg')" :srcPad="require('~/img/pic/mob/pic2.jpg')" :srcPc="require('~/img/pic/pc/pic2.jpg')") 補教業者針對學生、家長需求，開出學習歷程輔導課，安排專責學習顧問指導學生累積學習歷程。圖／取自補習班網路簡章
+        ColumnOne(
+          :srcMob="require('~/img/pic/mob/pic2.jpg')"
+          :srcPad="require('~/img/pic/mob/pic2.jpg')"
+          :srcPc="require('~/img/pic/pc/pic2.jpg')"
+        ) 補教業者針對學生、家長需求，開出學習歷程輔導課，安排專責學習顧問指導學生累積學習歷程。圖／取自補習班網路簡章
         p 舉例而言，甄戰學習顧問中心的學習歷程輔導班內設有30多個顧問老師，一對一輔導學生參加合適的社團、營隊、檢定；套裝課程也規畫學生完成3項門檻較高的任務，比如參與奧林匹亞科學競賽、取得專利等，目標高一到高二上每學期各完成一項，高三專心拼考試。
         h2 財源2：<br>新名詞「素養」 小學開始補
         p 周六上午10點，地點是台中西屯區百大佳華補習班。8個小學三、四年級學生排列成ㄇ字形，在老師的帶領下讀三國演義、山海經、魯賓遜漂流記等中外經典，提早養成108課綱強調的閱讀素養。
@@ -71,23 +100,52 @@ div#app(
         p 按百大佳華補習班課程簡章，素養班從小三開到國二，教學內容從文學故事進階到國學常識。國語文補教經驗12年、擔任這堂國小素養班老師的林聿安說，多數仍認為閱讀不用補，不過升學考題在改變，就連數學考題都仰賴閱讀，看不懂就無法作答。<strong>該班已成功開班兩年，她預期這股需求會逐漸提升</strong>。
         p 全國家長團體聯盟理事長彭淑燕分析，「素養」這個名詞太新，家長難免擔心學校沒準備好，或是各校對素養的解讀有差異，乾脆把小孩送往以素養為名的補習班；全國教師工會總聯合會理事長張旭政說，<strong>多數人對素養的理解就是考題變長</strong>，顯示素養的核心概念仍待溝通。
         p 不少學校教師和家長團體也擔憂，「什麼都補」將惡化學生教育資源、城鄉差距，核心素養、學習歷程的初衷也恐變調，但一名補教業者坦言，<strong>補教像教改的一面鏡，隨時因應「需求」調整服務。如今各種補教新商機，都在反映家長、學生對108課綱的焦慮</strong>。
-      NextBanner(cost="3億" description="教育部107年到109年每年平均花3億，推動擴大優先免試、多元入學、適性入學宣導、學生學習表現及成效蒐集" next="亂象三 |  教師被升學綁架")
+      NextBanner(
+        index="2"
+        cost="3億"
+        description="教育部107年到109年每年平均花3億，推動擴大優先免試、多元入學、適性入學宣導、學生學習表現及成效蒐集"
+        next="亂象三 |  教師被升學綁架"
+      )
     Chapter(:id="3")
-      ChapterBanner(title="升學和進度綁架^_^「素養」難落實" question="素養導向教學" ideal="學生不只學死背的知識，還學到應對未來挑戰的能力與態度" truth="教師受限升學與課本進度、教學能力，很難落實"  problem="亂象三" cover="cover3.jpg")
+      ChapterBanner(
+        index="3"
+        title="升學和進度綁架^_^「素養」難落實"
+        question="素養導向教學"
+        ideal="學生不只學死背的知識，還學到應對未來挑戰的能力與態度"
+        truth="教師受限升學與課本進度、教學能力，很難落實"
+        problem="亂象三" cover="cover3.jpg"
+      )
       article.article
         p 新課綱希望教師改變過去填塞課本的教學方式，落實「素養導向教學」，但國、高中教師直言，素養強調以生活化情境引導學生思考、討論、實作，也鼓勵教師跨領域合作，立意雖好卻很花時間，學科時數已經縮減，課程進度、升學考試壓力都還在，「怎麼可能這樣教？」
         h2 家長拿著課本問 誰敢不教完？
         p 高雄市鼓山高中校長莊福泰指出，新課綱在高中階段加入多元選修、校訂必修，讓學校設計特色課程，這塊因為沒有考試壓力，要落實素養導向教學相對容易，「但學科很難」，教師過去都沒有相關經驗，會擔心：「<strong>素養導向教學，學生能考好嗎？</strong>」沒有人敢輕易放手嘗試，且課程上不完，家長、學生都會來問。
         p 不只高中有考大學的升學包袱，國中有會考在前，壓力也很大。嘉義市民生國中校長陳明君舉例，自然領域橫跨生物、地球科學、理化，社會科有地理、歷史、公民，這些課程橫跨多元專業，在大校可透過教師互助備課，協助任課老師教完，但小校教師有限，特別是<strong>八、九年級課程，真的必須趕進度，教師和學生壓力都很大</strong>。
         p 「素養對教師而言太陌生了，教師不一定有意願，一支粉筆一樣可以教，會考也可以考很好。」高雄市田寮國中校長蔡嘉興直言，國中會考和升學綁在一起，就會影響國中的教學態度，學校在少子化浪潮下都有極大的招生壓力，明星國中承受不起升學率降低，小校更禁不起學生流失。
-        ColumnOne(:srcMob="require('~/img/pic/mob/pic3.jpg')" :srcPad="require('~/img/pic/mob/pic3.jpg')" :srcPc="require('~/img/pic/mob/pic3.jpg')") 新課綱學科時數縮減，許多教師都擔心教學進度來不及、影響學生升學考試，不敢放手調整教法，學校也有升學率壓力。記者余承翰／攝影
+        ColumnOne(
+          :srcMob="require('~/img/pic/mob/pic3.jpg')"
+          :srcPad="require('~/img/pic/mob/pic3.jpg')"
+          :srcPc="require('~/img/pic/mob/pic3.jpg')"
+        ) 新課綱學科時數縮減，許多教師都擔心教學進度來不及、影響學生升學考試，不敢放手調整教法，學校也有升學率壓力。記者余承翰／攝影
         h2 想靠考題引導 卻讓現場更混亂
         p 蔡嘉興認為，要改變教學現場，需要靠考試題型引導，但以會考而言，近年出題雖已看出題幹增長、考題生活化等趨勢，但紙筆測驗能考的還是很有限，仍以知識為主，考不出素養強調的能力與態度，各校段考、小考，更不可能出這樣的題型。
         p 考題改變反而讓學校教師更焦慮。嘉義市民生國中校長陳明君指出，國中生擔心的是會考，教學現場老師除了希望會考能有好成績，也希望學生掌握基礎知識，但現在新課綱的考題，卻讓部分教師憂心，<strong>無法確認學生是專業基礎能力不好，還是閱讀能力不好</strong>。
         p 舉例而言，數學科若單獨出計算題，學生或許能解題，但現在考試題目長篇大論，學生對題目理解能力不足，考試成績不好，可能不是數學力差，而是閱讀理解能力不佳，讓各專業課程老師很難透過成績，辨識學生對基礎課程的學習力。
-      NextBanner(cost="9.6~13億" description="教育部107年到109年每年平均花9.6億到13億，強化國中小課程與教學，如精進教學計畫、推動國中教學正常化等" next="亂象四 |  學生上課碰運氣")
+      NextBanner(
+        index="3"
+        cost="9.6~13億"
+        description="教育部107年到109年每年平均花9.6億到13億，強化國中小課程與教學，如精進教學計畫、推動國中教學正常化等"
+        next="亂象四 |  學生上課碰運氣"
+      )
     Chapter(:id="4")
-      ChapterBanner(title="一樣教師兩樣情^_^學生賭運氣" question="教師心態與素質" ideal="教師跟上改革趨勢，調整心態與教法" truth="教師態度兩極，有教師甚至躲避新課綱"  problem="亂象四" cover="cover4.jpg")
+      ChapterBanner(
+        index="4"
+        title="一樣教師兩樣情^_^學生賭運氣"
+        question="教師心態與素質"
+        ideal="教師跟上改革趨勢，調整心態與教法"
+        truth="教師態度兩極，有教師甚至躲避新課綱"
+        problem="亂象四"
+        cover="cover4.jpg"
+      )
       article.article
         p 新課綱的理念與精神能否落實，現場教師是關鍵。但課綱上路以來，各校都發現教師心態兩極，有些教師很有熱忱，積極設計、共備課程，但也有教師仍持觀望態度，不願調整教法，甚至以過去教改經驗「看衰」新課綱，還有教師以將退休為理由，拒絕帶第一批新課綱學生。
         p 教師心態、教法、能力參差不齊，讓學生的教育品質像賭博。
@@ -98,14 +156,31 @@ div#app(
         p 「老師能不能發現，學生已經不一樣了？」宜蘭縣利澤國中教務主任游思芳教學26年，她發現教室風景慢慢在改變。學生google得到的知識，比老師給的資料還多，課堂再也無法吸引學生專注。對她而言，新課綱是「讓孩子不要從課堂逃走的機會」，但她也坦言，多數老師心態仍是觀望、甚至抗拒。
         h2 有心改變的教師：<br>人、時間都不夠 熱情恐燒完
         p 有心想改變的教師，遇到的問題是時間、人力都不足。長久下來，各校都擔心教師的熱情與能量，會逐漸被沉重的教學壓力澆熄。
-        ColumnOne(:srcMob="require('~/img/pic/mob/pic4.jpg')" :srcPad="require('~/img/pic/mob/pic4.jpg')" :srcPc="require('~/img/pic/pc/pic4.jpg')") 現場教師態度兩極，有些教師還在觀望，也有不少教師已開始調整教學方法，但許多學校都擔心若無員額配套，課程負擔恐磨損教師熱情。圖為利澤國中「植物與人生」課程。記者余承翰／攝影
+        ColumnOne(
+          :srcMob="require('~/img/pic/mob/pic4.jpg')"
+          :srcPad="require('~/img/pic/mob/pic4.jpg')"
+          :srcPc="require('~/img/pic/pc/pic4.jpg')"
+        ) 現場教師態度兩極，有些教師還在觀望，也有不少教師已開始調整教學方法，但許多學校都擔心若無員額配套，課程負擔恐磨損教師熱情。圖為利澤國中「植物與人生」課程。記者余承翰／攝影
         p 「老師們這麼認真研發課程，有熱情但負擔沉重！」新課綱要求選修開課量應達學生修習學分數的1.2到1.5倍，台中女中教務主任王裕德舉例，學校學校員額被控管，以一人每周教學16節來算，等於少了100多節課的人力，<strong>目前校內自然教師超鐘點最多，每名幾乎每週20多節課，教師負荷沉重，也壓縮排課的靈活度</strong>。
         p 「教師員額沒增加，很難完全落實108課綱的理念。」王裕德舉例，自然科包括生物、地科、物理、化學，被列為考科與必修的高二「探究實作」理想上要有2名老師協同上課，但員額不足很難做到，多數學校乾脆自行變通「自然科老師一人上一節課」，完全失去108課綱設計的原意。
         p <strong>教師員額不足也發生在「非考科」的加深加廣課程</strong>，例如藝術、音樂、電腦、科技老師，多數學校僅1、2名額，國教署規定非考科至少也要開一門課列入選修，老師們叫苦連天，希望找校外兼課老師「支援」，偏偏這一類的老師又難找。
         p 對師資少的小校來說，開課更加辛苦。高雄市田寮國中所在的田寮區，是全台高齡化程度排名第三的鄉鎮區，人口外流嚴重，全校目前只有63個學生、15名教師，10幾名教師要開的課跟大校一樣多，大校動輒50、60名教師，小校幾個人得扛起所有學科課程、兼任行政職務、設計每學期要開3門的彈性課程，校長蔡嘉興直呼：「統一的開課量，老師真的會累死」。
-      NextBanner(cost="2億" description="教育部107年到109年每年平均花2億，協助國中小教師專業成長、補助高中專任教師赴公民營機構研習" next="亂象五 |  偏鄉孩子的困境")
+      NextBanner(
+        index="4"
+        cost="2億"
+        description="教育部107年到109年每年平均花2億，協助國中小教師專業成長、補助高中專任教師赴公民營機構研習"
+        next="亂象五 |  偏鄉孩子的困境"
+      )
     Chapter(:id="5")
-      ChapterBanner(title="沒有大學幫開課^_^偏鄉、小校怎麼辦？" question="多元選修課、素養導向" ideal="用多元課程、生活化命題和教學，打開學生更多可能性" truth="拉大城鄉間的資源差距"  problem="亂象五" cover="cover5.jpg")
+      ChapterBanner(
+        index="5"
+        title="沒有大學幫開課^_^偏鄉、小校怎麼辦？"
+        question="多元選修課、素養導向"
+        ideal="用多元課程、生活化命題和教學，打開學生更多可能性"
+        truth="拉大城鄉間的資源差距"
+        problem="亂象五"
+        cover="cover5.jpg"
+      )
       article.article
         p 108課綱上路後，一則<a href="https://udn.com/news/story/6885/4081579" target="_blank" rel="noopener" aria-label="大學策略聯盟開課" title="大學策略聯盟開課">5所明星高中與8所頂尖大學策略聯盟開課</a>的新聞，引發教學現場不安。明星高中如北一女、建中，和頂尖大學如台大、政大等校合作，大學教授幫高中生開課，不僅讓很多學校擔憂輸在起跑點，也打擊認真備課的高中教師；偏鄉與社區高中更焦慮，擔憂偏鄉學生原本就缺乏資源與文化刺激，這種「強強合作」的方式，更加拉大教育差距。
         h2 明星高中找大學幫忙<br>各校壓力大
@@ -116,12 +191,20 @@ div#app(
         p 「大學直接到高中來開課這種情形，應該要減少。」高雄市鼓山高中校長莊福泰認為，<strong>大學直接開課會造成其他學校很大壓力</strong>，大學可以協助高中，但不是直接開課，各校還是要依照學校屬性，設計適合孩子的課程。
         h2 課綱強調生活情境<br>偏鄉孩子更加弱勢
         p 明星高中可以找大學開課，屏東縣與台東縣等縣市，偏鄉學校連找老師開課都有困難，愈偏鄉難度愈高。屏縣某高中就坦言開設多元選修課程「有困難」，因為學校實在太遠了，校內師資不足、外聘老師來的意願很低，光這一點，就讓城鄉差距愈拉愈大。
-        ColumnOne(:srcMob="require('~/img/pic/mob/pic5.jpg')" :srcPad="require('~/img/pic/mob/pic5.jpg')" :srcPc="require('~/img/pic/pc/pic5.jpg')") 偏鄉學生文化刺激少、家長較難提供孩子學習環境，生活情境相對都市學生單薄，第一線教師擔心，新課綱強調素養、生活化情境的教學方向雖好，但要思考如何避免拉大城鄉間差距。記者劉學聖／攝影
+        ColumnOne(
+          :srcMob="require('~/img/pic/mob/pic5.jpg')"
+          :srcPad="require('~/img/pic/mob/pic5.jpg')"
+          :srcPc="require('~/img/pic/pc/pic5.jpg')"
+        ) 偏鄉學生文化刺激少、家長較難提供孩子學習環境，生活情境相對都市學生單薄，第一線教師擔心，新課綱強調素養、生活化情境的教學方向雖好，但要思考如何避免拉大城鄉間差距。記者劉學聖／攝影
         p 此外，新課綱強調生活情境融入課堂，也鼓勵家長在生活中多與孩子交流，但對很多偏鄉學生而言相對困難。台東縣龍田國小校長吳耀仁直言：「<strong>新課綱是台北看天下發展出來的課綱，對偏鄉學生是不公平的</strong>」。
         p 吳耀仁指出，新課綱強調生活情境融入的素養教學，但<strong>偏鄉學生文化刺激、科技知識都不足，接觸到的時事脈動也少，更別說新課綱強調的國際觀</strong>；大城市的學生有很多活動可以參加、很多博物館可以參觀，台東雖有雖有好山好水，刺激還是差很多，且需要老師結合環境特點、開發教材，但教師要找到進修和教材資源遠不如大城市容易。
         p 要期待家長提供生活情境就更困難了。以龍田國小為例，學生家長多半靠務農、打零工維生，整日忙碌，能提供給孩子的教育資源和陪伴時間很少，無法仰賴家庭提供學習環境。
         p 閱讀能力和識字率也是問題。台東大學教授陳淑麗曾做過研究，花東地區的學生識字能力從小一就開始落後全國，小四後更有擴大趨勢，且低識字量的學生落後更嚴重，<strong>小五至國一低識字組學生，只有一般學生小二的程度</strong>。吳耀仁擔憂，新課綱的素養導向命題題幹長、敘述複雜，著重學生的閱讀理解能力，偏鄉孩子很吃虧，只會拉大城鄉差距。
-      NextBanner(cost="16億" description="教育部107年到109年每年平均花16億，發展偏鄉教育相關計畫及推動教育優先區")
+      NextBanner(
+        index="5"
+        cost="16億"
+        description="教育部107年到109年每年平均花16億，發展偏鄉教育相關計畫及推動教育優先區"
+      )
       HaveQuestion
   PageFooter
     Editor
@@ -200,6 +283,55 @@ export default {
     NextBanner,
     PageFooter,
     PageBackTop,
+  },
+  methods: {
+    addChapterObserver() {
+      const vm = this;
+      function onEnterChapterBanner(cb) {
+        if (!vm.$store.state.isEnterMainContent) return;
+        
+        const index = cb[0].target.dataset.cbIndex;
+        const active = vm.$store.state.chapterBannerActiveList[index];
+        if (active) return;
+
+        vm.$store.dispatch('updatedChapterBannerActiveList', index);
+      }
+
+      const option = {};
+      const watcher = new IntersectionObserver(onEnterChapterBanner, option);
+      const lazyChapterBanners = document.querySelectorAll('div.chapter-banner');
+      const lazyChapterBannersGroup = Object.values(lazyChapterBanners);
+
+      lazyChapterBannersGroup.forEach(cb => {
+        watcher.observe(cb);
+      });
+    },
+    addNextChapterObserver() {
+      const vm = this;
+
+      function onEnterNextChapterObserver(nb) {
+        if (!vm.$store.state.isEnterMainContent) return;
+
+        const index = nb[0].target.dataset.cbIndex;
+        const active = vm.$store.state.nextChapterBannerActiveList[index];
+        if (active) return;
+
+        vm.$store.dispatch('updatedNextChapterBannerActiveList', index)
+      }
+
+      const option = {};
+      const watcher = new IntersectionObserver(onEnterNextChapterObserver, option);
+      const lazyNextBanners = document.querySelectorAll('section.next-banner');
+      const lazyNextBannersGroup = Object.values(lazyNextBanners);
+
+      lazyNextBannersGroup.forEach(nb => {
+        watcher.observe(nb);
+      });
+    },
+  },
+  mounted() {
+    this.addChapterObserver();
+    this.addNextChapterObserver();
   },
 }
 </script>

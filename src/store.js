@@ -10,6 +10,20 @@ export default new Vuex.Store({
     isEnterMainContent: false,
     isFocusOneCard: false,
     cardActiveIndex: -1,
+    chapterBannerActiveList: {
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+    },
+    nextChapterBannerActiveList: {
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+    },
   },
   mutations: {
     updatedIsInFirstView(state, payload) {
@@ -27,6 +41,12 @@ export default new Vuex.Store({
     updatedCardActiveIndex(state, payload) {
       state.cardActiveIndex = payload;
     },
+    updatedChapterBannerActiveList(state, payload) {
+      state.chapterBannerActiveList[payload] = true;
+    },
+    updatedNextChapterBannerActiveList(state, payload) {
+      state.nextChapterBannerActiveList[payload] = true;
+    },
   },
   actions: {
     updatedIsInFirstView(context, payload) {
@@ -43,6 +63,12 @@ export default new Vuex.Store({
     },
     updatedCardActiveIndex(context, payload) {
       context.commit('updatedCardActiveIndex', payload);
+    },
+    updatedChapterBannerActiveList(context, payload) {
+      context.commit('updatedChapterBannerActiveList', payload);
+    },
+    updatedNextChapterBannerActiveList(context, payload) {
+      context.commit('updatedNextChapterBannerActiveList', payload);
     },
   },
 });

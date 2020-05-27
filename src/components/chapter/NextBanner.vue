@@ -1,5 +1,5 @@
 <template lang="pug">
-article.article(:class="{ 'clean-padding': next === null }")
+article.article(:data-nb-index="index" :class="{ 'clean-padding': next === null }")
   section.next-banner(:class="{ 'clean-margin': next === null }")
     div.next-banner__conclusion
       header
@@ -24,6 +24,10 @@ export default {
     NmdArrow,
   },
   props: {
+    index: {
+      type: String,
+      required: true,
+    },
     cost: {
       type: String,
       required: true,
@@ -35,6 +39,11 @@ export default {
     next: {
       type: String,
       default: null
+    },
+  },
+  computed: {
+    fadeInFlag() {
+      return this.$store.state.nextChapterBannerActiveList[this.index];
     },
   }
 }

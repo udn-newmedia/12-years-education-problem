@@ -6,14 +6,37 @@ section.have-question
       img(:src="selectSrc_3(hqSrc.mob, hqSrc.mob, hqSrc.pc)" alt="有話想說")
     div.have-question__collector
       p 你對台灣教育、上路一年的108課綱有話想說嗎？歡迎寫下看法，《聯合報》今年將持續追蹤報導此波教改，你的心聲與建議，都是我們的重要報導線索。
-      button 新生蒐集
+      a(
+        href="#"
+        target="_blank"
+        rel="noopener"
+        aria-label="have question"
+        title="have question"
+        @click="sendGA(formatGA('HaveQuestion'))"
+      )
+        button.have-question__button(
+          aria-label="我有問提"
+          name="我有問提"
+        )
+          NmdButton(
+            textColor="#cf5454"
+            bgColor="#cf5454"
+            theme="outlined"
+            border="m"
+            size="m"
+          ) 新生蒐集
 </template>
 
 <script>
-import { autoResize_3, selectSrcMethod_3 } from '@/mixins/masterBuilder.js';
+import { autoResize_3, selectSrcMethod_3, sendGaMethods } from '@/mixins/masterBuilder.js';
+import NmdButton from '@/components/_common/pinhead/NmdButton.vue';
+
 export default {
   name: 'NextBanner',
-  mixins: [autoResize_3, selectSrcMethod_3],
+  mixins: [autoResize_3, selectSrcMethod_3, sendGaMethods],
+  components: {
+    NmdButton
+  },
   computed: {
     hqSrc() {
       return {
@@ -77,5 +100,9 @@ export default {
       }
     }
   }
+}
+.have-question__button {
+  width: 176px;
+  @include clean-btn;
 }
 </style>

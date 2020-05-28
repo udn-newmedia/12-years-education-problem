@@ -32,3 +32,23 @@
 .icon-theme-dark {
   color: #ffffff;
 }
+
+.fade-in-1 {
+  opacity: 0;
+  animation: fade-in-chapter .666s forwards;
+}
+.fade-in-2 {
+  opacity: 0;
+  animation: fade-in-chapter 1s forwards;
+}
+
+@keyframes fade-in-chapter {
+  from {
+    opacity: 0;
+    transform: translateY(30%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

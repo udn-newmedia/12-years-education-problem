@@ -157,11 +157,9 @@ export default {
   .cover__gate__title {
     position: absolute;
     z-index: 10;
-    left: 50%;
     bottom: 90px;
     width: 100%;
     text-align: center;
-    transform: translateX(-50%);
     opacity: 0;
     animation: fade-in .5s 2s forwards;
     @include pad {

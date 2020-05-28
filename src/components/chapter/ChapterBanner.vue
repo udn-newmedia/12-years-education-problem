@@ -1,13 +1,19 @@
 <template lang="pug">
 article.chapter-banner-container(:data-cb-index="index")
   div.chapter-banner
-    div.chapter-banner__left
+    div.chapter-banner__left(:class="{ 'fade-in-1': fadeInFlag }")
       h3 {{problem}}
     div.chapter-banner__right
-      div.chapter-line-top
-      img(:src="selectSrc_3(coverSrc.mob, coverSrc.mob, coverSrc.pc)" :alt="problem")
-      h2 {{title.replace('^_^', deviceType !== 'pc' ? '\n': '&nbsp')}}
-      table
+      figure.chapter-banner__img-container(:class="{ 'fade-in-2': fadeInFlag }")
+        div.chapter-line-top
+        img(
+          :src="selectSrc_3(coverSrc.mob, coverSrc.mob, coverSrc.pc)"
+          :alt="problem"
+        )
+      h2(
+        :class="{ 'fade-in-1': fadeInFlag }"
+      ) {{title.replace('^_^', deviceType !== 'pc' ? '\n': '&nbsp')}}
+      table(:class="{ 'fade-in-2': fadeInFlag }")
         tbody
           tr
             td
@@ -89,6 +95,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/style/_ui.scss';
+
 $red: #ba4141;
 .chapter-banner-container {
   position: relative;
@@ -162,11 +170,16 @@ $red: #ba4141;
     @include pc {
       width: 70%;
     }
-    img {
+    .chapter-banner__img-container {
+      position: relative;
+      margin: 0;
       width: 100%;
-      margin-bottom: 16px;
-      @include pc {
-        margin-bottom: 24px;
+      img {
+        width: 100%;
+        margin-bottom: 16px;
+        @include pc {
+          margin-bottom: 24px;
+        }
       }
     }
     h2 {

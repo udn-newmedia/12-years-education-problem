@@ -2,6 +2,7 @@
 figure.card-bg(
   :class="cardBgClassAttr"
   :style="{ backgroundImage: bgSrc }"
+  @click="handleCardCloseClick"
 )
 </template>
 
@@ -30,6 +31,11 @@ export default {
       return `url(${url})`;
     }
   },
+  methods: {
+    handleCardCloseClick() {
+      this.$store.dispatch('updatedIsFocusOneCard', false);
+    },
+  },
 }
 </script>
 
@@ -46,6 +52,7 @@ export default {
   opacity: 0;
   transform: translateY(100%);
   transition: 1s ease-in-out;
+  cursor: default;
   &.card-bg--active {
     opacity: 1;
     transform: translateY(0);

@@ -110,7 +110,7 @@ export default {
     },
     handleDragMovingEvent(edInfo) {
       this.isOnDragging = true;
-      if (!edInfo.dragTranslate) return;
+      if (!edInfo.dragTranslate || edInfo.dragDuration > 1500) return;
       if (
         edInfo.dragTranslate.x === this.cardsTranslate.x &&
         edInfo.dragTranslate.y === this.cardsTranslate.y

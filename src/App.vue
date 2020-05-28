@@ -2,6 +2,28 @@
 div#app(
   :class="{'app-in-first-view': $store.state.isInFirstView, 'app-in-collector': $store.state.isEnterCollector}"
 )
+  HeaderType(page-title="揭露課綱五大亂象")
+    a(
+      class="active"
+      :href="null"
+      target="_blank"
+      rel="noopener"
+    ) 揭露課綱五大亂象
+    a(
+      href="https://udn.com/newmedia/2020/12-years-education/data/"
+      target="_blank"
+      rel="noopener"
+    ) 台灣教育關鍵數字
+    a(
+      href="https://udn.com/newmedia/2020/12-years-education/collect/"
+      target="_blank"
+      rel="noopener"
+    ) 關於108課綱 我想說......
+    a(
+      href="https://udn.com/search/word/2/108%E8%AA%B2%E7%B6%B1"
+      target="_blank"
+      rel="noopener"
+    ) 更多課綱相關報導
   Cover
     h2(slot="prembleTitle") 新課綱上路一年<br>理想與現實的差距<br>有多大？
     p(slot="prembleText") 一張張美好明亮的圖卡，<br>是台灣教育對孩子的期待，<br>點按圖卡看現況與理想之間，<br>還有多大的差距。
@@ -9,14 +31,15 @@ div#app(
   main
     Abstract
       article.article
-        p 影響全台240萬學生的108課綱（十二年國教課程綱要）2019年正式實施，是台灣近20年最大一波教育改革，政府砸入大筆經費推動—教育預算年年增，是僅次社會保險、國防的第三大支出；2020年12年國教「專屬」預算高達341億，超越外交部、文化部等部會整年度預算。
-        ColumnOne(
-          :srcMob="require('~/img/chart/data_m.svg')"
-          :srcPad="require('~/img/chart/data_m.svg')"
-          :srcPc="require('~/img/chart/data.svg')"
-        )
-        p 但新課綱的推動，並沒有因為高額預算就一帆風順。被教育界喻為20年大躍進的這場新教改，《聯合報》追蹤調查，教學現場出現五大亂象，讓課綱精神變了調：
+        Budget
+          p 影響全台240萬學生的108課綱（十二年國教課程綱要）2019年正式實施，是台灣近20年最大一波教育改革，政府砸入大筆經費推動—教育預算年年增，是僅次社會保險、國防的第三大支出；2020年12年國教「專屬」預算高達341億，超越外交部、文化部等部會整年度預算。
+          ColumnOne(
+            :srcMob="require('~/img/chart/data_m.svg')"
+            :srcPad="require('~/img/chart/data_m.svg')"
+            :srcPc="require('~/img/chart/data.svg')"
+          )
         ChaosList
+          p 但新課綱的推動，並沒有因為高額預算就一帆風順。被教育界喻為20年大躍進的這場新教改，《聯合報》追蹤調查，教學現場出現五大亂象，讓課綱精神變了調：
           table
             tbody
               tr
@@ -44,6 +67,7 @@ div#app(
                   p 亂象五
                 td
                   p 偏鄉小校開課難
+    ArticleCastAnchor(title="明星高中帶頭亂")
     Chapter(:id="1")
       ChapterBanner(
         index="1"
@@ -71,6 +95,7 @@ div#app(
         description="教育部107年到109年每年平均花11億到15億，辦理高中職優質化輔助方案、多元選修、彈性學習之高中特色課程及高職務實致用特色課程"
         next="亂象二 |  補教搶賺焦慮財"
       )
+    ArticleCastAnchor(title="補教搶賺焦慮財")
     Chapter(:id="2")
       ChapterBanner(
         index="2"
@@ -106,6 +131,7 @@ div#app(
         description="教育部107年到109年每年平均花3億，推動擴大優先免試、多元入學、適性入學宣導、學生學習表現及成效蒐集"
         next="亂象三 |  教師被升學綁架"
       )
+    ArticleCastAnchor(title="教師被升學綁架")
     Chapter(:id="3")
       ChapterBanner(
         index="3"
@@ -136,6 +162,7 @@ div#app(
         description="教育部107年到109年每年平均花9.6億到13億，強化國中小課程與教學，如精進教學計畫、推動國中教學正常化等"
         next="亂象四 |  學生上課碰運氣"
       )
+    ArticleCastAnchor(title="學生上課碰運氣")
     Chapter(:id="4")
       ChapterBanner(
         index="4"
@@ -171,6 +198,7 @@ div#app(
         description="教育部107年到109年每年平均花2億，協助國中小教師專業成長、補助高中專任教師赴公民營機構研習"
         next="亂象五 |  偏鄉孩子的困境"
       )
+    ArticleCastAnchor(title="偏鄉孩子的困境")
     Chapter(:id="5")
       ChapterBanner(
         index="5"
@@ -245,6 +273,7 @@ div#app(
 import { sendGaMethods } from '@/mixins/masterBuilder.js';
 
 /* Header */
+import HeaderType from '@/components/_common/header/HeaderType.vue';
 /* Header */
 
 /* Footer */
@@ -256,7 +285,9 @@ import FooterShare from '@/components/_common/footer/FooterShare.vue';
 import PageBackTop from '@/components/_common/layout/PageBackTop.vue';
 /* Footer */
 
+import ArticleCastAnchor from '@/components/_common/layout/ArticleCastAnchor.vue';
 import Abstract from '@/components/abstract/Abstract.vue';
+import Budget from '@/components/abstract/Budget.vue';
 import ChaosList from '@/components/abstract/ChaosList.vue';
 import Chapter from '@/components/chapter/Chapter.vue';
 import ChapterBanner from '@/components/chapter/ChapterBanner.vue';
@@ -269,9 +300,11 @@ export default {
   name: 'App',
   mixins: [sendGaMethods],
   components: {
+    ArticleCastAnchor,
     Abstract,
-    Chapter,
+    Budget,
     ChaosList,
+    Chapter,
     ChapterBanner,
     ColumnOne,
     Cover,
@@ -280,6 +313,7 @@ export default {
     FooterLogo,
     FooterShare,
     HaveQuestion,
+    HeaderType,
     NextBanner,
     PageFooter,
     PageBackTop,
@@ -289,17 +323,17 @@ export default {
       const vm = this;
       function onEnterChapterBanner(cb) {
         if (!vm.$store.state.isEnterMainContent) return;
-        
+        if (!vm.$store.state.isEnterChaosContent)  vm.$store.dispatch('updatedIsEnterChaosContent', true);
+
         const index = cb[0].target.dataset.cbIndex;
-        const active = vm.$store.state.chapterBannerActiveList[index];
+        const active = vm.$store.state.chapterBannerActiveList[index];        
         if (active) return;
 
         vm.$store.dispatch('updatedChapterBannerActiveList', index);
       }
 
-      const option = {};
-      const watcher = new IntersectionObserver(onEnterChapterBanner, option);
-      const lazyChapterBanners = document.querySelectorAll('div.chapter-banner');
+      const watcher = new IntersectionObserver(onEnterChapterBanner);
+      const lazyChapterBanners = document.querySelectorAll('article.chapter-banner-container');
       const lazyChapterBannersGroup = Object.values(lazyChapterBanners);
 
       lazyChapterBannersGroup.forEach(cb => {
@@ -312,16 +346,15 @@ export default {
       function onEnterNextChapterObserver(nb) {
         if (!vm.$store.state.isEnterMainContent) return;
 
-        const index = nb[0].target.dataset.cbIndex;
+        const index = nb[0].target.dataset.nbIndex;
         const active = vm.$store.state.nextChapterBannerActiveList[index];
         if (active) return;
 
         vm.$store.dispatch('updatedNextChapterBannerActiveList', index)
       }
 
-      const option = {};
-      const watcher = new IntersectionObserver(onEnterNextChapterObserver, option);
-      const lazyNextBanners = document.querySelectorAll('section.next-banner');
+      const watcher = new IntersectionObserver(onEnterNextChapterObserver);
+      const lazyNextBanners = document.querySelectorAll('article.next-banner-container');
       const lazyNextBannersGroup = Object.values(lazyNextBanners);
 
       lazyNextBannersGroup.forEach(nb => {

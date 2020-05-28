@@ -5,9 +5,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    anchorList: [],
     isInFirstView: true,
     isEnterCollector: false,
     isEnterMainContent: false,
+    isEnterChaosContent: false,
     isFocusOneCard: false,
     cardActiveIndex: -1,
     chapterBannerActiveList: {
@@ -26,14 +28,24 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    addAnchor (state, anchor) {
+      state.anchorList.push(anchor)
+    },
+    updateAnchorStatus (state, object) {
+      state.anchorList[object.index].active = object.status;
+    },
     updatedIsInFirstView(state, payload) {
       state.isInFirstView = payload;
     },
     updatedIsEnterCollector(state, payload) {
       state.isEnterCollector = payload;
+      if (payload) state.isEnterChaosContent = false;
     },
     updatedIsEnterMainContent(state, payload) {
       state.isEnterMainContent = payload;
+    },
+    updatedIsEnterChaosContent(state, payload) {
+      state.isEnterChaosContent = payload;
     },
     updatedIsFocusOneCard(state, payload) {
       state.isFocusOneCard = payload;
@@ -49,6 +61,12 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    addAnchor (context, anchor) {
+      context.commit('addAnchor', anchor);
+    },
+    updateAnchorStatus (context, object) {
+      context.commit('updateAnchorStatus', object);
+    },
     updatedIsInFirstView(context, payload) {
       context.commit('updatedIsInFirstView', payload);
     },
@@ -57,6 +75,9 @@ export default new Vuex.Store({
     },
     updatedIsEnterMainContent(context, payload) {
       context.commit('updatedIsEnterMainContent', payload);
+    },
+    updatedIsEnterChaosContent(context, payload) {
+      context.commit('updatedIsEnterChaosContent', payload);
     },
     updatedIsFocusOneCard(context, payload) {
       context.commit('updatedIsFocusOneCard', payload);

@@ -1,12 +1,12 @@
 <template lang="pug">
-section.chaos-list(:class="{ 'chaos-list--await': !isEnter }")
-  div.chaos-list-line
+section.budget(:class="{ 'budget--await': !isEnter }")
+  div.budget-line
   slot
 </template>
 
 <script>
 export default {
-  name: 'ChaosList',
+  name: 'Budget',
   data() {
     return {
       isEnter: false
@@ -28,25 +28,16 @@ export default {
 
 <style lang="scss" scoped>
 $red: #a72626;
-.chaos-list {
+.budget {
   position: relative;
-  margin-top: 64px;
   transition: 1s;
-  &.chaos-list--await {
+  &.budget--await {
     transform: translateY(35%);
   }
 
 
 
-  p {
-    margin: 0;
-  }
-  .td--red {
-    padding-right: 0.5rem;
-    color: #e25151;
-  }
-
-  .chaos-list-line {
+  .budget-line {
     position: absolute;
     top: 1rem;
     left: -16px;

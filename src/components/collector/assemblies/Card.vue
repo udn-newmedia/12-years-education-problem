@@ -65,11 +65,18 @@ export default {
   computed: {
     cardClassAttr() {
       return {
+        // click
         'card--active': this.isCardActive,
-        'card--show': this.shouldCardShow && !this.$store.state.isFocusOneCard,
         'card--hide': this.isCardActive && this.$store.state.isFocusOneCard,
-        'card--ondragging': this.isOnDragging,
         'card--no-transition': !this.isCardActive && this.$store.state.isFocusOneCard,
+
+        // inside screen
+        'card--show': this.shouldCardShow && !this.$store.state.isFocusOneCard,
+
+        // no dragging
+        'card--ondragging': this.isOnDragging,
+
+        // enter main content
         'card--rotate-animation-1': this.$store.state.isEnterMainContent && this.index % 3 === 0,
         'card--rotate-animation-2': this.$store.state.isEnterMainContent && this.index % 3 === 1,
         'card--rotate-animation-3': this.$store.state.isEnterMainContent && this.index % 3 === 2,
@@ -223,15 +230,15 @@ export default {
     pointer-events: none;
   }
   &.card--rotate-animation-1 {
-    opacity: 1;
+    opacity: 0.7;
     animation: rotate-animation-1 linear 10s infinite;
   }
   &.card--rotate-animation-2 {
-    opacity: 1;
+    opacity: 0.8;
     animation: rotate-animation-2 15s infinite;
   }
   &.card--rotate-animation-3 {
-    opacity: 1;
+    opacity: 0.9;
     animation: rotate-animation-3 20s infinite;
   }
   @keyframes rotate-animation-1 {

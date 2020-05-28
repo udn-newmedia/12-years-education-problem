@@ -62,11 +62,16 @@ export default {
       this.$store.dispatch('updatedIsFocusOneCard', false);
     },
     handleCardNextClick() {
+      // TODO: ramdon next
+
       const infoLength = Object.keys(this.CARDS_INFO_TABLE).length;
       const newIndex = this.$store.state.cardActiveIndex + 1 > infoLength ? 1 : this.$store.state.cardActiveIndex + 1;
-      this.$store.dispatch('updatedCardActiveIndex', newIndex);      
+      this.$store.dispatch('updatedCardActiveIndex', newIndex);
     },
     handleCardPrevClick() {
+
+      // TODO: ramdon prev
+
       const infoLength = Object.keys(this.CARDS_INFO_TABLE).length;
       const newIndex = this.$store.state.cardActiveIndex - 1 < 1 ? infoLength : this.$store.state.cardActiveIndex - 1;
       this.$store.dispatch('updatedCardActiveIndex', newIndex);
@@ -90,8 +95,9 @@ export default {
   align-items: flex-start;
   background-color: #ffffff;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translate(-50%, -50%) scale(0) rotateY(-180deg);
   transition: .333s;
+  cursor: default;
   @include pad {
     width: 80vw;
     padding: 40px 80px;
@@ -106,7 +112,8 @@ export default {
     pointer-events: auto;
     opacity: 1;
     transition: 1s;
-    transform: translate(-50%, -50%) scale(1);
+    transition: .666s .5s;
+    transform: translate(-50%, -50%) scale(1) rotateY(0);
   }
 
 
@@ -135,31 +142,30 @@ export default {
     padding: 8px;
     @include clean-btn;
   }
-  .card__back-interface__next-bottom {
+  .card__back-interface__next-bottom, .card__back-interface__prev-bottom {
+    box-sizing: content-box;
     position: absolute;
     left: 50%;
-    top: -16px;
     width: 24px;
     height: 24px;
-    transform: translate(-50%, -100%);
+    padding: 24px;
     @include clean-btn;
+  }
+  .card__back-interface__next-bottom {
+    top: -8px;
+    transform: translate(-50%, -100%);
     @include pc {
-      right: -16px;
+      right: -8px;
       top: 50%;
       left: auto;
       transform: translate(100%, -50%);
     }
   }
   .card__back-interface__prev-bottom {
-    position: absolute;
-    left: 50%;
-    bottom: -16px;
-    width: 24px;
-    height: 24px;
+    bottom: -8px;
     transform: translate(-50%, 100%);
-    @include clean-btn;
     @include pc {
-      left: -16px;
+      left: -8px;
       top: 50%;
       bottom: auto;
       transform: translate(-100%, -50%);

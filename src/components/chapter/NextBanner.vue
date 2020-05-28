@@ -1,13 +1,18 @@
 <template lang="pug">
-article.article(:data-nb-index="index" :class="{ 'clean-padding': next === null }")
+article.article.next-banner-container(
+  :data-nb-index="index"
+  :class="{ 'clean-padding': next === null, 'fade-in-2': fadeInFlag }"
+)
   section.next-banner(:class="{ 'clean-margin': next === null }")
     div.next-banner__conclusion
       header
         h2 亂象背後花多少錢
         h2.h2--red {{cost}}
       p {{description}}
-      div.next-banner-line-top
-      div.next-banner-line-bottom
+      div.next-banner__line-top-container
+        div.next-banner__line-top
+      div.next-banner__line-bottom-container
+        div.next-banner__line-bottom(:class="{ 'next-banner__line-bottom--active': fadeInFlag }")
     div.next-banner__next(v-if="next !== null")
       p 往下看
       p {{next}}
@@ -50,7 +55,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/style/_ui.scss';
+
 $red: #a72626;
+.next-banner-container {
+  opacity: 0;
+  transform: translateY(50%);
+  margin-top: 64px;
+}
 .next-banner {
   position: relative;
   width: 100%;
@@ -78,10 +90,10 @@ $red: #a72626;
   }
 }
 .next-banner__next {
-  margin: 80px auto;
+  margin: 96px auto;
   @include pc {
     width: 60%;
-    margin: 96px auto;
+    margin: 128px auto;
   }
   p {
     margin-bottom: 0;
@@ -95,23 +107,38 @@ $red: #a72626;
   }
 }
 
-.next-banner-line-top, .next-banner-line-bottom {
+.next-banner__line-top-container, .next-banner__line-bottom-container {
   position: absolute;
-  background-color: $red;
+  overflow: hidden;
+  right: 50%;
   width: 1px;
   height: 128px;
-  right: 50%;
   @include pc {
     height: 165px;
   }
 }
-.next-banner-line-top {
+.next-banner__line-top-container {
   top: 0;
-  transform: translateY(-50%);
+  transform: translateY(-70%);
 }
-.next-banner-line-bottom {
+
+.next-banner__line-bottom-container {
   bottom: 0;
-  transform: translateY(50%);
+  transform: translateY(70%);
+}
+
+.next-banner__line-top, .next-banner__line-bottom {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: $red;
+  transition: .666s .666s;
+}
+.next-banner__line-bottom {
+  transform: translateY(-100%);
+  &.next-banner__line-bottom--active {
+    transform: translateY(0);
+  }
 }
 .clean-padding {
   padding-bottom: 0;

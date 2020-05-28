@@ -50,6 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 .have-question {
+  padding: 32px 0;
   min-height: 80vh;
   @include pc {
     min-height: 55vh;

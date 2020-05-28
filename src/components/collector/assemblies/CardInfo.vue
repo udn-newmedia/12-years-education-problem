@@ -7,10 +7,10 @@ article.card.cards-info(
       Cross
     button.card__back-interface__next-bottom(@click="handleCardNextClick()")
       Arrow(v-if="deviceType === 'pc'" dir="right")
-      Arrow(v-else dir="up")
+      Arrow(v-else dir="down")
     button.card__back-interface__prev-bottom(@click="handleCardPrevClick()")
       Arrow(v-if="deviceType === 'pc'" dir="left")
-      Arrow(v-else dir="down")
+      Arrow(v-else dir="up")
     p.card__back-interface__expection(
       :class="{'--show-opacity': $store.state.isFocusOneCard}"
     ) 台灣教育期待：...<br>{{cardInfo.expection}}
@@ -24,6 +24,8 @@ import { autoResize_3 } from '@/mixins/masterBuilder.js';
 
 import Arrow from './Arrow.vue';
 import Cross from './Cross.vue';
+
+const skipCardList = [3, 5, 8, 10, 13];
 
 export default {
   name: 'CardInfo',
@@ -62,18 +64,18 @@ export default {
       this.$store.dispatch('updatedIsFocusOneCard', false);
     },
     handleCardNextClick() {
-      // TODO: ramdon next
-
       const infoLength = Object.keys(this.CARDS_INFO_TABLE).length;
-      const newIndex = this.$store.state.cardActiveIndex + 1 > infoLength ? 1 : this.$store.state.cardActiveIndex + 1;
+      let newIndex = this.$store.state.cardActiveIndex + 1 > infoLength ? 1 : this.$store.state.cardActiveIndex + 1;
+
+      if (skipCardList.includes(newIndex)) newIndex++;
+      
       this.$store.dispatch('updatedCardActiveIndex', newIndex);
     },
     handleCardPrevClick() {
-
-      // TODO: ramdon prev
-
       const infoLength = Object.keys(this.CARDS_INFO_TABLE).length;
-      const newIndex = this.$store.state.cardActiveIndex - 1 < 1 ? infoLength : this.$store.state.cardActiveIndex - 1;
+      let newIndex = this.$store.state.cardActiveIndex - 1 < 1 ? infoLength : this.$store.state.cardActiveIndex - 1;
+
+      if (skipCardList.includes(newIndex)) newIndex--;
       this.$store.dispatch('updatedCardActiveIndex', newIndex);
     },
   },

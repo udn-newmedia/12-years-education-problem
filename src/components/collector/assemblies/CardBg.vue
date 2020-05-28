@@ -59,6 +59,7 @@ export default {
   }
   &.card-bg--active-first-time {
     transform: translateY(0) rotateX(-180deg);
+    // transform: translateY(0);
   }
 }
 </style>

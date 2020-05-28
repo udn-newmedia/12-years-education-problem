@@ -3,6 +3,7 @@ import App from './App.vue';
 import store from './store';
 import { rwdMethods } from '@/mixins/masterBuilder.js';
 import myDebugger from '@/utils/debugger.js';
+import 'intersection-observer';
 
 import '~/style/main.scss';
 

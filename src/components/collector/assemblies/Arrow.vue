@@ -54,13 +54,13 @@ export default {
 
 
 
-  .arrow-line__left--up-side {
+  .arrow-line__left--down-side {
     top: 0;
     left: 50%;
     transform: translate(calc(-50% + 0.5px), 50%) rotate(45deg);
     transform-origin: center 0;
   }
-  .arrow-line__right--up-side {
+  .arrow-line__right--down-side {
     top: 0;
     left: 50%;
     transform: translate(calc(-50% - 0.5px), 50%) rotate(-45deg);
@@ -69,13 +69,13 @@ export default {
 
 
 
-  .arrow-line__left--down-side {
+  .arrow-line__left--up-side {
     bottom: 0;
     left: 50%;
     transform: translate(calc(-50% + 0.5px), -50%) rotate(-45deg);
     transform-origin: center bottom;
   }
-  .arrow-line__right--down-side {
+  .arrow-line__right--up-side {
     bottom: 0;
     left: 50%;
     transform: translate(calc(-50% - 0.5px), -50%) rotate(45deg);

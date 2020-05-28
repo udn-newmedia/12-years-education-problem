@@ -14,7 +14,7 @@ export default {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  padding: 32vh 0;
+  padding: 32px 0 32vh 0;
   color: #f2e6e6;
   background-color: #080808;
 

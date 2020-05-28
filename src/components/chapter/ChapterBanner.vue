@@ -100,6 +100,7 @@ export default {
 $red: #ba4141;
 .chapter-banner-container {
   position: relative;
+  // overflow: hidden;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -148,11 +149,14 @@ $red: #ba4141;
     }
   }
   .chapter-banner__left {
+    width: 20%;
     margin-right: 16px;
+    text-align: right;
     @include pc {
       margin-right: 28px;
     }
     h3 {
+      display: inline-block;
       margin-top: 0;
       color: $red;
       font-family: SourceHanSerifTC;

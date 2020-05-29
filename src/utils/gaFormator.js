@@ -73,6 +73,21 @@ const gaTable = {
     action: 'click',
     label: '願景工程_logo'
   },
+  HaveQuestion: {
+    category: 'button',
+    action: 'click',
+    label: '我有問題'
+  },
+  CardNextClick: {
+    category: 'card',
+    action: 'click',
+    label: 'next'
+  },
+  CardPrevClick: {
+    category: 'card',
+    action: 'click',
+    label: 'previous'
+  },
 }
 
 export default gaTable;

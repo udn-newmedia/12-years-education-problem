@@ -31,7 +31,22 @@ export default {
     handleExit() {
       if(!this.$store.state.isEnterMainContent) this.$store.dispatch('updatedIsEnterMainContent', true);
       if(this.$store.state.isEnterCollector) this.$store.dispatch('updatedIsEnterCollector', false);
-      if(this.$store.state.isFocusOneCard) this.$store.dispatch('updatedIsFocusOneCard', false);
+
+      if(this.$store.state.isFocusOneCard) {
+        this.sendGA({
+          category: 'enter',
+          action: 'click',
+          label: `卡片內頁:${this.$store.state.cardActiveIndex}`
+        });
+        this.$store.dispatch('updatedIsFocusOneCard', false);
+      } else {
+        this.sendGA({
+          category: 'enter',
+          action: 'click',
+          label: '卡片封面'
+        });
+      }
+
       window.scroll(0, 0);
     },
   },

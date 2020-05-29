@@ -2,7 +2,6 @@
 article.card.cards-info(
     :class="{'cards-info--active': $store.state.isFocusOneCard}"
   )
-    
     button.card__back-interface__close-bottom(@click="handleCardCloseClick()")
       Cross
     button.card__back-interface__next-bottom(@click="handleCardNextClick()")
@@ -20,7 +19,7 @@ article.card.cards-info(
 </template>
 
 <script>
-import { autoResize_3 } from '@/mixins/masterBuilder.js';
+import { autoResize_3, sendGaMethods } from '@/mixins/masterBuilder.js';
 
 import Arrow from './Arrow.vue';
 import Cross from './Cross.vue';
@@ -29,7 +28,7 @@ const skipCardList = [3, 5, 8, 10, 13];
 
 export default {
   name: 'CardInfo',
-  mixins: [autoResize_3],
+  mixins: [autoResize_3, sendGaMethods],
   components: {
     Arrow,
     Cross,
@@ -48,6 +47,12 @@ export default {
       required: true
     },
   },
+  data() {
+    return {
+      gaTimer: null,
+      residenceTime: 1
+    }
+  },
   computed: {
     cardInfo() {
       if (this.$store.state.cardActiveIndex < 1) return { expection: null, truth: null };
@@ -58,10 +63,42 @@ export default {
 
       return { expection, truth };
     },
+    isFocusOneCard() {
+      return this.$store.state.isFocusOneCard;
+    }
+  },
+  watch: {
+    isFocusOneCard: {
+      handler(v) {
+        if (v) {
+          this.sendGA({
+            category: 'close',
+            action: 'click',
+            label: `停留${(this.residenceTime - 1) * 10}~${this.residenceTime * 10}秒`
+          });
+          this.gaTimer = setInterval(() => {
+            this.sendGA({
+              category: 'close',
+              action: 'click',
+              label: `停留${(this.residenceTime - 1) * 10}~${this.residenceTime * 10}秒`
+            });
+            this.residenceTime++;
+          }, 10000);
+        } else {
+          clearInterval(this.gaTimer);
+          this.residenceTime = 1;
+        }
+      }
+    }
   },
   methods: {
     handleCardCloseClick() {
       this.$store.dispatch('updatedIsFocusOneCard', false);
+      this.sendGA({
+        category: 'close',
+        action: 'click',
+        label: this.$store.state.cardActiveIndex
+      });
     },
     handleCardNextClick() {
       const infoLength = Object.keys(this.CARDS_INFO_TABLE).length;
@@ -70,6 +107,7 @@ export default {
       if (skipCardList.includes(newIndex)) newIndex++;
       
       this.$store.dispatch('updatedCardActiveIndex', newIndex);
+      this.sendGA(this.formatGA('CardNextClick'));
     },
     handleCardPrevClick() {
       const infoLength = Object.keys(this.CARDS_INFO_TABLE).length;
@@ -77,6 +115,7 @@ export default {
 
       if (skipCardList.includes(newIndex)) newIndex--;
       this.$store.dispatch('updatedCardActiveIndex', newIndex);
+      this.sendGA(this.formatGA('CardPrevClick'));
     },
   },
 }
@@ -84,6 +123,7 @@ export default {
 
 <style lang="scss" scoped>
 .cards-info {
+  will-change: transform;
   pointer-events: none;
   z-index: 5000;
   left: 50%;

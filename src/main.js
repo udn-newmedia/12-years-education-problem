@@ -15,7 +15,6 @@ new Vue({
   mixins: [rwdMethods]
 }).$mount('#app')
 
-/* 解決 rec.udn.com追蹤碼 佔位問題 */
 window.onload = () => {
   document.getElementsByTagName('iframe')[0].style.top = 0;
 };

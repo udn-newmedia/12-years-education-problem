@@ -257,6 +257,7 @@ export default {
     margin: 0 15px;
     transition: .333s ease-in-out;
     .header-bar__anchor-pc__container {
+      height: 100%;
       transition: .333s ease-in-out;
       transform: translateY(0);
       &.header-bar__anchor-pc__container--hide {

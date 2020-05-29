@@ -2,6 +2,7 @@
 div#app(
   :class="{'app-in-first-view': $store.state.isInFirstView, 'app-in-collector': $store.state.isEnterCollector}"
 )
+  PageIndicator
   HeaderType(page-title="揭露課綱五大亂象")
     a(
       class="active"
@@ -13,16 +14,19 @@ div#app(
       href="https://udn.com/newmedia/2020/12-years-education/data/"
       target="_blank"
       rel="noopener"
+      @click="sendGA({category: 'menu', action: 'click', label: '台灣教育關鍵數字'})"
     ) 台灣教育關鍵數字
     a(
       href="https://udn.com/newmedia/2020/12-years-education/collect/"
       target="_blank"
       rel="noopener"
+      @click="sendGA({category: 'menu', action: 'click', label: '關於108課綱 我想說......'})"
     ) 關於108課綱 我想說......
     a(
       href="https://udn.com/search/word/2/108%E8%AA%B2%E7%B6%B1"
       target="_blank"
       rel="noopener"
+      @click="sendGA({category: 'menu', action: 'click', label: '更多課綱相關報導'})"
     ) 更多課綱相關報導
   Cover
     h2(slot="prembleTitle") 新課綱上路一年<br>理想與現實的差距<br>有多大？
@@ -121,7 +125,7 @@ div#app(
         p 舉例而言，甄戰學習顧問中心的學習歷程輔導班內設有30多個顧問老師，一對一輔導學生參加合適的社團、營隊、檢定；套裝課程也規畫學生完成3項門檻較高的任務，比如參與奧林匹亞科學競賽、取得專利等，目標高一到高二上每學期各完成一項，高三專心拼考試。
         h2 財源2：<br>新名詞「素養」 小學開始補
         p 周六上午10點，地點是台中西屯區百大佳華補習班。8個小學三、四年級學生排列成ㄇ字形，在老師的帶領下讀三國演義、山海經、魯賓遜漂流記等中外經典，提早養成108課綱強調的閱讀素養。
-        p 108課綱強調「核心素養」，升高中的國中會考、升大學的學測，考題都強調朝「素養導向命題」邁進，抽象的新名詞讓許多家長困惑又緊張。補教業者則瞄準家長需求，紛紛開設核心素養相關課程，「閱讀素養」課程最多，吸引大批家長報名。
+        p 108課綱強調「核心素養」<ArticleDictionary title="素養">「素養」強調以生活化情境，來培養學生運用知識、跨科整合、動手實作等能力。相較過去死背知識，更重視學生能否運用所學，解決生活中遇到的各種難題。</ArticleDictionary>，升高中的國中會考、升大學的學測，考題都強調朝「素養導向命題」邁進，抽象的新名詞讓許多家長困惑又緊張。補教業者則瞄準家長需求，紛紛開設核心素養相關課程，「閱讀素養」課程最多，吸引大批家長報名。
         p 按百大佳華補習班課程簡章，素養班從小三開到國二，教學內容從文學故事進階到國學常識。國語文補教經驗12年、擔任這堂國小素養班老師的林聿安說，多數仍認為閱讀不用補，不過升學考題在改變，就連數學考題都仰賴閱讀，看不懂就無法作答。<strong>該班已成功開班兩年，她預期這股需求會逐漸提升</strong>。
         p 全國家長團體聯盟理事長彭淑燕分析，「素養」這個名詞太新，家長難免擔心學校沒準備好，或是各校對素養的解讀有差異，乾脆把小孩送往以素養為名的補習班；全國教師工會總聯合會理事長張旭政說，<strong>多數人對素養的理解就是考題變長</strong>，顯示素養的核心概念仍待溝通。
         p 不少學校教師和家長團體也擔憂，「什麼都補」將惡化學生教育資源、城鄉差距，核心素養、學習歷程的初衷也恐變調，但一名補教業者坦言，<strong>補教像教改的一面鏡，隨時因應「需求」調整服務。如今各種補教新商機，都在反映家長、學生對108課綱的焦慮</strong>。
@@ -234,7 +238,31 @@ div#app(
         description="教育部107年到109年每年平均花16億，發展偏鄉教育相關計畫及推動教育優先區"
       )
       HaveQuestion
+  OfflineBanner
   PageFooter
+    RelatedArticle(
+      title="更多報導"
+
+      :img1="require('~/img/relate/r1.jpg')"
+      title1="報導-2"
+      text1=""
+      href1="https://udn.com"
+
+      :img2="require('~/img/relate/r2.jpg')"
+      title2="報導-2"
+      text2=""
+      href2="https://udn.com"
+
+      :img3="require('~/img/relate/r3.jpg')"
+      title3="報導-3"
+      text3=""
+      href3="https://udn.com"
+
+      :img4="require('~/img/relate/r4.jpg')"
+      title4="報導-4"
+      text4=""
+      href4="https://udn.com"
+    )
     Editor
       div
         p 製作人
@@ -283,9 +311,11 @@ import FbComment from '@/components/_common/footer/FbComment.vue';
 import FooterLogo from '@/components/_common/footer/FooterLogo.vue';
 import FooterShare from '@/components/_common/footer/FooterShare.vue';
 import PageBackTop from '@/components/_common/layout/PageBackTop.vue';
+import RelatedArticle from '@/components/_common/footer/RelatedArticle.vue';
 /* Footer */
 
 import ArticleCastAnchor from '@/components/_common/layout/ArticleCastAnchor.vue';
+import ArticleDictionary from '@/components/_common/layout/ArticleDictionary.vue';
 import Abstract from '@/components/abstract/Abstract.vue';
 import Budget from '@/components/abstract/Budget.vue';
 import ChaosList from '@/components/abstract/ChaosList.vue';
@@ -295,12 +325,16 @@ import ColumnOne from '@/components/_common/layout/ColumnOne.vue';
 import Cover from '@/components/Cover.vue';
 import HaveQuestion from '@/components/chapter/HaveQuestion.vue';
 import NextBanner from '@/components/chapter/NextBanner.vue';
+import OfflineBanner from '@/components/OfflineBanner.vue';
+import PageIndicator from '@/components/_common/layout/PageIndicator.vue';
+
 
 export default {
   name: 'App',
   mixins: [sendGaMethods],
   components: {
     ArticleCastAnchor,
+    ArticleDictionary,
     Abstract,
     Budget,
     ChaosList,
@@ -315,8 +349,11 @@ export default {
     HaveQuestion,
     HeaderType,
     NextBanner,
+    OfflineBanner,
     PageFooter,
     PageBackTop,
+    PageIndicator,
+    RelatedArticle,
   },
   methods: {
     addChapterObserver() {

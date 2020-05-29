@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { autoResize_2 } from '@/mixins/masterBuilder.js';
+import { autoResize_2, sendGaMethods } from '@/mixins/masterBuilder.js';
 
 export default {
   name: 'Card',
-  mixins: [autoResize_2],
+  mixins: [autoResize_2, sendGaMethods],
   props: {
     index: {
       type: Number,
@@ -160,6 +160,12 @@ export default {
       this.isCardActive = !this.isCardActive;
       this.$store.dispatch('updatedIsFocusOneCard', true);
       this.$store.dispatch('updatedCardActiveIndex', this.index);
+      
+      this.sendGA({
+        category: 'card',
+        action: 'click',
+        label: this.$store.state.cardActiveIndex
+      });
     },
     handleSpecCardLoop() {
       setTimeout(() => {

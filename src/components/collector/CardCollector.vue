@@ -1,11 +1,11 @@
 <template lang="pug">
 section.card-collector#card-collector(
   v-if="isDataReady"
-  :class="{ 'card-collector--disabled': shouldCollectorHide, 'card-collector--disabled-touch-action': $store.state.isEnterCollector }"
+  :class="cardCollectorClassAttr"
   draggable=false
 )
   article.cards#cards(
-    :class="{'cards--on-dragging': isOnDragging, '--disabled-pointer': $store.state.isEnterMainContent}"
+    :class="cardsClassAttr"
     draggable=false
   )
     CardBg(
@@ -29,6 +29,7 @@ section.card-collector#card-collector(
       :CARDS_INFO_TABLE="CARDS_INFO_TABLE"
       :CARD_OWN="CARD_OWN"
     )
+  Loader(v-if="!isWindowComplete")
   Exit
   div.card-collector__entrance-container(
     :class="{'--active-pointer': $store.state.isEnterMainContent }"
@@ -48,6 +49,7 @@ import CardBg from '@/components/collector/assemblies/CardBg.vue';
 import CardInfo from '@/components/collector/assemblies/CardInfo.vue';
 import Entrance from '@/components/collector/assemblies/Entrance.vue';
 import Exit from '@/components/collector/assemblies/Exit.vue';
+import Loader from '@/components/Loader.vue';
 
 const CARD_SIZE = {
   mob: 0.28,
@@ -62,7 +64,8 @@ export default {
     CardBg,
     CardInfo,
     Entrance,
-    Exit
+    Exit,
+    Loader,
   },
   data() {
     return {
@@ -70,6 +73,7 @@ export default {
       ed: new ErikoDragger(),
       shouldCollectorHide: false,
       isDataReady: false,
+      isWindowComplete: false,
       CARD_OWN: null,
       CARDS_INFO_TABLE: null,
       CARDS_INFO: null,
@@ -96,6 +100,19 @@ export default {
     CARD_SIZE() {
       return CARD_SIZE[this.DEVICE];
     },
+    cardCollectorClassAttr() {
+      return {
+        'card-collector--disabled': this.shouldCollectorHide,
+        'card-collector--disabled-touch-action': this.$store.state.isEnterCollector
+      };
+    },
+    cardsClassAttr() {
+      return {
+        'cards--on-dragging': this.isOnDragging,
+        'cards--loaded': !this.isWindowComplete,
+        '--disabled-pointer': this.$store.state.isEnterMainContent
+      };
+    },
   },
   methods: {
     handleScrollEvent: _debounce(function() {
@@ -105,8 +122,8 @@ export default {
         if(this.shouldCollectorHide) this.shouldCollectorHide = false;
       }
     }, 30),
-    handleDragStartEvent(edInfo) {
-      edInfo
+    handleDragStartEvent() {
+      return;
     },
     handleDragMovingEvent(edInfo) {
       this.isOnDragging = true;
@@ -121,9 +138,11 @@ export default {
         y: edInfo.dragTranslate.y || this.cardsTranslate.y
       };
     },
-    handleDragEndEvent(edInfo) {
+    handleDragEndEvent() {
       this.isOnDragging = false;
-      edInfo
+    },
+    handleWindowComplete() {
+      this.isWindowComplete = true;
     },
     initialData() {
       axios.get('./data/collector_config.json')
@@ -152,14 +171,16 @@ export default {
       await this.ed.launch();
     }
   },
-  mounted() {
-    this.initialData();
-    this.es.addScrollEvent(this.handleScrollEvent);
-    
-  },
   destroyed() {
     this.ed.removeDragger();
     this.es.removeScrollEvent(this.handleScrollEvent);
+  },
+  created() {
+    window.addEventListener("load", this.handleWindowComplete);
+    this.$nextTick(() => {
+      this.initialData();
+      this.es.addScrollEvent(this.handleScrollEvent);
+    });
   },
 }
 </script>
@@ -209,10 +230,11 @@ export default {
     background: transparent;
     cursor: pointer;
   }
-
-
-
-  .cards--on-dragging {
+  &.cards--loaded {
+    pointer-events: none;
+    opacity: 0.2;
+  }
+  &.cards--on-dragging {
     cursor: pointer;
   }
 }

@@ -173,6 +173,7 @@ export default {
       a {
         color: #f6f6f6;
         opacity: 0.7;
+        min-height: 1rem;
         &.active {
           color: #ffffff;
           opacity: 1;
@@ -193,6 +194,9 @@ export default {
       }
       a {
         color: #000000;
+        min-height: 1rem;
+        // line-height: 0;
+        // margin-bottom: 1rem;
         &.active {
           color: #787878;
           border-bottom: solid 1px #000000;

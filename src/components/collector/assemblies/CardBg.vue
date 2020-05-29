@@ -7,11 +7,11 @@ figure.card-bg(
 </template>
 
 <script>
-import { autoResize_2 } from '@/mixins/masterBuilder.js';
+import { autoResize_2, sendGaMethods } from '@/mixins/masterBuilder.js';
 
 export default {
   name: 'CardBg',
-  mixins: [autoResize_2],
+  mixins: [autoResize_2, sendGaMethods],
   props: {
     index: {
       type: Number,
@@ -34,6 +34,11 @@ export default {
   methods: {
     handleCardCloseClick() {
       this.$store.dispatch('updatedIsFocusOneCard', false);
+      this.sendGA({
+        category: 'close',
+        action: 'click',
+        label: this.$store.state.cardActiveIndex
+      });
     },
   },
 }
@@ -58,8 +63,8 @@ export default {
     transform: translateY(0);
   }
   &.card-bg--active-first-time {
-    transform: translateY(0) rotateX(-180deg);
-    // transform: translateY(0);
+    // transform: translateY(0) rotateX(-180deg);
+    transform: translateY(0);
   }
 }
 </style>

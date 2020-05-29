@@ -4,9 +4,10 @@
     :class="cardClassAttr"
     :style="{transform, left: `${position.left}px`, top: `${position.top}px`}"
   )
-    div.card__cover(v-show="!isCardActive" @click="handleCardClick()")
+    div.card__cover(@click="handleCardClick()")
       img(
         :id="`card__cover-${pos}`"
+        alt="card"
         :src="imgSrc"
         draggable=false
       )
@@ -67,7 +68,6 @@ export default {
       return {
         // click
         'card--active': this.isCardActive,
-        'card--hide': this.isCardActive && this.$store.state.isFocusOneCard,
         'card--no-transition': !this.isCardActive && this.$store.state.isFocusOneCard,
 
         // inside screen
@@ -95,19 +95,24 @@ export default {
       return this.isMob ? 1.25 : 0.75;
     },
     transform() {
+      // TODO: optimization
       if (this.isCardActive && !this.$store.state.isEnterMainContent) {
-        const x = this.dataAccumulatedDragTranslate.x + (window.innerWidth * 0.5 - (this.$el.getBoundingClientRect().left + window.innerHeight * this.cardSize * 0.75 * 0.5));
-        const y = this.dataAccumulatedDragTranslate.y + (window.innerHeight * 0.5 - (this.$el.getBoundingClientRect().top + 120));
+        const pos = this.$el.getBoundingClientRect();
+        const x = this.dataAccumulatedDragTranslate.x + (window.innerWidth * 0.5 - (pos.left + window.innerHeight * this.cardSize * 0.75 * 0.5));
+        const y = this.dataAccumulatedDragTranslate.y + (window.innerHeight * 0.5 - (pos.top + 120));
+
         return `translate(${x}px,${y}px) scale(0) rotateY(-180deg)`;
+        // return `translate(${x}px,${y}px) scale(0)`;
       }
       else if(this.$store.state.isEnterMainContent) {
+        const pos = this.$el.getBoundingClientRect();
         const OffsetDistance = this.isMob ? 80 : 120;
         const ramdonOffsetX = (Math.random() * 2 - 1) * OffsetDistance - (this.isMob ? 20 : 40);
         const ramdonOffsetY = (Math.random() * 2 - 1) * OffsetDistance - (this.isMob ? 150 : 60);
         const ramdonScale = Math.random() * 0.6;
 
-        const x = this.dataAccumulatedDragTranslate.x + window.innerWidth * 0.5 - this.$el.getBoundingClientRect().left + ramdonOffsetX;
-        const y = this.dataAccumulatedDragTranslate.y + (window.innerHeight * 0.5 - this.$el.getBoundingClientRect().top) + ramdonOffsetY;
+        const x = this.dataAccumulatedDragTranslate.x + window.innerWidth * 0.5 - pos.left + ramdonOffsetX;
+        const y = this.dataAccumulatedDragTranslate.y + (window.innerHeight * 0.5 - pos.top) + ramdonOffsetY;
         return `translate(${x}px,${y}px) scale(${ramdonScale})`;
       }
       else return `translate(${this.dataAccumulatedDragTranslate.x}px,${this.dataAccumulatedDragTranslate.y}px)`;
@@ -224,13 +229,10 @@ export default {
     transition: .5s;
     background-color: #ffffff;
   }
-  &.card--hide {
-    animation: fade-out .666s ease-in-out forwards;
-  }
   &.card--no-transition {
     pointer-events: none;
-    transition: 0 !important;
-    animation: fade-out .666  s ease-in-out forwards;
+    z-index: -1;
+    animation: fade-out .666s ease-in-out forwards;
   }
   &.card--ondragging {
     pointer-events: none;

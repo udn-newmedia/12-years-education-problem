@@ -176,7 +176,8 @@ export default {
     this.es.removeScrollEvent(this.handleScrollEvent);
   },
   created() {
-    window.addEventListener("load", this.handleWindowComplete);
+    this.isWindowComplete = true;
+    // window.addEventListener("load", this.handleWindowComplete);
     this.$nextTick(() => {
       this.initialData();
       this.es.addScrollEvent(this.handleScrollEvent);

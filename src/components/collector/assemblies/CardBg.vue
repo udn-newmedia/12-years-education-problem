@@ -55,8 +55,8 @@ export default {
   padding: 0;
   margin: 0;
   opacity: 0;
-  transform: translateY(100%);
-  transition: 1s ease-in-out;
+  transform: translateY(50%);
+  transition: .666s ease-in-out;
   cursor: default;
   &.card-bg--active {
     opacity: 1;

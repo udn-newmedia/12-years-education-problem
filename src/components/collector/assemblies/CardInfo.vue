@@ -2,12 +2,24 @@
 article.card.cards-info(
     :class="{'cards-info--active': $store.state.isFocusOneCard}"
   )
-    button.card__back-interface__close-bottom(@click="handleCardCloseClick()")
+    button.card__back-interface__close-bottom(
+      @click="handleCardCloseClick()"
+      aria-label="close"
+      name="close"
+    )
       Cross
-    button.card__back-interface__next-bottom(@click="handleCardNextClick()")
+    button.card__back-interface__next-bottom(
+      @click="handleCardNextClick()"
+      aria-label="next"
+      name="next"
+    )
       Arrow(v-if="deviceType === 'pc'" dir="right")
       Arrow(v-else dir="down")
-    button.card__back-interface__prev-bottom(@click="handleCardPrevClick()")
+    button.card__back-interface__prev-bottom(
+      @click="handleCardPrevClick()"
+      aria-label="prev"
+      name="prev"
+    )
       Arrow(v-if="deviceType === 'pc'" dir="left")
       Arrow(v-else dir="up")
     p.card__back-interface__expection(
@@ -138,6 +150,7 @@ export default {
   background-color: #ffffff;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0) rotateY(-180deg);
+  // transform: translate(-50%, -50%) scale(0);
   transition: .333s;
   cursor: default;
   @include pad {
@@ -153,9 +166,8 @@ export default {
   &.cards-info--active {
     pointer-events: auto;
     opacity: 1;
-    transition: 1s;
     transition: .666s .5s;
-    transform: translate(-50%, -50%) scale(1) rotateY(0);
+    transform: translate(-50%, -50%);
   }
 
 

@@ -22,12 +22,17 @@ article.card.cards-info(
     )
       Arrow(v-if="deviceType === 'pc'" dir="left")
       Arrow(v-else dir="up")
-    p.card__back-interface__expection(
-      :class="{'--show-opacity': $store.state.isFocusOneCard}"
-    ) 台灣教育期待：...<br>{{cardInfo.expection}}
-    p.card__back-interface__truth(
-      :class="{'--show-opacity': $store.state.isFocusOneCard}"
-    ) 現實是：{{cardInfo.truth}}
+
+    p.card__back-interface__expection 台灣教育期待：...<br>
+      span(
+        v-for="item in Object.keys(CARDS_INFO_TABLE)" :key="item"
+        v-show="$store.state.cardActiveIndex === +item"
+      ) {{CARDS_INFO[CARDS_INFO_TABLE[item]].expection}}
+    p.card__back-interface__truth 現實是：<br>
+      span(
+        v-for="item in Object.keys(CARDS_INFO_TABLE)" :key="item"
+        v-show="$store.state.cardActiveIndex === +item"
+      ) {{CARDS_INFO[CARDS_INFO_TABLE[item]].truth}}
 </template>
 
 <script>
@@ -66,15 +71,6 @@ export default {
     }
   },
   computed: {
-    cardInfo() {
-      if (this.$store.state.cardActiveIndex < 1) return { expection: null, truth: null };
-
-      const info = this.CARDS_INFO[this.CARDS_INFO_TABLE[(this.$store.state.cardActiveIndex - 1) % this.CARD_OWN + 1]];
-      const expection = info.expection;
-      const truth = info.truth;
-
-      return { expection, truth };
-    },
     isFocusOneCard() {
       return this.$store.state.isFocusOneCard;
     }
@@ -173,12 +169,10 @@ export default {
 
 
   .card__back-interface__expection {
-    opacity: 0;
     color: #e54848;
     margin-bottom: 1rem;
   }
   .card__back-interface__truth {
-    opacity: 0;
     color: #121428;
     font-weight: bold;
   }

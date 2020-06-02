@@ -24,6 +24,9 @@
         'nmd-button__ripple': true,
         'nmd-button__ripple--hover': hoverFlag
       }"
+      :style="{
+        backgroundColor: rippleColor
+      }"
     />
     <div class="nmd-button__text">
       <p class="small"
@@ -48,6 +51,10 @@ export default {
     bgColor: {
       type: String,
       default: '#ededed'
+    },
+    rippleColor: {
+      type: String,
+      default: '#ababab'
     },
     theme: {
       type: String,
@@ -152,7 +159,6 @@ export default {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background-color: #ababab;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0);
     transition: .333s ease-in-out;

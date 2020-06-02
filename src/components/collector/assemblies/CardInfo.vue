@@ -23,7 +23,7 @@ article.card.cards-info(
       Arrow(v-if="deviceType === 'pc'" dir="left")
       Arrow(v-else dir="up")
 
-    p.card__back-interface__expection 台灣教育期待：...<br>
+    p.card__back-interface__expection 台灣教育期待：<br>
       span(
         v-for="item in Object.keys(CARDS_INFO_TABLE)" :key="item"
         v-show="$store.state.cardActiveIndex === +item"

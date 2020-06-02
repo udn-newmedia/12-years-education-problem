@@ -81,7 +81,7 @@ $red: #a72626;
     margin-bottom: 32px;
   }
   h2 {
-    font-family: source-han-seri-tc;
+    font-family: source-han-serif-tc;
     text-align: center;
     margin: 0;
   }

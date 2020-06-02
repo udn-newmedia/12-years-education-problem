@@ -2,7 +2,7 @@
   footer.exit-container(
     :class="{'exit-container--active': $store.state.isEnterCollector || $store.state.isFocusOneCard}"
   )
-    p.small 無效預算？揭露108課綱五大亂象
+    p.small 揭露108課綱五大亂象
     button.exit-button(
       @click="handleExit"
       aria-label="enter project"
@@ -13,7 +13,7 @@
         bgColor="#93acff"
         theme="outlined"
         border="m"
-        size="s"
+        size="m"
       ) 進專題
 </template>
 
@@ -59,13 +59,12 @@ export default {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 72px;
+  height: 96px;
   color: #93acff;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #031128;
-  opacity: 0.9;
   transform: translateY(100%);
   transition: .750s;
 }

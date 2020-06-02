@@ -149,6 +149,7 @@ $red: #ba4141;
     }
   }
   .chapter-banner__left {
+    opacity: 0;
     width: 20%;
     margin-right: 16px;
     text-align: right;
@@ -159,7 +160,7 @@ $red: #ba4141;
       display: inline-block;
       margin-top: 0;
       color: $red;
-      font-family: SourceHanSerifTC;
+      font-family: source-han-serif-tc;
       font-weight: 900;
       writing-mode: vertical-lr;
       letter-spacing: 0.8rem;
@@ -175,6 +176,7 @@ $red: #ba4141;
       width: 70%;
     }
     .chapter-banner__img-container {
+      opacity: 0;
       position: relative;
       margin: 0;
       width: 100%;
@@ -189,7 +191,7 @@ $red: #ba4141;
     h2 {
       color: $red;
       white-space: pre-wrap;
-      font-family: SourceHanSerifTC;
+      font-family: source-han-serif-tc;
       margin-bottom: 16px;
       @include pc {
         margin-bottom: 48px;

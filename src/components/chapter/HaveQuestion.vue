@@ -21,10 +21,11 @@ section.have-question
           NmdButton(
             textColor="#cf5454"
             bgColor="#cf5454"
+            rippleColor="#cf5454"
             theme="outlined"
             border="m"
             size="m"
-          ) 新生蒐集
+          ) 心聲蒐集
 </template>
 
 <script>

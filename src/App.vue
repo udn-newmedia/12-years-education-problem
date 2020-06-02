@@ -30,18 +30,19 @@ div#app(
     ) 更多課綱相關報導
   Cover
     h2(slot="prembleTitle") 新課綱上路一年<br>理想與現實的差距<br>有多大？
-    p(slot="prembleText") 一張張美好明亮的圖卡，<br>是台灣教育對孩子的期待，<br>現況與理想之間，<br>還有多大的差距。
+    p(slot="prembleText") 一張張美好明亮的圖卡，<br>是台灣教育對孩子的期待，<br>現況與理想之間，<br>還有多大的差距？
     h1(slot="gate") 無效預算？<br>揭露108課綱<br>五大亂象
   main
     Abstract
       article.article
         Budget
           p 影響全台240萬學生的108課綱（十二年國教課程綱要）2019年正式實施，是台灣近20年最大一波教育改革，政府砸入大筆經費推動—教育預算年年增，是僅次社會保險、國防的第三大支出；2020年12年國教「專屬」預算高達341億，超越外交部、文化部等部會整年度預算。
-          ColumnOne(
-            :srcMob="require('~/img/chart/data_m.svg')"
-            :srcPad="require('~/img/chart/data_m.svg')"
-            :srcPc="require('~/img/chart/data.svg')"
-          )
+          div.article-narrow
+            ColumnOne(
+              :srcMob="require('~/img/chart/data_m.svg')"
+              :srcPad="require('~/img/chart/data_m.svg')"
+              :srcPc="require('~/img/chart/data.svg')"
+            )
         ChaosList
           p 但新課綱的推動，並沒有因為高額預算就一帆風順。被教育界喻為20年大躍進的這場新教改，《聯合報》追蹤調查，教學現場出現五大亂象，讓課綱精神變了調：
           table
@@ -425,6 +426,15 @@ export default {
   &.app-in-collector {
     overflow: hidden;
     max-height: 100vh;
+  }
+  h2 {
+    font-family: source-han-serif-tc;
+  }
+  .article-narrow {
+    padding: 0 12.5%;
+    @include pc {
+      padding: 0 17.5%;
+    }
   }
 }
 main {

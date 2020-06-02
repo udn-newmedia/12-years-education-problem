@@ -91,10 +91,10 @@ export default {
     align-items: center;
     color: #ffffff;
     padding-bottom: 10vh;
-    background-color: rgba($color: #000000, $alpha: 0.7);
+    background-color: rgba($color: #000000, $alpha: 0.8);
 
     h2 {
-      font-family: source-han-seri-tc;
+      font-family: source-han-serif-tc;
       font-weight: bold;
       text-align: center;
       margin-bottom: 32px;
@@ -144,7 +144,8 @@ export default {
       background-image: url('../assets/img/gate/cover_door_mob.png');
       background-size: cover;
       background-position: center;
-      transition: 2s .5s ease;
+      // transition: 2s .5s ease;
+      transition: 2s ease;
       transform-origin: center 25%;
       @include pad {
         background-image: url('../assets/img/gate/cover_door_pad.png');
@@ -187,7 +188,7 @@ export default {
     }
   }
   h1 {
-    font-family: source-han-seri-tc;
+    font-family: source-han-serif-tc;
     font-weight: bold;
     margin-bottom: 32px;
     br:nth-child(2) {

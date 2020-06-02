@@ -56,7 +56,7 @@ $speed: 3s;
 $peakopacity:0.7;
 $color: #fff;
 .ScrollDownArrow {
-  margin: 0 auto;
+  // margin: 0 auto;
   .arrows {
     position: relative;
     cursor: pointer;

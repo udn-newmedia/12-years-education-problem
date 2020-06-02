@@ -7,6 +7,7 @@ section.cover#cover
     slot(name="prembleTitle")
     slot(name="prembleText")
     footer.cover__preamble__arrow-container
+      p.small 下滑點按圖卡
       NmdArrow(iconColor="#cecece")
   article.cover__block.cover__gate#gate
     div.cover__collector-container(:class="{'cover__collector-container--fixed': !$store.state.isEnterMainContent}")
@@ -90,7 +91,7 @@ export default {
     align-items: center;
     color: #ffffff;
     padding-bottom: 10vh;
-    background-color: #000000aa;
+    background-color: rgba($color: #000000, $alpha: 0.7);
 
     h2 {
       font-family: source-han-seri-tc;
@@ -100,6 +101,7 @@ export default {
     }
     p {
       text-align: center;
+      color: #ae9f9f;
       br:nth-child(odd) {
         @include pc {
           display: none;
@@ -108,9 +110,17 @@ export default {
     }
     .cover__preamble__arrow-container {
       position: absolute;
-      left: 50%;
+      left: 0;
       bottom: 10%;
-      transform: translateX(-50%);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      p {
+        margin-bottom: 16px;
+        color: #ffffff;
+      }
     }
   }
   .cover__gate {

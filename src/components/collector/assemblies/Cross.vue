@@ -30,11 +30,11 @@ export default {
     transition: .333s;
   }
   .cross-line--left {
-    transform: translateX(calc(100% - 0.5px)) rotate(45deg);
+    transform: translateX(100%) rotate(45deg);
     right: 0;
   }
   .cross-line--right {
-    transform: translateX(calc(-100%)) rotate(-45deg);
+    transform: translateX(-100%) rotate(-45deg);
     left: 0;
   }
 }

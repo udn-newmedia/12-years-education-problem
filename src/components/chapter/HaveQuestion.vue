@@ -58,6 +58,7 @@ export default {
   h2 {
     writing-mode: vertical-lr;
     margin: 0 auto;
+    max-height: 12rem;
     color: #ba4141;
     text-shadow: 0 3px 17px rgba(0, 0, 0, 0.12);
     font-family: source-han-seri-tc;

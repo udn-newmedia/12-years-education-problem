@@ -199,6 +199,9 @@ export default {
   }
   &.card-collector--disabled-touch-action {
     touch-action: none;
+    @include pc {
+      touch-action: auto;
+    }
   }
 
 

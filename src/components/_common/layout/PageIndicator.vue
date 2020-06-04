@@ -45,7 +45,7 @@ export default {
           this.ticking = false;
 
           const progress = Math.floor(this.readProgress / 10);
-          if (progress > this.lastStage) {
+          if (progress > this.lastStage && progress <= 100) {
             this.lastStage = progress;
             this.sendGA({
               category: 'read',
@@ -56,7 +56,7 @@ export default {
         });
       }
       this.ticking = true;
-    }, 100),
+    }, 30),
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll, { passive: true });

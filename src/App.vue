@@ -310,6 +310,7 @@ div#app(
 
 <script>
 import { sendGaMethods } from '@/mixins/masterBuilder.js';
+import InApp from 'detect-inapp';
 
 /* Header */
 import HeaderType from '@/components/_common/header/HeaderType.vue';
@@ -413,6 +414,26 @@ export default {
   mounted() {
     this.addChapterObserver();
     this.addNextChapterObserver();
+  },
+  created() {
+    // 處理inapp browser window.innerWidth問題
+    (function() {
+      const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera);
+      let currentWidth = window.innerWidth;
+      let executeCount = 0;
+      if (inapp.isInApp) {
+        const inappWidthListener = setInterval(() => {
+          executeCount++;
+          if (window.innerWidth !== currentWidth) {
+            window.location.reload();
+            currentWidth = window.innerWidth;
+          }
+          if (executeCount > 10) {
+            clearInterval(inappWidthListener);
+          }
+        }, 100);
+      }
+    })();
   },
 }
 </script>

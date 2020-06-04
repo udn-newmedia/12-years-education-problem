@@ -164,6 +164,7 @@ export default {
 <style lang="scss" scoped>
 .header-bar {
   position: fixed;
+  pointer-events: none;
   top: 0;
   left: 0;
   width: 100%;
@@ -171,6 +172,7 @@ export default {
   z-index: 4999;
   .header-bar__logo {
     position: absolute;
+    pointer-events: auto;
     z-index: 10;
     top: 0;
     left: 0;
@@ -200,6 +202,7 @@ export default {
   }
   .header-bar__nav {
     position: relative;
+    pointer-events: auto;
     z-index: 2;
     display: flex;
     justify-content: space-between;
@@ -227,11 +230,13 @@ export default {
   }
   .header-bar__share-container {
     position: absolute;
+    pointer-events: auto;
     top: 0;
     right: 0;
   }
   .header-bar__anchor-mob {
     position: absolute;
+    pointer-events: auto;
     top: 0;
     left: 0;
     width: 100%;
@@ -251,6 +256,7 @@ export default {
   }
   .header-bar__anchor-pc {
     position: relative;
+    pointer-events: auto;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -273,6 +279,7 @@ export default {
   }
   .haeder-bar__menu-button-container {
     position: relative;
+    pointer-events: auto;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "detect-inapp": "^1.4.0",
     "eriko-dragger.js": "^1.1.0",
     "eriko-scroller.js": "^1.0.11",
     "intersection-observer": "^0.10.0",

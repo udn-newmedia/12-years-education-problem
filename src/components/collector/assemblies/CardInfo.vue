@@ -149,6 +149,10 @@ export default {
   // transform: translate(-50%, -50%) scale(0);
   transition: .333s;
   cursor: default;
+  @include smob {
+    height: 280px;
+    padding: 24px 40px;
+  }
   @include pad {
     width: 80vw;
     padding: 40px 80px;
@@ -200,7 +204,7 @@ export default {
     @include clean-btn;
   }
   .card__back-interface__next-bottom {
-    top: -8px;
+    top: 8px;
     transform: translate(-50%, -100%);
     @include pc {
       right: -8px;
@@ -210,7 +214,7 @@ export default {
     }
   }
   .card__back-interface__prev-bottom {
-    bottom: -8px;
+    bottom: 8px;
     transform: translate(-50%, 100%);
     @include pc {
       left: -8px;

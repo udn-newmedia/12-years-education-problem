@@ -203,7 +203,7 @@ $red: #ba4141;
     padding: 0 1.315rem;
     td {
       vertical-align: top;
-      min-width: 70px;
+      min-width: 4.5rem;
       line-height: 1.7;
       li.li--white {
         color: #bababa;

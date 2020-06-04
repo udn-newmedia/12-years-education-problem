@@ -7,7 +7,7 @@ section.have-question
     div.have-question__collector
       p 你對台灣教育、上路一年的108課綱有話想說嗎？歡迎寫下看法，《聯合報》今年將持續追蹤報導此波教改，你的心聲與建議，都是我們的重要報導線索。
       a(
-        href="#"
+        href="https://udn.com/newmedia/2020/12-years-education/collect/"
         target="_blank"
         rel="noopener"
         aria-label="have question"

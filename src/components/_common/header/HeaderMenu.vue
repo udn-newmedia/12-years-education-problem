@@ -186,12 +186,12 @@ export default {
       }
     }
     &.header-menu__content-light {
-      background-color: rgba(#ffffff, 0.8);
-      @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-        backdrop-filter: blur(8px);
-        box-shadow: 0 0 10px 0 rgba(165, 165, 165, 0.23);
-        background-color: rgba(#ffffff, 0.8);
-      }
+      background-color: #ffffff;
+      // @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+      //   backdrop-filter: blur(8px);
+      //   box-shadow: 0 0 10px 0 rgba(165, 165, 165, 0.23);
+      //   background-color: rgba(#ffffff, 0.8);
+      // }
       a {
         color: #000000;
         min-height: 1rem;

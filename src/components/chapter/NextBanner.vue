@@ -87,6 +87,11 @@ $red: #a72626;
   }
   .h2--red {
     color: $red;
+    line-height: 1.5;
+    font-size: 3rem;
+    @include pc {
+      font-size: 3.75rem;
+    }
   }
 }
 .next-banner__next {

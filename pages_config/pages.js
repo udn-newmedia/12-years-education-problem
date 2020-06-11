@@ -11,8 +11,8 @@ const footerContent = contentGenerator('../contents/footer.html');
 // const mainPage = 'https://udn.com/newmedia/2020/12-years-education/';
 
 /* 測試路徑 */
-const pathRoot = process.env.NODE_ENV === 'production' ? 'http://nmdap.udn.com.tw/test/12-years-education/problem/' : './';
-const mainPage = 'http://nmdap.udn.com.tw/test/12-years-education/';
+const pathRoot = process.env.NODE_ENV === 'production' ? 'http://nmdap.udn.com.tw/newmedia/2020/12-years-education/problem/' : './';
+const mainPage = 'http://nmdap.udn.com.tw/newmedia/2020/12-years-education/';
 
 /* 作者 */
 const author = '洪欣慈、張心慈、楊若榆、林秀姿、潘乃欣、喻文玟、鄭惠仁、羅紹平、翁禎霞、卜敏正、徐如宜、李京昇、王駿杰、陳夢茹、魏翊庭、章凱閎';

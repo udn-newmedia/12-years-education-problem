@@ -1,0 +1,57 @@
+{
+  "name": "12-years-education-problem",
+  "version": "0.1.0",
+  "author": "freddycro",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "core-js": "^3.6.4",
+    "detect-inapp": "^1.4.0",
+    "eriko-dragger.js": "^1.1.0",
+    "eriko-scroller.js": "^1.0.11",
+    "intersection-observer": "^0.10.0",
+    "lodash.debounce": "^4.0.8",
+    "vue": "^2.6.11",
+    "vue-scrollto": "^2.18.1",
+    "vuex": "^3.3.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.3.0",
+    "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-service": "~4.3.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "html-minifier": "^4.0.0",
+    "normalize-scss": "^7.0.1",
+    "pug-html-loader": "^1.1.5",
+    "pug-plain-loader": "^1.0.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

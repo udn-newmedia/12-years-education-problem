@@ -187,16 +187,9 @@ export default {
     }
     &.header-menu__content-light {
       background-color: #ffffff;
-      // @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-      //   backdrop-filter: blur(8px);
-      //   box-shadow: 0 0 10px 0 rgba(165, 165, 165, 0.23);
-      //   background-color: rgba(#ffffff, 0.8);
-      // }
       a {
         color: #000000;
         min-height: 1rem;
-        // line-height: 0;
-        // margin-bottom: 1rem;
         &.active {
           color: #787878;
           border-bottom: solid 1px #000000;

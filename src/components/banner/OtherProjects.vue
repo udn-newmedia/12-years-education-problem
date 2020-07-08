@@ -15,7 +15,7 @@
           'item-first': i === 0,
         }"
         :style="{
-          opacity: (i === active || (i === 1 && !isAfterOnlineDate)) && 0.4,
+          opacity: i === active && 0.4,
           cursor: (i === active || (i === 1 && !isAfterOnlineDate)) && 'auto',
         }"
         @mouseenter="hoverItem(i)"
@@ -33,7 +33,9 @@
         </div>
         <div class="otherprojects-subtitle-wrapper">
           <span class="otherprojects-subtitle">
-            <span class="underline">{{ item.title }}</span>
+            <!-- <span class="underline">{{ item.title }}</span> -->
+            <span class="underline" v-html="item.title" />
+            <br />
             <span class="online" v-if="item.online">{{ item.online }}</span>
           </span>
         </div>
@@ -49,123 +51,121 @@
       />
     </ul>
 
-    <a href="https://udn.com/search/word/2/108課綱" class="otherprojects-link"
-      >更多課綱相關報導</a
-    >
+    <a href="https://udn.com/search/word/2/108課綱" class="otherprojects-link">更多課綱相關報導</a>
   </div>
 </template>
 
 <script>
-import content from "./data/content";
-import { sendGaMethods } from "@/mixins/masterBuilder.js";
-import isAfterOnlineDate from "@/mixins/handleOnlineDate.js";
+import content from './data/content'
+import { sendGaMethods } from '@/mixins/masterBuilder.js'
+import isAfterOnlineDate from '@/mixins/handleOnlineDate.js'
 
 export default {
-  name: "OtherProjects",
+  name: 'OtherProjects',
   props: {
     theme: {
       type: String,
-      default: "dark",
+      default: 'dark',
     },
     isNotRoot: { type: Boolean, default: true },
   },
   data() {
     return {
       dataArray: content.otherProjects,
-      windowSize: "web",
+      windowSize: 'web',
       active: null,
       hovered: null,
       activePage: 0,
-    };
+    }
   },
   mixins: [sendGaMethods, isAfterOnlineDate],
   methods: {
     checkWindowSize() {
-      if (window.innerWidth < 768) {
-        this.windowSize = "mob";
+      if (window.innerWidth <= 768) {
+        this.windowSize = 'mob'
       } else {
-        this.windowSize = "web";
+        this.windowSize = 'web'
       }
     },
     hoverItem(i) {
       if (
-        this.windowSize === "web" &&
+        this.windowSize === 'web' &&
         i !== this.active &&
         (i !== 1 || !isAfterOnlineDate)
       ) {
-        this.hovered = i;
+        this.hovered = i
       }
     },
     unHoverItem() {
-      this.hovered = null;
+      this.hovered = null
     },
     containerScrollHandler() {
-      if (this.windowSize === "mob") {
+      if (this.windowSize === 'mob') {
         const {
           scrollLeft,
           scrollWidth,
           offsetWidth,
-        } = this.$refs.otherprojectsContainer;
+        } = this.$refs.otherprojectsContainer
         for (let i = 0; i < this.dataArray.length; i++) {
           if (
             scrollLeft >
             ((scrollWidth - offsetWidth) * (2 * i - 1)) /
               (2 * (this.dataArray.length - 1))
           ) {
-            this.activePage = i;
+            this.activePage = i
           }
         }
       }
     },
     getActive() {
-      const currentURL = window.location.href;
+      const currentURL = window.location.href
 
-      if (currentURL.indexOf("../problem") !== -1) {
-        this.active = 0;
-      } else if (currentURL.indexOf("/poll") !== -1) {
-        this.active = 1;
-      } else if (currentURL.indexOf("/data") !== -1) {
-        this.active = 2;
-      } else if (currentURL.indexOf("/story") !== -1) {
-        this.active = 4;
-      } else if (currentURL.indexOf("/collect") !== -1) {
-        this.active = 5;
+      if (currentURL.indexOf('../problem') !== -1) {
+        this.active = 0
+      } else if (currentURL.indexOf('/poll') !== -1) {
+        this.active = 1
+      } else if (currentURL.indexOf('/data') !== -1) {
+        this.active = 2
+      } else if (currentURL.indexOf('/story') !== -1) {
+        this.active = 4
+      } else if (currentURL.indexOf('/collect') !== -1) {
+        this.active = 5
       } else {
-        this.active = 3;
+        this.active = 3
       }
     },
     goToOther(index) {
       if (index !== this.active) {
         this.sendGA({
-          category: "related",
-          action: "click",
+          category: 'related',
+          action: 'click',
           label: index + 1,
-        });
+        })
       }
     },
     operatedLink(link, index) {
       if (index === this.active || (index === 1 && isAfterOnlineDate)) {
-        return "javascript:void(0);";
+        return 'javascript:void(0);'
       } else {
-        return this.isNotRoot ? `.${link}` : link;
+        return this.isNotRoot ? `.${link}` : link
       }
     },
   },
   mounted() {
-    window.addEventListener("scroll", this.checkWindowSize);
+    window.addEventListener('scroll', this.checkWindowSize)
     document
-      .querySelector(".otherprojects-container")
-      .addEventListener("scroll", this.containerScrollHandler);
-    this.checkWindowSize();
-    this.getActive();
+      .querySelector('.otherprojects-container')
+      .addEventListener('scroll', this.containerScrollHandler)
+    this.checkWindowSize()
+    this.getActive()
   },
   destroyed() {
-    window.removeEventListener("scroll", this.checkWindowSize);
+    window.removeEventListener('scroll', this.checkWindowSize)
     document
-      .querySelector(".otherprojects-container")
-      .removeEventListener("scroll", this.containerScrollHandler);
+      .querySelector('.otherprojects-container')
+      .removeEventListener('scroll', this.containerScrollHandler)
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .otherprojects-wrapper {
@@ -178,7 +178,7 @@ export default {
     padding: 0 0 100px;
   }
   .otherprojects-title {
-    font-family: "Noto Sans TC", "Microsoft JhengHei", Roboto, sans-serif;
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', Roboto, sans-serif;
     font-size: 20px;
     font-weight: 500;
     line-height: 2.56;
@@ -199,7 +199,7 @@ export default {
       max-width: 33.33%;
       height: 30.14vh;
       margin: 5.56vh 0;
-      padding: 0 15px;
+      padding: 0 7.5px;
       @media screen and (max-width: 768px) {
         flex: 0 0 340px;
         max-width: 340px;
@@ -208,12 +208,13 @@ export default {
       @media screen and (max-width: 414px) {
         flex: 0 0 280px;
         max-width: 280px;
-        height: 315px;
+        // height: 315px;
+        height: 340px;
       }
       @media screen and (max-width: 374.99px) {
         flex: 0 0 200px;
         max-width: 200px;
-        height: 225px;
+        // height: 225px;
       }
       .otherprojects-image {
         max-width: 100%;
@@ -227,7 +228,7 @@ export default {
         display: flex;
         justify-content: flex-start;
         .otherprojects-subtitle {
-          font-family: "Microsoft JhengHei", Roboto, sans-serif;
+          font-family: 'Microsoft JhengHei', Roboto, sans-serif;
           font-size: 18px;
           line-height: 1.7;
           justify-self: start;
@@ -249,7 +250,7 @@ export default {
             }
           }
           @media screen and (max-width: 768px) {
-            text-align: center;
+            text-align: left;
           }
         }
       }
@@ -316,6 +317,9 @@ export default {
         }
       }
     }
+    // @media screen and (max-width: 414px) {
+    //   margin-top: 50px;
+    // }
   }
 
   .otherprojects-link {

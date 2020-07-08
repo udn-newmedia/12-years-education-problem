@@ -53,9 +53,6 @@ export default {
 .have-question {
   padding: 32px 0;
   min-height: 80vh;
-  @include pc {
-    min-height: 55vh;
-  }
   h2 {
     writing-mode: vertical-lr;
     margin: 0 auto;

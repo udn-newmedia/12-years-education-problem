@@ -20,20 +20,20 @@ import marketingBg2 from "@/assets/img/marketing/banner_bg2.jpg";
 const content = {
   otherProjects: [
     {
-      title: "無效預算？揭露108課綱五大亂象",
+      title: "無效預算？<br/>揭露108課綱五大亂象",
       img: { web: otherProjectsWebImg1, mob: otherProjectsMobImg1 },
       id: `${otherProjectsWebImg1}${otherProjectsMobImg1}`,
       link: "./problem/",
     },
     {
-      title: "【108課綱大調查】 升學主義 教師心中的教改殺手",
+      title: "【108課綱大調查】<br/>升學主義 教師心中的教改殺手",
       img: { web: otherProjectsWebImg2, mob: otherProjectsMobImg2 },
       id: `${otherProjectsWebImg2}${otherProjectsMobImg2}`,
       link: "./poll/",
       online: "  (7/13上線) ",
     },
     {
-      title: "最不快樂的世代 看懂台灣教育",
+      title: "最不快樂的世代<br/>10個關鍵數字 看懂台灣教育",
       img: { web: otherProjectsWebImg3, mob: otherProjectsMobImg3 },
       id: `${otherProjectsWebImg3}${otherProjectsMobImg3}`,
       link: "./data/",
@@ -45,13 +45,13 @@ const content = {
       link: "./",
     },
     {
-      title: "她的家庭 是台灣升學主義縮影",
+      title: "她的家庭<br/>是台灣升學主義縮影",
       img: { web: otherProjectsWebImg5, mob: otherProjectsMobImg5 },
       id: `${otherProjectsWebImg5}${otherProjectsMobImg5}`,
       link: "./story/",
     },
     {
-      title: "當台灣學生好可憐？寫下你的教改心聲",
+      title: "當台灣學生好可憐？<br/>寫下你的教改心聲",
       img: { web: otherProjectsWebImg6, mob: otherProjectsMobImg6 },
       id: `${otherProjectsWebImg6}${otherProjectsMobImg6}`,
       link: "./collect/",

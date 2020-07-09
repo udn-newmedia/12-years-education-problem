@@ -41,6 +41,14 @@ div#app(
       rel="noopener"
       @click="sendGA({category: 'menu', action: 'click', label: '寫下你的教改心聲'})"
     ) 寫下你的教改心聲
+    a(
+      href="https://udn.com/search/word/2/108課綱"
+      target="_blank"
+      rel="noopener"
+      aria-label="outlink"
+      name="outlink"
+      @click="sendGA({category: 'menu', action: 'click', label: '更多課綱相關報導'})"
+    ) 更多課綱相關報導
   Cover
     h2(slot="prembleTitle") 新課綱上路一年<br>理想與現實的差距<br>有多大？
     p(slot="prembleText") 一張張美好明亮的圖卡，<br>是台灣教育對孩子的期待，<br>現況與理想之間，<br>還有多大的差距？

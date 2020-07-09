@@ -36,7 +36,7 @@
             <!-- <span class="underline">{{ item.title }}</span> -->
             <span class="underline" v-html="item.title" />
             <br />
-            <span class="online" v-if="item.online">{{ item.online }}</span>
+            <span class="online" v-if="item.online&& !isAfterOnlineDate">{{ item.online }}</span>
           </span>
         </div>
       </a>
@@ -120,7 +120,7 @@ export default {
     getActive() {
       const currentURL = window.location.href
 
-      if (currentURL.indexOf('../problem') !== -1) {
+      if (currentURL.indexOf('/problem') !== -1) {
         this.active = 0
       } else if (currentURL.indexOf('/poll') !== -1) {
         this.active = 1

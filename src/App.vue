@@ -11,21 +11,42 @@ div#app(
       rel="noopener"
     ) 揭露課綱五大亂象
     a(
-      href="https://udn.com/newmedia/2020/12-years-education/data/"
+      :class="{'header-menu-link--disabled': !isAfterOnlineDate}"
+      :href="isAfterOnlineDate ? '../poll/' : '#'"
+      target="_blank"
+      rel="noopener"
+      @click="sendGA({category: 'menu', action: 'click', label: '108課綱上路周年大調查'})"
+    ) <span v-if="isAfterOnlineDate">108</span>課綱上路周年大調查<span  v-if="!isAfterOnlineDate"class="menu-item__online-date">（07/13上線）</span>
+    a(
+      href="../data/"
       target="_blank"
       rel="noopener"
       @click="sendGA({category: 'menu', action: 'click', label: '台灣教育關鍵數字'})"
     ) 台灣教育關鍵數字
     a(
-      href="https://udn.com/newmedia/2020/12-years-education/collect/"
+      href="../"
       target="_blank"
       rel="noopener"
-      @click="sendGA({category: 'menu', action: 'click', label: '關於108課綱 我想說......'})"
-    ) 關於108課綱 我想說......
+      @click="sendGA({category: 'menu', action: 'click', label: '台灣教改為何總失敗'})"
+    ) 台灣教改為何總失敗
     a(
-      href="https://udn.com/search/word/2/108%E8%AA%B2%E7%B6%B1"
+      href="../story/"
       target="_blank"
       rel="noopener"
+      @click="sendGA({category: 'menu', action: 'click', label: '一個家庭看台灣升學主義'})"
+    ) 一個家庭看台灣升學主義
+    a(
+      href="../collect/"
+      target="_blank"
+      rel="noopener"
+      @click="sendGA({category: 'menu', action: 'click', label: '寫下你的教改心聲'})"
+    ) 寫下你的教改心聲
+    a(
+      href="https://udn.com/search/word/2/108課綱"
+      target="_blank"
+      rel="noopener"
+      aria-label="outlink"
+      name="outlink"
       @click="sendGA({category: 'menu', action: 'click', label: '更多課綱相關報導'})"
     ) 更多課綱相關報導
   Cover
@@ -249,31 +270,9 @@ div#app(
         description="教育部107年到109年每年平均花16億，發展偏鄉教育相關計畫及推動教育優先區"
       )
       HaveQuestion
-  OfflineBanner
+  Marketing
   PageFooter
-    RelatedArticle(
-      title="更多報導"
-
-      :img1="require('~/img/relate/r1.jpg')"
-      title1="報導-2"
-      text1=""
-      href1="https://udn.com"
-
-      :img2="require('~/img/relate/r2.jpg')"
-      title2="報導-2"
-      text2=""
-      href2="https://udn.com"
-
-      :img3="require('~/img/relate/r3.jpg')"
-      title3="報導-3"
-      text3=""
-      href3="https://udn.com"
-
-      :img4="require('~/img/relate/r4.jpg')"
-      title4="報導-4"
-      text4=""
-      href4="https://udn.com"
-    )
+    OtherProjects
     Editor
       div
         p 製作人
@@ -294,14 +293,14 @@ div#app(
         p 插畫
         p Huyu、董十行
       div
-        p 製作單位
-        p 聯合報新媒體中心、<br>視覺設計中心、<br>數據中心
-      div
         p 監製
         p 蕭衡倩
       div
+        p 製作單位
+        p 聯合報新媒體中心、<br>視覺設計中心、<br>數據中心
+      div
         p 
-        p 2020.07
+        p 2020.07.09
     FooterShare
     FbComment
     FooterLogo
@@ -310,6 +309,7 @@ div#app(
 
 <script>
 import { sendGaMethods } from '@/mixins/masterBuilder.js';
+import isAfterOnlineDate from '@/mixins/handleOnlineDate.js';
 import InApp from 'detect-inapp';
 
 /* Header */
@@ -323,7 +323,6 @@ import FbComment from '@/components/_common/footer/FbComment.vue';
 import FooterLogo from '@/components/_common/footer/FooterLogo.vue';
 import FooterShare from '@/components/_common/footer/FooterShare.vue';
 import PageBackTop from '@/components/_common/layout/PageBackTop.vue';
-import RelatedArticle from '@/components/_common/footer/RelatedArticle.vue';
 /* Footer */
 
 import ArticleCastAnchor from '@/components/_common/layout/ArticleCastAnchor.vue';
@@ -337,13 +336,14 @@ import ColumnOne from '@/components/_common/layout/ColumnOne.vue';
 import Cover from '@/components/Cover.vue';
 import HaveQuestion from '@/components/chapter/HaveQuestion.vue';
 import NextBanner from '@/components/chapter/NextBanner.vue';
-import OfflineBanner from '@/components/OfflineBanner.vue';
+import Marketing from '@/components/banner/Marketing.vue';
+import OtherProjects from '@/components/banner/OtherProjects.vue';
 import PageIndicator from '@/components/_common/layout/PageIndicator.vue';
 
 
 export default {
   name: 'App',
-  mixins: [sendGaMethods],
+  mixins: [sendGaMethods, isAfterOnlineDate],
   components: {
     ArticleCastAnchor,
     ArticleDictionary,
@@ -361,11 +361,11 @@ export default {
     HaveQuestion,
     HeaderType,
     NextBanner,
-    OfflineBanner,
+    Marketing,
+    OtherProjects,
     PageFooter,
     PageBackTop,
     PageIndicator,
-    RelatedArticle,
   },
   methods: {
     addChapterObserver() {
@@ -439,6 +439,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~/style/menu_item_disabled.scss';
+
 #app {
   &.app-in-first-view {
     overflow: hidden;

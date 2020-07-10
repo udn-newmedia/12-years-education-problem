@@ -147,6 +147,9 @@ export default {
       if (index === this.active || (index === 1 && isAfterOnlineDate)) {
         return 'javascript:void(0);'
       } else {
+        if (link.indexOf('http') !== -1) {
+          return link
+        }
         return this.isNotRoot ? `.${link}` : link
       }
     },
@@ -203,13 +206,14 @@ export default {
       @media screen and (max-width: 768px) {
         flex: 0 0 340px;
         max-width: 340px;
-        height: 382.5px;
+        // height: 382.5px;
+        height: 400px;
       }
       @media screen and (max-width: 414px) {
         flex: 0 0 280px;
         max-width: 280px;
         // height: 315px;
-        height: 340px;
+        height: 350px;
       }
       @media screen and (max-width: 374.99px) {
         flex: 0 0 200px;

@@ -1,15 +1,24 @@
+
 import otherProjectsWebImg1 from "@/assets/img/relate/12-years-education_r1_web.jpg";
 import otherProjectsWebImg2 from "@/assets/img/relate/12-years-education_r2_web.jpg";
 import otherProjectsWebImg3 from "@/assets/img/relate/12-years-education_r3_web.jpg";
 import otherProjectsWebImg4 from "@/assets/img/relate/12-years-education_r4_web.jpg";
 import otherProjectsWebImg5 from "@/assets/img/relate/12-years-education_r5_web.jpg";
 import otherProjectsWebImg6 from "@/assets/img/relate/12-years-education_r6_web.jpg";
+import otherProjectsWebImg7 from "@/assets/img/relate/12-years-education_r7_web.jpg";
+import otherProjectsWebImg8 from "@/assets/img/relate/12-years-education_r8_web.jpg";
+import otherProjectsWebImg9 from "@/assets/img/relate/12-years-education_r9_web.jpg";
+import otherProjectsWebImg10 from "@/assets/img/relate/12-years-education_r10_web.jpg";
 import otherProjectsMobImg1 from "@/assets/img/relate/12-years-education_r1_mob.jpg";
 import otherProjectsMobImg2 from "@/assets/img/relate/12-years-education_r2_mob.jpg";
 import otherProjectsMobImg3 from "@/assets/img/relate/12-years-education_r3_mob.jpg";
 import otherProjectsMobImg4 from "@/assets/img/relate/12-years-education_r4_mob.jpg";
 import otherProjectsMobImg5 from "@/assets/img/relate/12-years-education_r5_mob.jpg";
 import otherProjectsMobImg6 from "@/assets/img/relate/12-years-education_r6_mob.jpg";
+import otherProjectsMobImg7 from "@/assets/img/relate/12-years-education_r7_mob.jpg";
+import otherProjectsMobImg8 from "@/assets/img/relate/12-years-education_r8_mob.jpg";
+import otherProjectsMobImg9 from "@/assets/img/relate/12-years-education_r9_mob.jpg";
+import otherProjectsMobImg10 from "@/assets/img/relate/12-years-education_r10_mob.jpg";
 
 import marketingPeople1 from "@/assets/img/marketing/lan.png";
 import marketingPeople2 from "@/assets/img/marketing/fan.png";
@@ -55,6 +64,31 @@ const content = {
       img: { web: otherProjectsWebImg6, mob: otherProjectsMobImg6 },
       id: `${otherProjectsWebImg6}${otherProjectsMobImg6}`,
       link: "./collect/",
+    },
+    {
+      title: "五大解方<br/>讓教改繼續前行",
+      img: { web: otherProjectsWebImg7, mob: otherProjectsMobImg7 },
+      id: `${otherProjectsWebImg7}${otherProjectsMobImg7}`,
+      link: "https://udn.com/news/story/6885/4691348",
+    },
+    {
+      title: "國中成教改斷崖<br/>最大問題仍卡在「升學」",
+      img: { web: otherProjectsWebImg8, mob: otherProjectsMobImg8 },
+      id: `${otherProjectsWebImg8}${otherProjectsMobImg8}`,
+      link: "https://udn.com/news/story/120884/4687019",
+    },
+    {
+      title: "新名詞太多難懂<br/>家長「超前部署」送私校",
+      img: { web: otherProjectsWebImg9, mob: otherProjectsMobImg9 },
+      id: `${otherProjectsWebImg9}${otherProjectsMobImg9}`,
+      link: "https://udn.com/news/story/120884/4689318",
+    },
+    {
+      title: "別把「素養」過度神話<br/>破解兩大課綱迷思",
+      img: { web: otherProjectsWebImg10, mob: otherProjectsMobImg10 },
+      id: `${otherProjectsWebImg10}${otherProjectsMobImg10}`,
+      link:
+        "https://udn.com/news/story/120884/4689991?from=udn-catelistnews_ch2",
     },
   ],
   marketing: [

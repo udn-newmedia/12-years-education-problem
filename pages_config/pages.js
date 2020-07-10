@@ -29,7 +29,7 @@ module.exports = {
       keywords: '108課綱,12年國教,教育部,教改,素養,學習歷程檔案',
       author: author,
       datePublished: '2020-07-09T07:00:00+08:00',
-      dateModified: '2020-07-09T07:00:00+08:00',
+      dateModified: '2020-07-10T07:00:00+08:00',
       MONITOR: monitorCode,
       CONTENT: headerContent + mainContent + footerContent,
       pageUrl: pathRoot,

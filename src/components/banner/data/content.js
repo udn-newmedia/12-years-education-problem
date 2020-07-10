@@ -51,7 +51,7 @@ const content = {
       link: "./story/",
     },
     {
-      title: "當台灣學生好可憐？<br/>寫下你的教改心聲",
+      title: "寫下你的教改心聲",
       img: { web: otherProjectsWebImg6, mob: otherProjectsMobImg6 },
       id: `${otherProjectsWebImg6}${otherProjectsMobImg6}`,
       link: "./collect/",

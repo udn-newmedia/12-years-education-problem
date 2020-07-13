@@ -51,7 +51,11 @@
       />
     </ul>
 
-    <a href="https://udn.com/search/word/2/108課綱" class="otherprojects-link">更多課綱相關報導</a>
+    <a
+      href="https://udn.com/search/word/2/108課綱"
+      target="_blank"
+      class="otherprojects-link"
+    >更多課綱相關報導</a>
   </div>
 </template>
 
@@ -59,7 +63,6 @@
 import content from './data/content'
 import { sendGaMethods } from '@/mixins/masterBuilder.js'
 import isAfterOnlineDate from '@/mixins/handleOnlineDate.js'
-
 export default {
   name: 'OtherProjects',
   props: {
@@ -88,11 +91,7 @@ export default {
       }
     },
     hoverItem(i) {
-      if (
-        this.windowSize === 'web' &&
-        i !== this.active &&
-        (i !== 1 || !isAfterOnlineDate)
-      ) {
+      if (this.windowSize === 'web' && i !== this.active) {
         this.hovered = i
       }
     },
@@ -119,7 +118,6 @@ export default {
     },
     getActive() {
       const currentURL = window.location.href
-
       if (currentURL.indexOf('/problem') !== -1) {
         this.active = 0
       } else if (currentURL.indexOf('/poll') !== -1) {
@@ -144,7 +142,7 @@ export default {
       }
     },
     operatedLink(link, index) {
-      if (index === this.active || (index === 1 && isAfterOnlineDate)) {
+      if (index === this.active) {
         return 'javascript:void(0);'
       } else {
         if (link.indexOf('http') !== -1) {
@@ -298,7 +296,6 @@ export default {
       // }
     }
   }
-
   .otherprojects-pagination {
     display: none;
     @media screen and (max-width: 768px) {
@@ -325,7 +322,6 @@ export default {
     //   margin-top: 50px;
     // }
   }
-
   .otherprojects-link {
     margin-top: 11.11vh;
     display: block;

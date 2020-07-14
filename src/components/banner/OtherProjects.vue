@@ -33,7 +33,6 @@
         </div>
         <div class="otherprojects-subtitle-wrapper">
           <span class="otherprojects-subtitle">
-            <!-- <span class="underline">{{ item.title }}</span> -->
             <span class="underline" v-html="item.title" />
             <br />
             <span class="online" v-if="item.online&& !isAfterOnlineDate">{{ item.online }}</span>
@@ -60,9 +59,9 @@
 </template>
 
 <script>
-import content from './data/content'
 import { sendGaMethods } from '@/mixins/masterBuilder.js'
 import isAfterOnlineDate from '@/mixins/handleOnlineDate.js'
+
 export default {
   name: 'OtherProjects',
   props: {
@@ -74,7 +73,7 @@ export default {
   },
   data() {
     return {
-      dataArray: content.otherProjects,
+      dataArray: [],
       windowSize: 'web',
       active: null,
       hovered: null,
@@ -118,6 +117,7 @@ export default {
     },
     getActive() {
       const currentURL = window.location.href
+
       if (currentURL.indexOf('/problem') !== -1) {
         this.active = 0
       } else if (currentURL.indexOf('/poll') !== -1) {
@@ -145,11 +145,18 @@ export default {
       if (index === this.active) {
         return 'javascript:void(0);'
       } else {
-        if (link.indexOf('http') !== -1) {
-          return link
-        }
-        return this.isNotRoot ? `.${link}` : link
+        return link
       }
+    },
+    getJsonData() {
+      const url =
+        process.env.NODE_ENV === 'production' ? 'https://udn.com/newmedia/2020/12-years-education/related/OtherProject.json' : './data/other_project.json';
+
+      fetch(url)
+        .then(response => response.json())
+        .then(result => {
+          this.dataArray = result
+        })
     },
   },
   mounted() {
@@ -159,6 +166,7 @@ export default {
       .addEventListener('scroll', this.containerScrollHandler)
     this.checkWindowSize()
     this.getActive()
+    this.getJsonData()
   },
   destroyed() {
     window.removeEventListener('scroll', this.checkWindowSize)
@@ -191,7 +199,6 @@ export default {
     flex-wrap: wrap;
     @media screen and (max-width: 768px) {
       flex-wrap: nowrap;
-      // overflow-y: scroll;
       overflow-y: hidden;
     }
     .otherprojects-image-wrapper {
@@ -204,19 +211,16 @@ export default {
       @media screen and (max-width: 768px) {
         flex: 0 0 340px;
         max-width: 340px;
-        // height: 382.5px;
         height: 400px;
       }
       @media screen and (max-width: 414px) {
         flex: 0 0 280px;
         max-width: 280px;
-        // height: 315px;
         height: 350px;
       }
       @media screen and (max-width: 374.99px) {
         flex: 0 0 200px;
         max-width: 200px;
-        // height: 225px;
       }
       .otherprojects-image {
         max-width: 100%;
@@ -265,9 +269,6 @@ export default {
         .otherprojects-subtitle-wrapper {
           .otherprojects-subtitle {
             @media screen and (min-width: 768.1px) {
-              // &::after {
-              //   width: 100%;
-              // }
               .underline {
                 background-size: 100% 100%;
               }
@@ -289,13 +290,9 @@ export default {
           margin-left: 44px;
         }
       }
-      // &.item-last {
-      //   @media screen and (max-width: 768px) {
-      //     margin-right: 15vw;
-      //   }
-      // }
     }
   }
+
   .otherprojects-pagination {
     display: none;
     @media screen and (max-width: 768px) {
@@ -318,10 +315,8 @@ export default {
         }
       }
     }
-    // @media screen and (max-width: 414px) {
-    //   margin-top: 50px;
-    // }
   }
+
   .otherprojects-link {
     margin-top: 11.11vh;
     display: block;

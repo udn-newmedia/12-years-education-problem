@@ -4,9 +4,10 @@ import store from './store';
 import { rwdMethods } from '@/mixins/masterBuilder.js';
 import myDebugger from '@/utils/debugger.js';
 import 'intersection-observer';
-
+import 'isomorphic-fetch';
 import '~/style/main.scss';
 
+Window.Promise = Promise;
 Vue.config.productionTip = false
 
 new Vue({
